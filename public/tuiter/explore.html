@@ -3,76 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <title>Explore</title>
-    <link href="universal.css" rel="stylesheet"/>
+    <link href="css/explore.css" rel="stylesheet"/>
+    <link href="css/universal.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
 </head>
-<body class="wd-font wd-bg-color-black wd-fg-color-white">
-<div class="wd-div">
-    <form id="search-tuiter-form">
-        <label for="search-tuiter">
-            <img src="search-icon.jpg" class="wd-search-icon" alt="search icon"/>
-            <input id="search-tuiter" class="wd-search-bar" placeholder="Search Tuiter"/>
-        </label>
-        <a href="explore-settings.html"><img src="gear.png" class="wd-gear-icon" alt="settings gear"/></a>
-    </form>
-    <a href="#" class="wd-float-left wd-for-you-button">For you</a>
-    <a href="#" class="wd-float-left wd-unselected-buttons">Trending</a>
-    <a href="#" class="wd-float-left wd-unselected-buttons">COVID-19</a>
-    <a href="#" class="wd-float-left wd-unselected-buttons">News</a>
-    <a href="#" class="wd-float-left wd-unselected-buttons">Sports</a>
-    <a href="#" class="wd-float-left wd-unselected-buttons">Entertainment</a>
-    <div class="wd-float-done"></div>
-</div>
-<div class="wd-small-div"></div>
-<div class="wd-suggested-tuits">
-    <a href="#" class="wd-main-ellipses">...</a>
-    <a href="#" class="wd-ellipses">...</a>
-    <div>Trending in United States</div>
-    <div class="wd-topic">Euphoria</div>
-    <div>9,424 Tuits</div>
-</div>
-<div class="wd-div wd-suggested-tuits">
-    <img src="covid.jpg" class="wd-tuit-images" alt="covid-19-icon">
-    <div>COVID-19 • LIVE</div>
-    <div class="wd-topic">COVID-19: News and updates for Boston</div>
-    <div class="wd-float-done"></div>
-</div>
-<div class="wd-div wd-suggested-tuits">
-    <img src="sleeping.jpg" class="wd-tuit-images" alt="sleeping-person">
-    <div class="wd-publication-name">
-        <img src="t.jpg" class="wd-tuit-icons" alt="times-logo">
-        The New York Times
-        <img src="verified.png" class="wd-tuit-icons" alt="verified">
-        • Yesterday</div>
-    <div class="wd-topic">Why getting 8 hours of sleep just isn't enough</div>
-    <div class="wd-float-done"></div>
-</div>
-<div class="wd-div wd-suggested-tuits">
-    <a href="#" class="wd-ellipses">...</a>
-    <div>Trending in Sports</div>
-    <div class="wd-topic">Tom Brady</div>
-    <div>30.2k Tuits</div>
-</div>
-<div class="wd-div wd-suggested-tuits">
-
-    <img src="vday.jpg" class="wd-tuit-images" alt="valentines">
-    <div class="wd-publication-name">
-        <img src="buzzfeed.jpg" class="wd-tuit-icons" alt="buzzfeed-logo">
-        Buzzfeed
-        <img src="verified.png" class="wd-tuit-icons" alt="verified">
-        • February 5, 2022
+<body class="wd-font wd-bg-color-white wd-fg-color-black">
+<div class="container">
+    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"> <!--d-none d-xxl-block-->
+        <div class="row">
+            <div class="col-xxl-2 col-xl-2 col-lg-1 col-md-2 col-sm-2 mt-2">
+                <div class="d-none d-sm-block d-md-none fa-2x">S</div>
+                <div class="d-none d-md-block d-lg-none fa-2x">M</div>
+                <div class="d-none d-lg-block d-xl-none fa-2x">L</div>
+                <div class="d-none d-xl-block d-xxl-none fa-2x">XL</div>
+                <div class="d-none d-xxl-block fa-2x">XXL</div>
+                <div class="list-group">
+                    <div class="list-group-item"><i class="fa-brands fa-twitter"></i></div>
+                    <a href="home.html" class="list-group-item list-group-item-action">
+                        <i class="fa-solid fa-house-chimney wd-float-left pt-1 pe-1"></i>
+                        <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Home</div>
+                    </a>
+                    <a href="explore.html" class="list-group-item list-group-item-action active">
+                        <i class="fa-solid fa-hashtag wd-float-left pt-1 pe-1"></i>
+                        <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Explore</div>
+                    </a>
+                    <a href="notifications.html" class="list-group-item list-group-item-action"><i
+                            class="fa-solid fa-bell wd-float-left pt-1 pe-1"></i>
+                        <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Notifications</div>
+                    </a>
+                    <a href="messages.html" class="list-group-item list-group-item-action"><i
+                            class="fa-solid fa-envelope wd-float-left pt-1 pe-1"></i>
+                        <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Messages</div>
+                    </a>
+                    <a href="bookmarks.html" class="list-group-item list-group-item-action"><i
+                            class="fa-solid fa-bookmark wd-float-left pt-1 pe-1"></i>
+                        <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Bookmarks</div>
+                    </a>
+                    <a href="lists.html" class="list-group-item list-group-item-action">
+                        <i class="fa-solid fa-list wd-float-left pt-1 pe-1"></i>
+                        <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Lists</div>
+                    </a>
+                    <a href="profile.html" class="list-group-item list-group-item-action"><i
+                            class="fa-solid fa-user wd-float-left pt-1 pe-1"></i>
+                        <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Profile</div>
+                    </a>
+                    <a href="more.html" class="list-group-item list-group-item-action">
+                        <span class="fa-stack wd-span-more-padding wd-float-left pt-1 pe-1">
+                            <i class="fa-solid fa-circle fa-stack-1x"></i>
+                            <i class="fa-solid fa-ellipsis fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">More</div>
+                    </a>
+                    <button class="btn btn-primary wd-override-bs-tuit" type="button">
+                        Tuit
+                    </button>
+                </div>
+                <!--                <div class="list-group d-xxl-none d-xl-none d-lg-block d-md-block d-sm-block">-->
+                <!--                    <div class="list-group-item"><i class="fa-brands fa-twitter"></i></div>-->
+                <!--                    <a href="home.html" class="list-group-item list-group-item-action">-->
+                <!--                        <i class="fa-solid fa-house-chimney"></i></a>-->
+                <!--                    <a href="explore.html" class="list-group-item list-group-item-action active">-->
+                <!--                        <i class="fa-solid fa-hashtag"></i></a>-->
+                <!--                    <a href="notifications.html" class="list-group-item list-group-item-action"><i class="fa-solid fa-bell"></i></a>-->
+                <!--                    <a href="messages.html" class="list-group-item list-group-item-action"><i class="fa-solid fa-envelope"></i></a>-->
+                <!--                    <a href="bookmarks.html" class="list-group-item list-group-item-action"><i class="fa-solid fa-bookmark"></i></a>-->
+                <!--                    <a href="lists.html" class="list-group-item list-group-item-action"><i class="fa-solid fa-list"></i></a>-->
+                <!--                    <a href="profile.html" class="list-group-item list-group-item-action"><i class="fa-solid fa-user"></i></a>-->
+                <!--                    <a href="more.html" class="list-group-item list-group-item-action">-->
+                <!--                        <span class="fa-stack wd-span-more-padding">-->
+                <!--                            <i class="fa-solid fa-circle fa-stack-1x"></i>-->
+                <!--                            <i class="fa-solid fa-ellipsis fa-stack-1x fa-inverse"></i>-->
+                <!--                        </span>-->
+                <!--                    </a>-->
+                <!--                    <button class="btn btn-primary wd-override-bs-tuit" type="button">-->
+                <!--                        Tuit-->
+                <!--                    </button>-->
+                <!--                </div>-->
+            </div>
+            <div class="col-xxl-6 col-xl-6 col-lg-7 col-md-10 col-sm-10 mt-2">
+                <form id="search-tuiter-form">
+                    <label for="search-tuiter" class="wd-search-bar mb-2">
+                        <i class="fa-solid fa-magnifying-glass wd-search-icon"></i>
+                        <input id="search-tuiter" class="wd-search-bar-content mb-2 mt-0" placeholder="Search Tuiter"/>
+                    </label>
+                    <a href="explore-settings.html"><i class="fa-solid fa-gear wd-gear-icon"></i></a>
+                </form>
+                <ul class="nav nav-tabs wd-explore-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="for-you.html">For You</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="trending.html">Trending</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="news.html">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sports.html">Sports</a>
+                    </li>
+                    <li class="nav-item d-xxl-block d-xl-block d-lg-block d-md-block d-sm-none">
+                        <a class="nav-link" href="entertainment.html">Entertainment</a>
+                    </li>
+                </ul>
+                <div>
+                    <img src="media/starship.jpg" class="wd-explore-image">
+                    <h2 class="wd-covere-image-title">SpaceX's Starship</h2>
+                </div>
+                <div class="list-group wd-for-you-tuits">
+                    <li class="list-group-item wd-suggested-follows-primary-text">
+                        <img src="media/react.png" class="wd-float-right wd-tuit-image-icons">
+                        <div class="wd-for-you-topics-and-tuit-count">
+                            Web Development
+                        </div>
+                        <div class="wd-tuit-author">ReactJS <i class="fa-solid fa-circle-check"></i></div>
+                        <div class="wd-for-you-topics-and-tuit-count">- 2h</div>
+                        React.js is a component based front end library that makes it very easy to build Single Page
+                        Applications or SPAs
+                    </li>
+                    <li class="list-group-item wd-suggested-follows-primary-text">
+                        <img src="media/js.png" class="wd-float-right wd-tuit-image-icons">
+                        <div class="wd-tuit-author">JavaScript <i class="fa-solid fa-circle-check"></i></div>
+                        <div class="wd-for-you-topics-and-tuit-count">- 2h</div>
+                        JavaScript is programming language that can run on browsers as well as desktops
+                        <div class="wd-for-you-topics-and-tuit-count">123K Tuits</div>
+                    </li>
+                    <li class="list-group-item wd-suggested-follows-primary-text">
+                        <img src="media/jquery.png" class="wd-float-right wd-tuit-image-icons">
+                        <div class="wd-for-you-topics-and-tuit-count">
+                            Web Development
+                        </div>
+                        jQuery
+                        <div class="wd-for-you-topics-and-tuit-count">123K Tuits</div>
+                    </li>
+                    <li class="list-group-item wd-suggested-follows-primary-text">
+                        <img src="media/node.png" class="wd-float-right wd-tuit-image-icons">
+                        <div class="wd-for-you-topics-and-tuit-count">
+                            Web Development
+                        </div>
+                        <div class="wd-tuit-author">NodeJS <i class="fa-solid fa-circle-check"></i></div>
+                        <div class="wd-for-you-topics-and-tuit-count">- 2h</div>
+                        <div class="wd-for-you-topics-and-tuit-count">123K Tuits</div>
+                    </li>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-xl-4 col-lg-4 d-xxl-block d-xl-block d-lg-block d-md-none d-sm-none mt-2">
+                <div class="list-group">
+                    <li class="list-group-item wd-suggested-follows-primary-text">Who to follow</li>
+                    <li class="list-group-item wd-suggested-follows-primary-text">
+                        <button class="btn btn-primary wd-override-bs-follow" type="button">
+                            Follow
+                        </button>
+                        <img src="media/java.png" class="wd-avatar-image">
+                        <div class="wd-suggested-follows-account-name">
+                            Java
+                            <i class="fa-solid fa-circle-check wd-verified-check"></i>
+                        </div>
+                        <div class="wd-suggested-follows-account-handle">
+                            @Java
+                        </div>
+                    </li>
+                    <li class="list-group-item wd-suggested-follows-primary-text">
+                        <button class="btn btn-primary wd-override-bs-follow" type="button">
+                            Follow
+                        </button>
+                        <img src="media/relspace.png" class="wd-avatar-image">
+                        <div class="wd-suggested-follows-account-name">
+                            Relativity Space
+                            <i class="fa-solid fa-circle-check wd-verified-check"></i>
+                        </div>
+                        <div class="wd-suggested-follows-account-handle">
+                            @relativityspace
+                        </div>
+                    </li>
+                    <li class="list-group-item wd-suggested-follows-primary-text">
+                        <button class="btn btn-primary wd-override-bs-follow" type="button">
+                            Follow
+                        </button>
+                        <img src="media/virgin.png" class="wd-avatar-image">
+                        <div class="wd-suggested-follows-account-name">
+                            Virgin Galactic
+                            <i class="fa-solid fa-circle-check wd-verified-check"></i>
+                        </div>
+                        <div class="wd-suggested-follows-account-handle">
+                            @virgingalactic
+                        </div>
+                    </li>
+                    <li class="list-group-item wd-suggested-follows-primary-text">
+                        <button class="btn btn-primary wd-override-bs-follow" type="button">
+                            Follow
+                        </button>
+                        <img src="media/nasa.png" class="wd-avatar-image">
+                        <div class="wd-suggested-follows-account-name">
+                            NASA
+                            <i class="fa-solid fa-circle-check wd-verified-check"></i>
+                        </div>
+                        <div class="wd-suggested-follows-account-handle">
+                            @NASA
+                        </div>
+                    </li>
+                    <li class="list-group-item wd-suggested-follows-primary-text">
+                        <button class="btn btn-primary wd-override-bs-follow" type="button">
+                            Follow
+                        </button>
+                        <img src="media/tesla.png" class="wd-avatar-image">
+                        <div class="wd-suggested-follows-account-name">
+                            Tesla
+                            <i class="fa-solid fa-circle-check wd-verified-check"></i>
+                        </div>
+                        <div class="wd-suggested-follows-account-handle">
+                            @Tesla
+                        </div>
+                    </li>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="wd-topic">14 Valentine's Day ideas for anyone who loves food</div>
-    <div class="wd-float-done"></div>
+    <!--<div class="d-none d-xl-block d-xxl-none fa-2x">
+        <div class="row">
+            <div class="col-2 wd-columns wd-xl-window"></div>
+            <div class="col-6 wd-columns wd-xl-window"></div>
+            <div class="col-4 wd-columns wd-xl-window wd-follow-div"></div>
+        </div>
+    </div>
+    <div class="d-none d-lg-block d-xl-none fa-2x">L</div>
+    <div class="d-none d-md-block d-lg-none fa-2x">M</div>
+    <div class="d-none d-sm-block d-md-none fa-2x">S</div>-->
 </div>
-<div class="wd-div wd-suggested-tuits">
-    <img src="olympics.jpg" class="wd-tuit-images" alt="beijing-2022">
-
-    <div>Beijing 2022 • LIVE</div>
-
-    <div class="wd-topic">Beijing 2022 Olympics: The United States at the Winter Games</div>
-    <div class="wd-float-done"></div>
-</div>
-
 </body>
 </html>
+
+<!--
+    <div class="d-block d-sm-none fa-2x">XS</div>
+    <div class="d-none d-sm-block d-md-none fa-2x">S</div>
+    <div class="d-none d-md-block d-lg-none fa-2x">M</div>
+    <div class="d-none d-lg-block d-xl-none fa-2x">L</div>
+    <div class="d-none d-xl-block d-xxl-none fa-2x">XL</div>
+    <div class="d-none d-xxl-block fa-2x">XXL</div>
+
+<div class="wd-div">
+                <form id="search-tuiter-form">
+                    <label for="search-tuiter">
+                        <i class="fa-solid fa-magnifying-glass wd-search-icon"></i>
+                        <input id="search-tuiter" class="wd-search-bar" placeholder="Search Tuiter"/>
+                    </label>
+                    <a href="explore-settings.html"><i class="fa-solid fa-gear wd-gear-icon"></i></a>
+                </form>
+                <a href="#" class="wd-float-left wd-for-you-button">For you</a>
+                <a href="#" class="wd-float-left wd-unselected-buttons">Trending</a>
+                <a href="#" class="wd-float-left wd-unselected-buttons">COVID-19</a>
+                <a href="#" class="wd-float-left wd-unselected-buttons">News</a>
+                <a href="#" class="wd-float-left wd-unselected-buttons">Sports</a>
+                <a href="#" class="wd-float-left wd-unselected-buttons">Entertainment</a>
+                <div class="wd-float-done"></div>
+            </div>
+            <div class="wd-small-div"></div>
+            <div class="wd-suggested-tuits">
+                <a href="#" class="wd-main-ellipses">...</a>
+                <a href="#" class="wd-ellipses">...</a>
+                <div>Trending in United States</div>
+                <div class="wd-topic">Euphoria</div>
+                <div>9,424 Tuits</div>
+            </div>
+            <div class="wd-div wd-suggested-tuits">
+                <img src="media/covid.jpg" class="wd-tuit-images" alt="covid-19-icon">
+                <div>COVID-19 • LIVE</div>
+                <div class="wd-topic">COVID-19: News and updates for Boston</div>
+                <div class="wd-float-done"></div>
+            </div>
+            <div class="wd-div wd-suggested-tuits">
+                <img src="media/sleeping.jpg" class="wd-tuit-images" alt="sleeping-person">
+                <div class="wd-publication-name">
+                    <img src="media/t.jpg" class="wd-tuit-icons" alt="times-logo">
+                    The New York Times
+                    <img src="media/verified.png" class="wd-tuit-icons" alt="verified">
+                    • Yesterday
+                </div>
+                <div class="wd-topic">Why getting 8 hours of sleep just isn't enough</div>
+                <div class="wd-float-done"></div>
+            </div>
+            <div class="wd-div wd-suggested-tuits">
+                <a href="#" class="wd-ellipses">...</a>
+                <div>Trending in Sports</div>
+                <div class="wd-topic">Tom Brady</div>
+                <div>30.2k Tuits</div>
+            </div>
+            <div class="wd-div wd-suggested-tuits">
+
+                <img src="media/vday.jpg" class="wd-tuit-images" alt="valentines">
+                <div class="wd-publication-name">
+                    <img src="media/buzzfeed.jpg" class="wd-tuit-icons" alt="buzzfeed-logo">
+                    Buzzfeed
+                    <img src="media/verified.png" class="wd-tuit-icons" alt="verified">
+                    • February 5, 2022
+                </div>
+
+                <div class="wd-topic">14 Valentine's Day ideas for anyone who loves food</div>
+                <div class="wd-float-done"></div>
+            </div>
+            <div class="wd-div wd-suggested-tuits">
+                <img src="media/olympics.jpg" class="wd-tuit-images" alt="beijing-2022">
+
+                <div>Beijing 2022 • LIVE</div>
+
+                <div class="wd-topic">Beijing 2022 Olympics: The United States at the Winter Games</div>
+                <div class="wd-float-done"></div>
+            </div>
+
+
+OLD:
+gear: <img src="media/gear.png" class="wd-gear-icon" alt="settings gear"/>
+search: <img src="media/search-icon.jpg" class="wd-search-icon" alt="search icon"/>
+-->

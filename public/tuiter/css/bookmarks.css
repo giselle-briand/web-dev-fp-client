@@ -1,0 +1,111 @@
+.wd-bookmarks-div {
+    border-style: solid;
+    border-color: rgb(47, 51, 54);
+    border-width: 1px;
+}
+
+.wd-username {
+    color: rgb(110, 118, 125);
+    font-size: 13px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+}
+
+.wd-ellipses-blue {
+    text-decoration: none;
+    float: right;
+    font-size: 25px;
+    color: dodgerblue;
+    padding-right: 16px;
+}
+
+.wd-ellipses-bookmark {
+    text-decoration: none;
+    float: right;
+    padding-top: 12px;
+    padding-right: 12px;
+    font-size: 20px;
+    color: rgb(110, 118, 125);
+}
+
+.wd-avatar {
+    border-radius: 100%;
+    width: 48px;
+    height: 48px;
+    padding: 12px 16px;
+    float: left;
+
+}
+.wd-tuit-author {
+    padding-top: 12px;
+    padding-right: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    float: left;
+}
+.wd-tuit-handle {
+    padding-top: 12px;
+    padding-left: 3px;
+    font-size: 15px;
+    color: rgb(110, 118, 125);
+}
+.wd-tuit-itself {
+    font-size: 15px;
+    color: white;
+    width: 506px;
+    padding: 5px 16px 12px;
+    margin-left: 65px;
+}
+.wd-bookmark-image {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(110, 118, 125);
+    width: 504px;
+    height: 264px;
+    margin-left: 76px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.wd-bookmark-content {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(110, 118, 125);
+    margin-top: -4px;
+    margin-left: 76px;
+    width: 480px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 12px;
+}
+.wd-bookmark-image-title {
+    color: white;
+    font-size: 15px;
+    padding-bottom: 5px;
+}
+.wd-bookmark-image-subtext {
+    color: rgb(110, 118, 125);
+    font-size: 15px;
+    padding-bottom: 5px;
+}
+.wd-external-link {
+    text-decoration: none;
+    color: rgb(110, 118, 125);
+}
+
+.wd-tuit-action-icons {
+    text-decoration: none;
+    width: 20px;
+    height: 20px;
+    color: rgb(110, 118, 125);
+    padding-top: 12px;
+    padding-left: 76px;
+}
+
+.wd-heart {
+    color: crimson;
+}
+.wd-icon-spacing {
+    padding-right: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
