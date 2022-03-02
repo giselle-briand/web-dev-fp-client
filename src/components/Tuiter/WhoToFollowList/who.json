@@ -1,11 +1,11 @@
 [
   {
-    "avatarIcon": "../../../media/java.png",
+    "avatarIcon": "../media/java.png",
     "userName": "Java",
     "handle": "Java"
   },
   {
-    "avatarIcon": "../../../media/relativity.jpeg",
+    "avatarIcon": "../media/relspace.png",
     "userName": "Relativity Space",
     "handle": "relativityspace"
   },

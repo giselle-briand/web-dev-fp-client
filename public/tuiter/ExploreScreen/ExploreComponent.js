@@ -27,7 +27,7 @@ const ExploreComponent = () => {
                 </li>
            </ul>
            <div>
-                <img src="../../../media/starship.jpg" class="wd-explore-image">
+                <img src="../../media/starship.jpg" class="wd-explore-image">
                 <h3 class="wd-covere-image-title">SpaceX's Starship</h3>
            </div>
            ${PostSummaryList()}
