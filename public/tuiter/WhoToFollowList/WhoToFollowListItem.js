@@ -10,7 +10,7 @@ const WhoToFollowListItem = (who) => {
                     <i class="fa-solid fa-circle-check wd-verified-check"></i>
                 </div>
                 <div class="wd-suggested-follows-account-handle">
-                    ${who.handle}
+                    @${who.handle}
                 </div>
             </li>
     `);

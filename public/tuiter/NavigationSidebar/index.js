@@ -37,10 +37,10 @@ const NavigationSidebar = () => {
                         </span>
                         <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">More</div>
                     </a>
-                    <a href="../tuit.html" class="btn btn-primary wd-override-bs-tuit" type="button">
-                        Tuit
-                    </a>
                 </div>
+                <a href="../tuit.html" class="btn btn-primary wd-override-bs-tuit col-12" type="button">
+                    Tuit
+                </a>
     `);
 }
 export default NavigationSidebar;
