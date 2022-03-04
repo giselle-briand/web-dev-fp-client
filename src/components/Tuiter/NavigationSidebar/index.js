@@ -46,7 +46,7 @@ const NavigationSidebar = (
                 </a>
 
             </div>
-            <a href="../tuit.html" className="btn btn-primary wd-override-bs-tuit col-xxl-12 col-md-8 col-lg-8 col-xl-10" type="button">
+            <a href="../tuit.html" className="btn btn-primary wd-override-bs-tuit col-xxl-12 col-md-4 col-lg-2 col-xl-12" type="button">
                 Tuit
             </a>
         </>
