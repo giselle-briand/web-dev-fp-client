@@ -10,7 +10,6 @@ const WhoToFollowListItem = (
     }
 ) => {
     return(
-        <div>
             <li className="list-group-item wd-suggested-follows-primary-text">
                 <button className="btn btn-primary wd-override-bs-follow" type="button">
                     Follow
@@ -24,7 +23,6 @@ const WhoToFollowListItem = (
                     @{who.handle}
                 </div>
             </li>
-        </div>
     );
 }
 export default WhoToFollowListItem;
