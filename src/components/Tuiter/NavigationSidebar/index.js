@@ -6,7 +6,6 @@ const NavigationSidebar = (
     }
 ) => {
     return(
-        <div>
             <div className="list-group">
                 <div className="list-group-item"><i className="fa-brands fa-twitter"/></div>
                 <a href="../home.html" className={`list-group-item list-group-item-action ${active === 'home' ? 'active' : ''}`}>
@@ -48,7 +47,6 @@ const NavigationSidebar = (
                     Tuit
                 </a>
             </div>
-        </div>
     );
 }
 export default NavigationSidebar;
