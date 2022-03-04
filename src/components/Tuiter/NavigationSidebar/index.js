@@ -6,6 +6,7 @@ const NavigationSidebar = (
     }
 ) => {
     return(
+        <>
             <div className="list-group">
                 <div className="list-group-item"><i className="fa-brands fa-twitter"/></div>
                 <a href="../home.html" className={`list-group-item list-group-item-action ${active === 'home' ? 'active' : ''}`}>
@@ -43,10 +44,12 @@ const NavigationSidebar = (
                     </span>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">More</div>
                 </a>
-                <a href="../tuit.html" className="btn btn-primary wd-override-bs-tuit" type="button">
-                    Tuit
-                </a>
+
             </div>
+            <a href="../tuit.html" className="btn btn-primary wd-override-bs-tuit" type="button">
+                Tuit
+            </a>
+        </>
     );
 }
 export default NavigationSidebar;
