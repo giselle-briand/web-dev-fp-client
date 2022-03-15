@@ -8,7 +8,7 @@
     color: black;
 }
 .wd-columns {
-    padding-top: 10px;
+    padding-top: -20px;
 }
 
 .wd-span-more-padding {
@@ -142,12 +142,42 @@
 .wd-suggested-follows-primary-text {
     font-weight: bold;
 }
+.wd-delete-tuit-button {
+    text-decoration: none;
+    float: right;
+    font-size: 15px;
+    color: white;
+}
+.wd-write-tuit-avatar {
+    margin-left: 16px;
+}
 .wd-avatar-image {
     width: 50px;
     height: 50px;
     float: left;
     border-radius: 100%;
-    align-content: center;
+    /*align-content: center;*/
+}
+.wd-tuit-textarea-home {
+    width: 98%;
+    height: 50px;
+    background-color: black;
+    color: white;
+    border-style: none;
+    margin-left: 5px;
+}
+.wd-tuit-override-button-home {
+    float: right;
+    width: 100px;
+    border-radius: 40px;
+    margin-bottom: 15px;
+}
+.wd-avatar {
+    border-radius: 100%;
+    width: 48px;
+    height: 48px;
+    padding: 12px 16px;
+    float: left;
 }
 .wd-suggested-follows-account-name {
     padding-left: 60px;
@@ -163,6 +193,66 @@
     font-weight: normal;
     color: rgb(110, 118, 125);
     padding-left: 60px;
+}
+
+.wd-tuits-list-home {
+    padding-left: 12px;
+}
+.wd-tuit-account-handle-home-verified {
+    padding-left: 20px;
+    font-weight: normal;
+    color: grey;
+    /*color: rgb(110, 118, 125);*/
+}
+.wd-tuit-account-handle-home-unverified {
+    padding-left: 5px;
+    font-weight: normal;
+    color: grey;
+    /*color: rgb(110, 118, 125);*/
+}
+.wd-write-tuit-avatar-width {
+    width: 12%;
+}
+.wd-tuit-texarea-width {
+    width: 88%;
+}
+.wd-avatar-width {
+    width: 9%
+}
+.wd-tuit-width {
+    width: 91%;
+}
+.wd-tuit-itself {
+    font-weight: normal;
+    padding-left: 12px;
+}
+.wd-tuit-image-home {
+    width: 97%;
+    height: 350px;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 30px;
+}
+.wd-no-display {
+    display: none;
+}
+.wd-icon-spacing {
+    padding-right: 10px;
+    padding-top: 12px;
+}
+.wd-icon-spacing-2 {
+    padding-right: 5px;
+}
+.wd-tuit-icon-spacing-3 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-left: 25px;
+}
+.wd-tomato {
+    color:tomato;
+
 }
 .btn-primary.wd-override-bs-follow {
     color: white;

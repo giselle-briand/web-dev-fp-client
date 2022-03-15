@@ -149,8 +149,10 @@
     border-radius: 100%;
     align-content: center;
 }
+
+
 .wd-suggested-follows-account-name {
-    padding-left: 60px;
+    padding-left: 10px;
 }
 .wd-verified-check {
     position: absolute;
