@@ -29,15 +29,6 @@ function App() {
                           {/*       element={<NotificationScreen/>}/>*/}
                       </Route>
                   </Route>
-                  {/*<Route path="/hello" exact={true}>*/}
-                  {/*    <HelloWorld/>*/}
-                  {/*</Route>*/}
-                  {/*<Route path={["/", "/labs"]} exact={true}>*/}
-                  {/*    <Labs/>*/}
-                  {/*</Route>*/}
-                  {/*<Route path="/tuiter" exact={true}>*/}
-                  {/*    <Tuiter/>*/}
-                  {/*</Route>*/}
               </Routes>
           </div>
       </BrowserRouter>
