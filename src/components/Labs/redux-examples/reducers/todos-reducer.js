@@ -26,8 +26,8 @@ const todosReducer = (state = data, action) => {
                 _id: (new Date()).getTime() + ""
             };
             return [
-                ...state,
-                newTodo
+                newTodo,
+                ...state
             ]
         default:
             return state;
