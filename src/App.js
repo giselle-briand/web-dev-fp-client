@@ -17,12 +17,11 @@ function App() {
                   <Route path="/">
                       <Route index element={<Labs />} />
                       <Route path="labs"
-                             exact={true}
+                             // exact={true}
                              element={<Labs/>}/>
                       <Route path="hello"
                              element={<HelloWorld/>}/>
                       <Route path="tuiter"
-                             exact={true}
                              element={<Tuiter/>}>
                           <Route index
                                  element={<HomeScreen/>}/>
