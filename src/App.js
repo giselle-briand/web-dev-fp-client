@@ -22,6 +22,7 @@ function App() {
                       <Route path="hello"
                              element={<HelloWorld/>}/>
                       <Route path="tuiter"
+                             exact={true}
                              element={<Tuiter/>}>
                           <Route index
                                  element={<HomeScreen/>}/>
