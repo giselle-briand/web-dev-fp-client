@@ -2,18 +2,18 @@ import React from "react";
 
 const NavigationSidebar = (
     {
-        active = 'explore'
+        active = 'home'
     }
 ) => {
     return(
         <>
             <div className="list-group">
                 <div className="list-group-item"><i className="fa-brands fa-twitter"/></div>
-                <a href="../home.html" className={`list-group-item list-group-item-action ${active === 'home' ? 'active' : ''}`}>
+                <a href="" className={`list-group-item list-group-item-action ${active === 'home' ? 'active' : ''}`}>
                     <i className="fa-solid fa-house-chimney wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Home</div>
                 </a>
-                <a href="../ExploreScreen/explore.html" className={`list-group-item list-group-item-action ${active === 'explore' ? 'active' : ''}`}>
+                <a href="../ExploreScreen/ExploreScreen.js" className={`list-group-item list-group-item-action ${active === 'explore' ? 'active' : ''}`}>
                     <i className="fa-solid fa-hashtag wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Explore</div>
                 </a>
