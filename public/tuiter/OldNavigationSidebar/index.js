@@ -2,11 +2,11 @@ const NavigationSidebar = () => {
     return(`
             <div class="list-group">
                     <div class="list-group-item"><i class="fa-brands fa-twitter"></i></div>
-                    <a href="../home.html" class="list-group-item list-group-item-action">
+                    <a href="../old-home.html" class="list-group-item list-group-item-action">
                         <i class="fa-solid fa-house-chimney wd-float-left pt-1 pe-1"></i>
                         <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Home</div>
                     </a>
-                    <a href="../ExploreScreen/explore.html" class="list-group-item list-group-item-action active">
+                    <a href="../OldExploreScreen/old-explore.html" class="list-group-item list-group-item-action active">
                         <i class="fa-solid fa-hashtag wd-float-left pt-1 pe-1"></i>
                         <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Explore</div>
                     </a>
@@ -18,7 +18,7 @@ const NavigationSidebar = () => {
                             class="fa-solid fa-envelope wd-float-left pt-1 pe-1"></i>
                         <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Messages</div>
                     </a>
-                    <a href="../bookmarks.html" class="list-group-item list-group-item-action"><i
+                    <a href="../old-bookmarks.html" class="list-group-item list-group-item-action"><i
                             class="fa-solid fa-bookmark wd-float-left pt-1 pe-1"></i>
                         <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Bookmarks</div>
                     </a>
@@ -26,7 +26,7 @@ const NavigationSidebar = () => {
                         <i class="fa-solid fa-list wd-float-left pt-1 pe-1"></i>
                         <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Lists</div>
                     </a>
-                    <a href="../profile.html" class="list-group-item list-group-item-action"><i
+                    <a href="../old-profile.html" class="list-group-item list-group-item-action"><i
                             class="fa-solid fa-user wd-float-left pt-1 pe-1"></i>
                         <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Profile</div>
                     </a>
@@ -38,7 +38,7 @@ const NavigationSidebar = () => {
                         <div class="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">More</div>
                     </a>
                 </div>
-                <a href="../tuit.html" class="btn btn-primary wd-override-bs-tuit col-12" type="button">
+                <a href="../old-tuit.html" class="btn btn-primary wd-override-bs-tuit col-12" type="button">
                     Tuit
                 </a>
     `);
