@@ -236,6 +236,9 @@
 .wd-no-display {
     display: none;
 }
+.wd-stats {
+    margin-left: 20px;
+}
 .wd-icon-spacing {
     padding-right: 10px;
     padding-top: 12px;
@@ -246,8 +249,8 @@
 .wd-tuit-icon-spacing-3 {
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin-left: 25px;
 }
 .wd-tomato {
