@@ -1,10 +1,13 @@
-import React from "react";
-import {useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {createTuit, deleteTuit, findAllTuits} from "../actions/tuits-actions";
 import TuitListItem from "./TuitListItem";
 import TuitStats from "../TuitStats/TuitStats";
 
 const TuitList = () => {
     const tuits = useSelector(state => state.tuits);
+    const dispatch = useDispatch();
+    useEffect(() => findAllTuits(dispatch), []);
     return (
         <ul className="list-group wd-columns wd-float-done">
             {

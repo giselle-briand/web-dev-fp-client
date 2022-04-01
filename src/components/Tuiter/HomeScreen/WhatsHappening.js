@@ -1,15 +1,10 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
+import {createTuit} from "../actions/tuits-actions";
 
 const WhatsHappening = () => {
-    let [whatsHappening, setWhatsHappening]
-        = useState('');
     const dispatch = useDispatch();
-    const tuitClickHandler = () => {
-        dispatch({type: 'create-tuit',
-            tuit: whatsHappening
-        });
-    }
+    const [newTuit, setNewTuit] = useState({tuit: 'New tuit'});
     return (
         <div>
             <div className="wd-float-left wd-write-tuit-avatar-width">
@@ -18,8 +13,11 @@ const WhatsHappening = () => {
             <div className="wd-float-right wd-tuit-texarea-width">
                 <textarea className="wd-tuit-textarea-home"
                           placeholder="What's happening?"
-                          value={whatsHappening}
-                          onChange={(event) => setWhatsHappening(event.target.value)}/>
+                          onChange={(e) =>
+                              setNewTuit({
+                                  ...newTuit,
+                                  tuit: e.target.value
+                              })}/>
                 <hr/>
                 <div className="wd-float-left">
                     <a href="#"><i className="fa fa-image wd-icon-spacing"/></a>
@@ -28,7 +26,7 @@ const WhatsHappening = () => {
                     <a href="#"><i className="fa fa-calendar wd-icon-spacing"/></a>
                 </div>
                 <button className="btn btn-primary wd-tuit-override-button-home col-12"
-                    onClick={tuitClickHandler}>
+                        onClick={() => createTuit(dispatch, newTuit)}>
                     Tuit
                 </button>
             </div>
