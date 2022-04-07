@@ -1,5 +1,5 @@
-#Final Project Web Dev 2022
-#Getting Started with Create React App
+# Final Project Web Dev 2022
+# Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
