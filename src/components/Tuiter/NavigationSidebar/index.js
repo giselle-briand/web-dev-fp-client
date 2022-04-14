@@ -9,31 +9,15 @@ const NavigationSidebar = (
         <>
             <div className="list-group">
                 <div className="list-group-item"><i className="fa-brands fa-twitter"/></div>
-                <a href="" className={`list-group-item list-group-item-action ${active === 'home' ? 'active' : ''}`}>
+                <a href="/home" className={`list-group-item list-group-item-action ${active === 'home' ? 'active' : ''}`}>
                     <i className="fa-solid fa-house-chimney wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Home</div>
                 </a>
-                <a href="/explore" className={`list-group-item list-group-item-action ${active === 'explore' ? 'active' : ''}`}>
+                <a href="/" className={`list-group-item list-group-item-action ${active === 'explore' ? 'active' : ''}`}>
                     <i className="fa-solid fa-hashtag wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Explore</div>
                 </a>
-                <a href="../notifications.html" className={`list-group-item list-group-item-action ${active === 'notifications' ? 'active' : ''}`}>
-                    <i className="fa-solid fa-bell wd-float-left pt-1 pe-1"/>
-                    <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Notifications</div>
-                </a>
-                <a href="../messages.html" className={`list-group-item list-group-item-action ${active === 'messages' ? 'active' : ''}`}>
-                    <i className="fa-solid fa-envelope wd-float-left pt-1 pe-1"/>
-                    <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Messages</div>
-                </a>
-                <a href="../bookmarks.html" className={`list-group-item list-group-item-action ${active === 'bookmarks' ? 'active' : ''}`}>
-                    <i className="fa-solid fa-bookmark wd-float-left pt-1 pe-1"/>
-                    <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Bookmarks</div>
-                </a>
-                <a href="../lists.html" className={`list-group-item list-group-item-action ${active === 'lists' ? 'active' : ''}`}>
-                    <i className="fa-solid fa-list wd-float-left pt-1 pe-1"/>
-                    <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Lists</div>
-                </a>
-                <a href="../profile" className={`list-group-item list-group-item-action ${active === 'profile' ? 'active' : ''}`}>
+                <a href="/profile" className={`list-group-item list-group-item-action ${active === 'profile' ? 'active' : ''}`}>
                     <i className="fa-solid fa-user wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Profile</div>
                 </a>
@@ -46,9 +30,6 @@ const NavigationSidebar = (
                 </a>
 
             </div>
-            <a href="../tuit.html" className="btn btn-primary wd-override-bs-tuit col-12" type="button">
-                Tuit
-            </a>
         </>
     );
 }

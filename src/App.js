@@ -7,6 +7,8 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ExploreScreen from "./components/Tuiter/ExploreScreen/ExploreScreen";
 import HomeScreen from "./components/Tuiter/HomeScreen";
 import ProfilePage from "./components/Tuiter/ProfilePage";
+import LoginPage from "./components/Tuiter/ProfilePage/login";
+import SignUp from "./components/Tuiter/ProfilePage/signup";
 
 function App() {
   return (
@@ -14,9 +16,11 @@ function App() {
           <div className="container">
               <Routes>
                   <Route path="/" element={<Tuiter/>}>
-                      <Route index element={<HomeScreen/>}/>
-                      <Route path="explore" element={<ExploreScreen/>}/>
+                      <Route index element={<ExploreScreen/>}/>
+                      <Route path="home"  element={<HomeScreen/>}/>
                       <Route path="profile" element={<ProfilePage/>}/>
+                      <Route path="login" element={<LoginPage/>}/>
+                      <Route path="signup" element={<SignUp/>}/>
                   </Route>
               </Routes>
           </div>
@@ -24,4 +28,6 @@ function App() {
   );
 }
 
+
+//TODO change the profile screne being displayed based on whether or not the user is logged in
 export default App;
