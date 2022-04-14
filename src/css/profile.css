@@ -1,0 +1,56 @@
+.background-pic {
+    height: 200px;
+    width: 100%;
+}
+
+.pfp {
+    border-radius: 500px;
+    width: 20%;
+    height: 20%;
+    position: relative;
+    left: 15px;
+    bottom: 60px;
+    border-color: white;
+    border-style: solid;
+}
+
+
+.username-text-align {
+    position: relative;
+    left: 15px;
+    top: -30px;
+    color: white;
+}
+
+.white-text {
+    color:white;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.up-down-padding {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.left-padding-small {
+    padding-left: 25px;
+}
+
+.left-padding-big {
+    padding-left: 50px;
+}
+
+.right-padding {
+    padding-right: 100px;
+}
+
+.inline {
+    display: inline;
+}
