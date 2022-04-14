@@ -6,6 +6,7 @@ import Tuiter from "./components/Tuiter";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ExploreScreen from "./components/Tuiter/ExploreScreen/ExploreScreen";
 import HomeScreen from "./components/Tuiter/HomeScreen";
+import ProfilePage from "./components/Tuiter/ProfilePage";
 
 function App() {
   return (
@@ -15,11 +16,11 @@ function App() {
                   <Route path="/" element={<Tuiter/>}>
                       <Route index element={<HomeScreen/>}/>
                       <Route path="explore" element={<ExploreScreen/>}/>
+                      <Route path="profile" element={<ProfilePage/>}/>
                   </Route>
               </Routes>
           </div>
       </BrowserRouter>
-
   );
 }
 

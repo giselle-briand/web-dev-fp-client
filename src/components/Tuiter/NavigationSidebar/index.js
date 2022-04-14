@@ -13,7 +13,7 @@ const NavigationSidebar = (
                     <i className="fa-solid fa-house-chimney wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Home</div>
                 </a>
-                <a href="../ExploreScreen/ExploreScreen.js" className={`list-group-item list-group-item-action ${active === 'explore' ? 'active' : ''}`}>
+                <a href="/explore" className={`list-group-item list-group-item-action ${active === 'explore' ? 'active' : ''}`}>
                     <i className="fa-solid fa-hashtag wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Explore</div>
                 </a>
@@ -33,7 +33,7 @@ const NavigationSidebar = (
                     <i className="fa-solid fa-list wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Lists</div>
                 </a>
-                <a href="../profile.html" className={`list-group-item list-group-item-action ${active === 'profile' ? 'active' : ''}`}>
+                <a href="../profile" className={`list-group-item list-group-item-action ${active === 'profile' ? 'active' : ''}`}>
                     <i className="fa-solid fa-user wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Profile</div>
                 </a>

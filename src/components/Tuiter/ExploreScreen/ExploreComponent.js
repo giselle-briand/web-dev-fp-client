@@ -6,7 +6,7 @@ const ExploreComponent = () => {
         <div>
            <form id="search-tuiter-form">
                 <label className="wd-search-bar mb-2">
-                    <i className="fa-solid fa-magnifying-glass wd-search-icon"/>
+                    <i className="fa-solid fa-magnifying-glass wd-search-icon left-right-padding"/>
                     <input className="wd-search-bar-content wd-search-bar" placeholder="Search Tuiter"/>
                 </label>
                 <a href="explore-settings.html"><i className="fa-solid fa-gear wd-gear-icon"/></a>
