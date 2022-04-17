@@ -3,6 +3,7 @@ import './vendors/bootstrap/css/bootstrap.min.css';
 import './vendors/bootstrap/bootstrap.min.css';
 import './vendors/fontawesome/css/all.min.css';
 import Tuiter from "./components/Tuiter";
+import React, {useState, useEffect} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import React from 'react';
 import ExploreScreen from "./components/Tuiter/ExploreScreen/ExploreScreen";
@@ -10,13 +11,37 @@ import HomeScreen from "./components/Tuiter/HomeScreen";
 import ProfilePage from "./components/Tuiter/ProfilePage";
 import LoginPage from "./components/Tuiter/ProfilePage/login";
 import SignUp from "./components/Tuiter/ProfilePage/signup";
+import Popup from "./components/Tuiter/Privacy";
 import SearchTwitter from "./components/Tuiter/Search/Search";
 import SearchTumblr from "./components/Tuiter/Search/Search";
 
 function App() {
+    const [isOpen, setIsOpen] = useState(true);
+    let tracker = true;
+
+    // https://medium.com/@daniela.sandoval/creating-a-popup-window-using-js-and-react-4c4bd125da57
+    //https://www.cluemediator.com/create-simple-popup-in-reactjs
+
+    const togglePopupFalse = () => {
+        setIsOpen(false);
+        tracker = false;
+        console.log(isOpen);
+    }
+
+   useEffect(() => {
+       console.log(tracker)
+       if (tracker) {
+           setIsOpen(true);
+       } else {
+           setIsOpen(false);
+       }
+
+       console.log("hello");
+    }, []);
+
   return (
-      <BrowserRouter>
           <div className="container">
+              <BrowserRouter>
               <Routes>
                   <Route path="/" element={<Tuiter/>}>
                       <Route index element={<ExploreScreen/>}/>
@@ -32,6 +57,19 @@ function App() {
           </div>
       </BrowserRouter>
 
+              </BrowserRouter>
+              {isOpen && <Popup
+                  content={<>
+                      <b>Design your Popup</b>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                          occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  </>}
+                  handleClose={togglePopupFalse}
+              />}
+          </div>
   );
 }
 
