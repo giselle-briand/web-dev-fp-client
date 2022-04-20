@@ -51,9 +51,6 @@ function App() {
                       <Route path="search" element={<ExploreScreen/>}/>
                       <Route path="search/:searchString" element={<ExploreScreen/>}/>
                       <Route path="profile" element={
-                      <Route index element={<ExploreScreen/>}/>
-                      <Route path="home"  element={<HomeScreen/>}/>
-                      <Route path="/profile" element={
                           <SecureRoute>
                               <ProfilePage/>
                           </SecureRoute>
