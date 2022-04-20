@@ -18,7 +18,6 @@ const SearchTumblr = () => {
     // const TUMBLR_URL = 'https://api.tumblr.com/v2/blog/'
     const TUMBLR_URL = 'https://api.tumblr.com/v2/text?api_key=aVWxuentDtiSQRwKjIv7rJtkeWRuslHqOMe5Sqkgubo2cyZ2No/tagged?tag'
     // const TUMBLR_KEY = ''
-
     // const searchPostsByKeyword = async () => {
     //     client.taggedPosts(tagRef.current.value, function (err, data) {
     //         console.log(data);
