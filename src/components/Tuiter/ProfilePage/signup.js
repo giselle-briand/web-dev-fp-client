@@ -1,11 +1,16 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import {createUser} from "../actions/users-actions";
+import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {useProfile} from "../../../contexts/profile-context";
+
+const api = axios.create({withCredentials: true})
 
 const SignUp = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    //const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const test = useProfile()
 
     const [user, setUser] = useState({
             name: "",
@@ -15,10 +20,9 @@ const SignUp = () => {
             email: "",
     });
 
-    const createUserClickHandler = () => {
-        console.log(user);
+    const createUserClickHandler = async () => {
         try {
-            createUser(dispatch, user)
+            await test.signup(user)
             navigate('/profile')
         } catch (e) {
             alert('oops')

@@ -1,10 +1,12 @@
 import React from "react";
 import '../../../css/profile.css'
 import TuitList from "../../Tuiter/TuitList";
+import {useProfile} from "../../../contexts/profile-context";
+import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 const ProfilePage = ({
-                         user = {
+/*                         user = {
                              name: "rosan wang",
                              username: "WangRosan",
                              password: "",
@@ -21,9 +23,25 @@ const ProfilePage = ({
                              likes: "idk",
                              email: "rosanwang@yahoo.com",
                              phoneNumber: String
-                         }
+                         }*/
                      }) => {
     //const who = useSelector((state) => state.who)
+    const {profile, signout} = useProfile()
+    const navigate = useNavigate()
+
+    //TODO implement logout button
+    const logout = async () => {
+        try {
+            await signout()
+        } catch (e) {
+
+        }
+        navigate('/signup')
+    }
+
+
+    const user = profile
+
     return(
         <div className="container-fluid">
             <div className="up-down-padding row">
