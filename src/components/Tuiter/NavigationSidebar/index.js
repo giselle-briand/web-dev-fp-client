@@ -14,7 +14,7 @@ const NavigationSidebar = (
                     <i className="fa-solid fa-house-chimney wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Home</div>
                 </Link>
-                <Link to="/search" className={`list-group-item list-group-item-action ${active === 'explore' ? 'active' : ''}`}>
+                <Link to="/search" className={`list-group-item list-group-item-action ${active === 'search' ? 'active' : ''}`}>
                     <i className="fa-solid fa-hashtag wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Search</div>
                 </Link>
@@ -22,7 +22,7 @@ const NavigationSidebar = (
                     <i className="fa-solid fa-user wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Profile</div>
                 </Link>
-                <Link to="/privacy" className={`list-group-item list-group-item-action ${active === 'more' ? 'active' : ''}`}>
+                <Link to="/privacy" className={`list-group-item list-group-item-action ${active === 'privacy' ? 'active' : ''}`}>
                     <span className="fa-stack wd-span-more-padding wd-float-left pt-1 pe-1">
                         <i className="fa-solid fa-circle fa-stack-1x"/>
                         <i className="fa-solid fa-ellipsis fa-stack-1x fa-inverse"/>

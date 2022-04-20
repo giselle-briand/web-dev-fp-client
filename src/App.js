@@ -17,6 +17,7 @@ import SearchTwitter from "./components/Tuiter/Search/Search";
 import SearchTumblr from "./components/Tuiter/Search/Search";
 import PrivacyPage from "./components/Tuiter/Privacy/PrivacyPage";
 
+
 function App() {
     const [isOpen, setIsOpen] = useState(true);
     let tracker = true;
@@ -50,6 +51,9 @@ function App() {
                       <Route path="search" element={<ExploreScreen/>}/>
                       <Route path="search/:searchString" element={<ExploreScreen/>}/>
                       <Route path="profile" element={
+                      <Route index element={<ExploreScreen/>}/>
+                      <Route path="home"  element={<HomeScreen/>}/>
+                      <Route path="/profile" element={
                           <SecureRoute>
                               <ProfilePage/>
                           </SecureRoute>
