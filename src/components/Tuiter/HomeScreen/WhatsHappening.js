@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {createTuit} from "../actions/tuits-actions";
 
 const WhatsHappening = () => {
     const dispatch = useDispatch();
     const [newTuit, setNewTuit] = useState({tuit: 'New tuit'});
+
     return (
         <div>
             <div className="wd-float-left wd-write-tuit-avatar-width">
@@ -25,11 +26,11 @@ const WhatsHappening = () => {
                     <a href="#"><i className="fa fa-grin wd-icon-spacing"/></a>
                     <a href="#"><i className="fa fa-calendar wd-icon-spacing"/></a>
                 </div>
-                <button className="btn btn-primary wd-tuit-override-button-home col-12"
-                        onClick={() => createTuit(dispatch, newTuit)}>
-                    Tuit
-                </button>
-            </div>
+                    <button className="btn btn-primary wd-tuit-override-button-home col-12"
+                            onClick={() => createTuit(dispatch, newTuit)}>
+                        Tuit
+                    </button>
+                </div>
         </div>
     );
 }

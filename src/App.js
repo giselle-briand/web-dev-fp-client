@@ -15,6 +15,7 @@ import Popup from "./components/Tuiter/Privacy";
 import SecureRoute from "./components/secure-route";
 import SearchTwitter from "./components/Tuiter/Search/Search";
 import SearchTumblr from "./components/Tuiter/Search/Search";
+import PrivacyPage from "./components/Tuiter/Privacy/PrivacyPage";
 
 function App() {
     const [isOpen, setIsOpen] = useState(true);
@@ -30,8 +31,10 @@ function App() {
     }
 
    useEffect(() => {
-       if (tracker) {
+       let popup_status = localStorage.getItem('prviacy_popup');
+       if (popup_status === 'false') {
            setIsOpen(true);
+           localStorage.setItem('privacy_popup', 'true');
        } else {
            setIsOpen(false);
        }
@@ -43,18 +46,19 @@ function App() {
               <BrowserRouter>
               <Routes>
                   <Route path="/" element={<Tuiter/>}>
-                      <Route index element={<ExploreScreen/>}/>
-                      <Route path="home"  element={<HomeScreen/>}/>
-                      <Route path="/profile" element={
+                      <Route index element={<HomeScreen/>}/>
+                      <Route path="search" element={<ExploreScreen/>}/>
+                      <Route path="search/:searchString" element={<ExploreScreen/>}/>
+                      <Route path="profile" element={
                           <SecureRoute>
                               <ProfilePage/>
                           </SecureRoute>
                       }/>
                       <Route path="login" element={<LoginPage/>}/>
                       <Route path="signup" element={<SignUp/>}/>
-                      <Route index element={<HomeScreen/>}/>
-                      <Route path="explore" element={<ExploreScreen/>}/>
-                      <Route path="search/:searchString" element={<ExploreScreen/>}/>
+                      <Route path="privacy" element={<PrivacyPage/>}/>
+                      {/*<Route index element={<ExploreScreen/>}/>*/}
+                      {/*<Route path="home"  element={<HomeScreen/>}/>*/}
                   </Route>
               </Routes>
 

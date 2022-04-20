@@ -139,6 +139,18 @@
     margin-top: 6px;
     margin-bottom: 6px;
 }
+.display {
+    display: block;
+}
+.spacing-right {
+    margin-right: 12px;
+}
+.spacing-left {
+    margin-left: 12px;
+}
+.sp {
+    max-width: 100%;
+}
 .wd-suggested-follows-primary-text {
     font-weight: bold;
 }

@@ -17,9 +17,9 @@ const store = createStore(reducer);
 const Tuiter = () => {
     return(
         <Provider store={store}>
-            <div className="row mt-2">
+            <div className="row mt-2 sp">
                 <div className="col-2 col-md-2 col-lg-1 col-xl-2">
-                    <NavigationSidebar/>
+                    <NavigationSidebar active={<Outlet/>}/>
                 </div>
                 <div className="col-xxl-6 col-xl-6 col-lg-7 col-md-10 col-sm-10 mt-2" style={{"position": "relative"}}>
                     <Outlet/>
