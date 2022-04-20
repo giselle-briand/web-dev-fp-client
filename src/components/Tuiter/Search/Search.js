@@ -1,73 +1,65 @@
 import React, {useEffect, useRef, useState} from 'react';
-// import axios from "axios";
-// import Pre from "../utils/pre";
-import TwitterApi from 'twitter-api-v2';
+import axios from "axios";
+import Pre from "./pre"
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+const tumblr = require('tumblr.js');
 
-const SearchTwitter = () => {
-    const [tweets, setTweets] = useState([])
+const SearchTumblr = () => {
+    const [posts, setPosts] = useState([])
     const {searchString} = useParams()
-    const titleRef = useRef()
+    const tagRef = useRef()
     const navigate = useNavigate()
     const location = useLocation()
-    const client = new TwitterApi({
-        appKey: 'SDERcQWl5NZFUulRDQiYwqwU3',
-        appSecret: 'QKLxrpwjfN2ZaZdZngb8x9TmyX13Of7Y5Cf2jvCwEaUUbxXkVi',
-        accessToken: '1400104361230061568-qDCW73WVU3yfiivXCZ55eCVjNmMT6p',
-        accessSecret: 'yk3w0gHIlwnXHbiSVvH2wG4bfJIA8GXAzoxxzUVw9rEum',
-    });
-    // const client = new TwitterApi('AAAAAAAAAAAAAAAAAAAAACb7bAEAAAAAMAZuDQua10e%2Fg9KaiBHbZhAeXdA%3DLjlrb4ole3eFgE3lMpdQFW2RRFyWsfBFq5HB5my9GJHGMC2d3O');
-    // const TWITTER_URL = 'https://'
-    //const OMDB_URL = 'https://www.omdbapi.com/?apikey=852159f0&s'
-    const searchMoviesByTitle = async () => {
-        const jsTweets = await client.v2.searchAll('JavaScript', { 'media.fields': 'url' });
-        // Consume fetched tweet from first page of jsTweets
-        for (const tweet of jsTweets) {
-            console.log(tweet);
-        }
-        // const response = await axios.get(`${OMDB_URL}=${titleRef.current.value}`)
-        // setMovies(response.data.Search)
-        // navigate(`/omdb/${titleRef.current.value}`)
-    }
+
+    const client = tumblr.createClient({ consumer_key: 'aVWxuentDtiSQRwKjIv7rJtkeWRuslHqOMe5Sqkgubo2cyZ2No' });
+
+    // const OMDB_URL = 'https://www.omdbapi.com/?apikey=852159f0&s'
+    // full Tumblr URL: https://api.tumblr.com/v2/blog/text?api_key={key}/tagged?tag={keyword}
+    // const TUMBLR_URL = 'https://api.tumblr.com/v2/blog/'
+    const TUMBLR_URL = 'https://api.tumblr.com/v2/text?api_key=aVWxuentDtiSQRwKjIv7rJtkeWRuslHqOMe5Sqkgubo2cyZ2No/tagged?tag'
+    // const TUMBLR_KEY = ''
+
+    // const searchPostsByKeyword = async () => {
+    //     client.taggedPosts(tagRef.current.value, function (err, data) {
+    //         console.log(data);
+    //         setPosts(data.responseText)
+    //         navigate(`/search/${tagRef.current.value}`)
+    //     });
+    // }
     // useEffect(() => {
     //     if(searchString) {
-    //         titleRef.current.value = searchString
-    //         searchMoviesByTitle()
+    //         tagRef.current.value = searchString
+    //         searchPostsByKeyword()
     //     }
     // }, [])
     return (
-        <button onClick={searchMoviesByTitle}>
-            Search
-        </button>
-        // <div>
-        //     <h1>Search Omdb</h1>
-        //
-        //     <ul className="list-group">
-        //         <li className="list-group-item">
-        //             <button
-        //                 onClick={searchMoviesByTitle}
-        //                 className="btn btn-primary float-end">
-        //                 Search
-        //             </button>
-        //             <input ref={titleRef}
-        //                    className="form-control w-75"/>
-        //         </li>
-        //         {
-        //             movies.map(movie =>
-        //                 <li className="list-group-item">
-        //                     <Link to={`/omdb/details/${movie.imdbID}`}>
-        //                         <img src={movie.Poster} height={30}
-        //                              className="me-2"/>
-        //                         {movie.Title}
-        //                     </Link>
-        //                 </li>
-        //             )
-        //         }
-        //     </ul>
-        //
-        //     <Pre obj={movies}/>
-        // </div>
+        <div>
+            <h1>Search Tumblr</h1>
+
+            <ul className="list-group">
+                <li className="list-group-item">
+                    <button
+                        // onClick={searchPostsByKeyword}
+                        className="btn btn-primary float-end">
+                        Search
+                    </button>
+                    <input ref={tagRef}
+                           className="form-control w-75"/>
+                </li>
+                {/*{*/}
+                {/*    posts.map(post =>*/}
+                {/*        <li className="list-group-item">*/}
+                {/*            <Link to={`/search/details/${post.id_string}`}>*/}
+                {/*                {post.blog.title}*/}
+                {/*            </Link>*/}
+                {/*        </li>*/}
+                {/*    )*/}
+                {/*}*/}
+            </ul>
+
+            <Pre obj={posts}/>
+        </div>
     );
 };
 
-export default SearchTwitter;
+export default SearchTumblr;
