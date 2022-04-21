@@ -6,8 +6,8 @@ import {createUser} from "../components/Tuiter/actions/users-actions";
 const ProfileContext = React.createContext("");
 
 const api = axios.create({
-    withCredentials: false
-    //withCredentials: true
+    //withCredentials: false
+    withCredentials: true
 })
 
 export const ProfileProvider = ({children}) => {
@@ -15,16 +15,14 @@ export const ProfileProvider = ({children}) => {
 
     const signout = async () => {
         const response = await api
-            .post("http://localhost:4000/api/signout")
-        setProfile(null)
+            .post("http://localhost:4000/api/logout")
+        setProfile("init")
     }
-
-    //TODO rewrite to add server logic!!!
 
     const checkLoggedIn = async () => {
         try {
             const response = await api
-                .post("http://localhost:4000/api/login")
+                .post("http://localhost:4000/api/profile")
             setProfile(response.data)
             return response.data
         } catch (e) {
@@ -34,7 +32,8 @@ export const ProfileProvider = ({children}) => {
 
     const signup = async (user) => {
         try { // TODO: move this to service
-           const response = await api.post("http://localhost:4000/api/users",
+            console.log(user);
+           const response = await api.post("http://localhost:4000/api/signup",
                user)
                //createUser(dispatch, user)
       /*      const response = await api
@@ -48,7 +47,7 @@ export const ProfileProvider = ({children}) => {
     const signin = async (email, password) => {
         try {
             const response = await api
-                .post("http://localhost:4000/api/signin",
+                .post("http://localhost:4000/api/login",
                     {email, password})
             setProfile(response.data)
         } catch (e) {

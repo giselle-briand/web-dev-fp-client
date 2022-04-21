@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {createTuit} from "../actions/tuits-actions";
+import {useProfile} from "../../../contexts/profile-context";
 
 const WhatsHappening = () => {
+    const {profile} = useProfile()
+
     const dispatch = useDispatch();
     const [newTuit, setNewTuit] = useState({tuit: 'New tuit'});
 
     return (
         <div>
             <div className="wd-float-left wd-write-tuit-avatar-width">
-                <img src="../../../media/profileimage.jpg" className="wd-avatar-image wd-write-tuit-avatar"/>
+                <img src={`${profile["avatar-image"]}`} className="wd-avatar-image wd-write-tuit-avatar"/>
             </div>
             <div className="wd-float-right wd-tuit-texarea-width">
                 <textarea className="wd-tuit-textarea-home"

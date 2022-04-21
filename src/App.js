@@ -28,7 +28,6 @@ function App() {
     const togglePopupFalse = () => {
         setIsOpen(false);
         tracker = false;
-        console.log(isOpen);
     }
 
    useEffect(() => {
