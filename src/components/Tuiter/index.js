@@ -9,6 +9,7 @@ import {Provider} from "react-redux";
 import '../../css/universal.css';
 import '../../css/explore.css';
 import WhoToFollowList from "./WhoToFollowList";
+
 const reducer = combineReducers({
     tuits: tuitsReducer, who: whoReducer, users: usersReducer
 });

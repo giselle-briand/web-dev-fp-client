@@ -2,7 +2,7 @@ import React from "react";
 import '../../../css/profile.css'
 import TuitList from "../../Tuiter/TuitList";
 import {useProfile} from "../../../contexts/profile-context";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 const ProfilePage = ({
@@ -25,18 +25,18 @@ const ProfilePage = ({
                              phoneNumber: String
                          }*/
                      }) => {
-    //const who = useSelector((state) => state.who)
+
     const {profile, signout} = useProfile()
     const navigate = useNavigate()
 
-    //TODO implement logout button
     const logout = async () => {
         try {
             await signout()
+            navigate('/login')
         } catch (e) {
-
+            alert("logout failed")
         }
-        navigate('/signup')
+
     }
 
 
@@ -54,7 +54,9 @@ const ProfilePage = ({
                 </div>
             </div>
             <img className="background-pic" src={user.header}/>
-            <img className="pfp" src={user.avatar_image}/>
+            <img className="pfp" src={user["avatar-image"]}/>
+
+            <button type="button" onClick={logout} className="btn btn-primary wd-float-right">Logout</button>
 
             <div className="username-text-align bold">{user.name}</div>
             <div className="username-text-align">@{user.username}</div>
@@ -66,16 +68,13 @@ const ProfilePage = ({
 
             <div className="nav nav-tabs nav-fill" >
                 <div className="nav-item">
-                    <a className="nav-link active" href="for-you.html">Tweets</a>
+                    <Link className="nav-link active" to="/tweets">Tweets</Link>
                 </div>
                 <div className="nav-item col-3">
-                    <a className="nav-link" href="trending.html">Tweets & replies</a>
+                    <Link className="nav-link" to="/comments">Comments</Link>
                 </div>
                 <div className="nav-item col-3">
-                    <a className="nav-link" href="news.html">Media</a>
-                </div>
-                <div className="nav-item col-3">
-                    <a className="nav-link" href="sports.html">Likes</a>
+                    <Link className="nav-link" to="/likes">Likes</Link>
                 </div>
             </div>
 

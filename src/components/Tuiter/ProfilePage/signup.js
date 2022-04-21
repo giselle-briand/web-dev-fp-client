@@ -12,15 +12,18 @@ const SignUp = () => {
     const navigate = useNavigate()
     const test = useProfile()
 
+    //TODO possibly change to useRef
     const [user, setUser] = useState({
             name: "",
             username: "",
             password: "",
             bio: "",
             email: "",
+            phone_num:""
     });
 
     const createUserClickHandler = async () => {
+        //TODO make sure that you can't create user without required fields
         try {
             await test.signup(user)
             navigate('/profile')
@@ -42,7 +45,7 @@ const SignUp = () => {
                                setUser({
                                    ...user,
                                    name: e.target.value
-                               })}/>
+                               })} required/>
                 </div>
             </div>
             <div className="mb-3 row">
@@ -55,7 +58,7 @@ const SignUp = () => {
                                setUser({
                                    ...user,
                                    username: e.target.value
-                               })}/>
+                               })} required/>
                 </div>
             </div>
             <div className="mb-3 row">
@@ -69,7 +72,7 @@ const SignUp = () => {
                                setUser({
                                    ...user,
                                    password: e.target.value
-                               })}/>
+                               })} required/>
                 </div>
             </div>
 
@@ -83,7 +86,21 @@ const SignUp = () => {
                                setUser({
                                    ...user,
                                    email: e.target.value
-                               })}/>
+                               })} required/>
+                </div>
+            </div>
+
+            <div className="mb-3 row">
+                <label htmlFor="phonenum" className="col-sm-2 col-form-label">
+                    Phone Number</label>
+                <div className="col-sm-10">
+                    <input type="text" className="form-control"
+                           id="phonenum" placeholder="(xxx)xxx-xxxx"
+                           onChange={(e) =>
+                               setUser({
+                                   ...user,
+                                   phone_num: e.target.value
+                               })} required/>
                 </div>
             </div>
 
