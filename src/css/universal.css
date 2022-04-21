@@ -71,5 +71,9 @@
 }
 
 .wd-tuit-image {
-    border-radius: 1rem;
+    border-radius: 1.5rem;
+    border: 0.5px solid rgb(77, 77, 77);
+    max-height: 500px;
+    max-width: 100%;
+    object-fit: cover;
 }

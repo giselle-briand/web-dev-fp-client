@@ -17,7 +17,7 @@ import SecureRoute from "./components/secure-route";
 import SearchTwitter from "./components/Tuiter/Search/Search";
 import SearchTumblr from "./components/Tuiter/Search/Search";
 import PrivacyPage from "./components/Tuiter/Privacy/PrivacyPage";
-import TuitScreen from './components/Tuiter/TuitScreen';
+import Details from './components/Tuiter/Details';
 
 function App() {
     const [isOpen, setIsOpen] = useState(true);
@@ -62,7 +62,7 @@ function App() {
                       {/*<Route index element={<ExploreScreen/>}/>*/}
                       {/*<Route path="home"  element={<HomeScreen/>}/>*/}
                       <Route path="explore" element={<ExploreScreen/>}/>
-                      <Route path="tuit" element={<TuitScreen/>}/>
+                      <Route path="details" element={<Details/>}/>
                   </Route>
               </Routes>
 
