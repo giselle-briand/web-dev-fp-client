@@ -107,7 +107,6 @@ const Details = ({
                         <hr/>
                         <div className={`${tuit.comments > 0 ? "" : "wd-no-display"} `}>
                             <Tuit />
-
                         </div>
                         <div>
                             <h5 className="ps-3 fw-bold mb-4">More Tuits</h5>
