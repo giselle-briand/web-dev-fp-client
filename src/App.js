@@ -7,15 +7,13 @@ import Tuiter from "./components/Tuiter";
 import React, {useState, useEffect} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {ProfileProvider} from "./contexts/profile-context"
-import ExploreScreen from "./components/Tuiter/ExploreScreen/ExploreScreen";
+import SearchScreen from "./components/Tuiter/Search/SearchScreen";
 import HomeScreen from "./components/Tuiter/HomeScreen";
 import ProfilePage from "./components/Tuiter/ProfilePage";
 import LoginPage from "./components/Tuiter/ProfilePage/login";
 import SignUp from "./components/Tuiter/ProfilePage/signup";
 import Popup from "./components/Tuiter/Privacy";
 import SecureRoute from "./components/secure-route";
-import SearchTwitter from "./components/Tuiter/Search/Search";
-import SearchTumblr from "./components/Tuiter/Search/Search";
 import PrivacyPage from "./components/Tuiter/Privacy/PrivacyPage";
 import Details from './components/Tuiter/Details';
 
@@ -48,8 +46,8 @@ function App() {
               <Routes>
                   <Route path="/" element={<Tuiter/>}>
                       <Route index element={<HomeScreen/>}/>
-                      <Route path="search" element={<ExploreScreen/>}/>
-                      <Route path="search/:searchString" element={<ExploreScreen/>}/>
+                      <Route path="search" element={<SearchScreen/>}/>
+                      <Route path="search/:searchString" element={<SearchScreen/>}/>
                       <Route path="profile" element={
                           <SecureRoute>
                               <ProfilePage/>
@@ -58,7 +56,7 @@ function App() {
                       <Route path="login" element={<LoginPage/>}/>
                       <Route path="signup" element={<SignUp/>}/>
                       <Route path="privacy" element={<PrivacyPage/>}/>
-                      {/*<Route index element={<ExploreScreen/>}/>*/}
+                      {/*<Route index element={<SearchScreen/>}/>*/}
                       {/*<Route path="home"  element={<HomeScreen/>}/>*/}
                       <Route path="explore" element={<ExploreScreen/>}/>
                       <Route path="details" element={<Details/>}/>
