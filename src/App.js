@@ -58,8 +58,7 @@ function App() {
                       <Route path="privacy" element={<PrivacyPage/>}/>
                       {/*<Route index element={<SearchScreen/>}/>*/}
                       {/*<Route path="home"  element={<HomeScreen/>}/>*/}
-                      <Route path="explore" element={<ExploreScreen/>}/>
-                      <Route path="details" element={<Details/>}/>
+                      <Route path="search/details/:id_string" element={<Details/>}/>
                   </Route>
               </Routes>
 

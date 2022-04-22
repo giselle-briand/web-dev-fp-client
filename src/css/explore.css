@@ -24,6 +24,9 @@
     border-radius: 40px;
     margin-top: 10px;
 }
+.wd-search-div {
+    padding-bottom: 20px;
+}
 .wd-search-bar {
     background-color: white;
     /*border-style: solid;*/
