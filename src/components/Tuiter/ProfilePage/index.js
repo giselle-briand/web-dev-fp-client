@@ -1,8 +1,8 @@
 import React from "react";
 import '../../../css/profile.css'
-import TuitList from "../../Tuiter/TuitList";
 import {useProfile} from "../../../contexts/profile-context";
-import {Link, useNavigate} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
+import ProfileNavigation from "./sub-pages"
 import {useSelector} from "react-redux";
 
 const ProfilePage = ({
@@ -66,19 +66,8 @@ const ProfilePage = ({
                 <span> <span className="bold">{user.followerCount}</span> Follower</span>
             </div>
 
-            <div className="nav nav-tabs nav-fill" >
-                <div className="nav-item">
-                    <Link className="nav-link active" to="/tweets">Tweets</Link>
-                </div>
-                <div className="nav-item col-3">
-                    <Link className="nav-link" to="/comments">Comments</Link>
-                </div>
-                <div className="nav-item col-3">
-                    <Link className="nav-link" to="/likes">Likes</Link>
-                </div>
-            </div>
-
-            <TuitList/>
+            <ProfileNavigation active={<Outlet/>}/>
+            <Outlet/>
         </div>
     );
 }
