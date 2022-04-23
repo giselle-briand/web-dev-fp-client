@@ -27,7 +27,6 @@ const Tuit = ({
         "avatar-image": "../media/emptypp.webp"
     }
 }) => {
-    console.log(tuit)
     return (
         <div className="row ps-3 pe-3">
 

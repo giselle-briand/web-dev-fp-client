@@ -31,46 +31,48 @@ const ProfileNavigation = (
     const highlight = (id) => {
         const selectedDiv = document.getElementById(id);
         const postsDiv = document.getElementById("posts");
-        const commentsDiv = document.getElementById("comments");
+        const bookmarksDiv = document.getElementById("bookmarks");
         const likesDiv = document.getElementById("likes");
-        if (id === "comments") {
+        if (id === "bookmarks") {
             selectedDiv.style.backgroundColor = "#2a9fd6";
             postsDiv.style.backgroundColor = "transparent";
             likesDiv.style.backgroundColor = "transparent";
         }
         else if (id === "posts") {
             selectedDiv.style.backgroundColor = "#2a9fd6";
-            commentsDiv.style.backgroundColor = "transparent";
+            bookmarksDiv.style.backgroundColor = "transparent";
             likesDiv.style.backgroundColor = "transparent";
         }
         else {
             selectedDiv.style.backgroundColor = "#2a9fd6";
             postsDiv.style.backgroundColor = "transparent";
-            commentsDiv.style.backgroundColor = "transparent";
+            bookmarksDiv.style.backgroundColor = "transparent";
         }
     }
-    let comments_path;
+    let bookmarks_path;
     let tuits_path;
     let likes_path;
     if (previous_path === "/profile") {
-        comments_path = "profile/comments";
+        bookmarks_path = "profile/bookmarks";
         tuits_path = "profile/";
         likes_path = "profile/likes";
     }
     else {
-        comments_path = previous_path.concat("/comments");
+        bookmarks_path = previous_path.concat("/bookmarks");
         tuits_path = previous_path;
         likes_path = previous_path.concat("/likes");;
     }
 
+    //
+
     return(
         <>
             <div className="nav nav-tabs nav-fill" >
-                <div  className={`nav-item col-3`}>
-                    <Link id="posts" className={`nav-link ${active === "/profile" ? "active" : ""}`} to={"/profile"} onClick={() => {highlight("posts")}}>Tuits</Link>
-                </div>
                 <div className={`nav-item col-3 `}>
-                    <Link id="comments" className="nav-link" to={"/profile/comments"} onClick={() => {highlight("comments")}}>Comments</Link>
+                    <Link id="posts" className={`nav-link ${active === "/profile" ? "active" : ""}`} to={"/profile"} onClick={() => {highlight("posts")}}>Posts</Link>
+                </div>
+                <div  className={`nav-item col-3`}>
+                    <Link id="bookmarks" className="nav-link" to={"/profile/bookmarks"} onClick={() => {highlight("bookmarks")}}>Bookmarks</Link>
                 </div>
                 <div className={`nav-item col-3`}>
                     <Link id="likes" className="nav-link" to={"/profile/likes"} onClick={() => {highlight("likes")}}>Likes</Link>
