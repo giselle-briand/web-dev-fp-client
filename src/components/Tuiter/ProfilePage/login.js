@@ -9,17 +9,18 @@ const LoginPage = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const navigate = useNavigate()
-    const {signin} = useProfile()
+    const {profile, signin} = useProfile()
     const handleSigninBtn = async () => {
         try {
             await signin(
                 emailRef.current.value,
                 passwordRef.current.value
             )
-            navigate('/profile')
         } catch (e) {
             alert('oops')
         }
+        const user = profile
+        navigate('/');
     }
 
     return(

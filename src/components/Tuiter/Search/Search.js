@@ -15,7 +15,7 @@ const Search = () => {
 
     const searchPostsByKeyword = async () => {
         client.taggedPosts(tagRef.current.value, function (err, data) {
-            console.log(data);
+            // console.log(data);
             setPosts([]);
             const filteredData = data.filter(postToCheck => postToCheck.summary !== "");
             filteredData.map(updatedPost => {
@@ -62,7 +62,7 @@ const Search = () => {
         });
     }
     const goToDetails = async (post) => {
-        navigate(`/search/details/${post.id_string}`);
+        navigate(`/search/details/${post.id_string}`, {state: [post, location.pathname]});
     }
     useEffect(() => {
         if(searchString) {

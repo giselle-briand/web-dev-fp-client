@@ -37,7 +37,7 @@ const Tuit = ({
                 <div className="d-inline-flex justify-content-between w-100">
                     <h6 className="fw-bold m-0">{tuit.name}
                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
-                    <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "-" + tuit.date.day + "-" + tuit.date.year}</span></h6>
+                    <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "-" + tuit.date.day}</span></h6>
                     <h6 className="text-secondary m-0"><i className="fa-solid fa-ellipsis"/></h6>
                 </div>
                 <div>

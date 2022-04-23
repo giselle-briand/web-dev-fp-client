@@ -16,6 +16,9 @@ import Popup from "./components/Tuiter/Privacy";
 import SecureRoute from "./components/secure-route";
 import PrivacyPage from "./components/Tuiter/Privacy/PrivacyPage";
 import Details from './components/Tuiter/Details';
+import Posts from "./components/Tuiter/ProfilePage/sub-pages/posts";
+import Comments from "./components/Tuiter/ProfilePage/sub-pages/comments";
+import Likes from "./components/Tuiter/ProfilePage/sub-pages/likes";
 
 function App() {
     const [isOpen, setIsOpen] = useState(true);
@@ -48,17 +51,19 @@ function App() {
                       <Route index element={<HomeScreen/>}/>
                       <Route path="search" element={<SearchScreen/>}/>
                       <Route path="search/:searchString" element={<SearchScreen/>}/>
-                      <Route path="profile" element={
+                      <Route path="profile/:username" element={
                           <SecureRoute>
                               <ProfilePage/>
                           </SecureRoute>
-                      }/>
+                      }>
+                          <Route index element={<Posts/>}/>
+                          <Route path="comments" element={<Comments/>}/>
+                          <Route path="likes" element={<Likes/>}/>
+                      </Route>
                       <Route path="login" element={<LoginPage/>}/>
                       <Route path="signup" element={<SignUp/>}/>
                       <Route path="privacy" element={<PrivacyPage/>}/>
-                      {/*<Route index element={<SearchScreen/>}/>*/}
-                      {/*<Route path="home"  element={<HomeScreen/>}/>*/}
-                      <Route path="search/details/:id_string" element={<Details/>}/>
+                      <Route path="search/details/:username" element={<Details/>}/>
                   </Route>
               </Routes>
 

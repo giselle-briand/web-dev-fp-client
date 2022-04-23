@@ -3,7 +3,7 @@ import React from "react";
 import Tuit from "../Tuit";
 import TuitStats from "../TuitStats/TuitStats";
 import TuitListItem from "../TuitList/TuitListItem";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const api = axios.create({
     withCredentials: true
@@ -36,14 +36,21 @@ const Details = ({
     },
     previous_path = ""
 }) => {
+    console.log(tuit);
+    console.log(previous_path);
     const navigate = useNavigate()
+    const {state} = useLocation()
+    tuit = state[0] || {};
+    previous_path = state[1]
     const goBack = () => {
         navigate(previous_path);
-        //go back logic here
     }
     return (
         <div >
             <div className="row">
+                <div className="col-1 d-flex align-items-center">
+                    <i className="fa-solid fa-arrow-left ps-3 text-white" onClick={goBack}/>
+                </div>
                 <div className="col-11 m-0 ps-4">
                     <h5 className="m-0 fw-bold">Tuit</h5>
                 </div> 
@@ -95,7 +102,7 @@ const Details = ({
                         <hr/>
                         <div className="d-inline-flex justify-content-between" >
                             <div>
-                                <h6 className="fw-bold m-0">{tuit.retuits} <span className="text-secondary fw-normal">Retweets</span></h6>
+                                <h6 className="fw-bold m-0">{tuit.retuits} <span className="text-secondary fw-normal">Retuits</span></h6>
                             </div>
                             <div>
                                 <h6 className="ms-4 fw-bold m-0">{tuit.likes} <span className="text-secondary fw-normal">Likes</span></h6>
