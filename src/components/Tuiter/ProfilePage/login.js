@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     return(
         <div className="container-fluid">
-            <h5>Look's like you're not logged in! Log in to unlock more actions and features.</h5>
+            <h5>Look's like you're not logged in! Log in to access your profile and interact with other users.</h5>
             <br/>
             <div className="mb-3">
                 <label htmlFor="exampleFormControlInput1" className="form-label">
