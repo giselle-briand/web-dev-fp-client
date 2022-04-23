@@ -1,6 +1,5 @@
 import React from "react";
 import '../../../css/profile.css'
-import TuitList from "../../Tuiter/TuitList";
 import {useProfile} from "../../../contexts/profile-context";
 import {useSelector} from "react-redux";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
@@ -56,7 +55,7 @@ const ProfilePage = ({
                 {/*</div>*/}
                 <div className="ps-5 inline col-11">
                     <div className="bold white-text">{user.name}</div>
-                    <div className="white-text">{user.tuits.length} tuits</div>
+                    <div className="white-text">{user.tuitsCount} tuits</div>
                 </div>
             </div>
             <img className="background-pic" src={user.header}/>
@@ -71,7 +70,6 @@ const ProfilePage = ({
                 <span> <span className="bold">{user.followingCount}</span> Following</span>
                 <span> <span className="bold">{user.followerCount}</span> Follower</span>
             </div>
-
             <ProfileNavigation user={user} previous_path={location.pathname}/>
             <Outlet/>
         </div>
