@@ -1,4 +1,7 @@
 import React from "react";
+import {createTuit, updateTuit} from "../actions/tuits-actions";
+import {useDispatch} from "react-redux";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const Tuit = ({
 
@@ -27,6 +30,12 @@ const Tuit = ({
         "avatar-image": "../media/emptypp.webp"
     }
 }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const goToDetails = async (post) => {
+        navigate(`/search/details/${post["api-post-id"]}`, {state: [post, location.pathname]});
+    }
     return (
         <div className="row ps-3 pe-3">
 
@@ -40,7 +49,7 @@ const Tuit = ({
                     <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "-" + tuit.date.day}</span></h6>
                     <h6 className="text-secondary m-0"><i className="fa-solid fa-ellipsis"/></h6>
                 </div>
-                <div>
+                <div onClick={() => goToDetails(tuit)}>
                     <p className="text-white">
                         {tuit.tuit}
                     </p>
@@ -63,7 +72,35 @@ const Tuit = ({
                         <span className="ps-3">{tuit.retuits}</span>
                     </h6>
                     <h6 className="text-secondary m-0">
-                        <i className="fa-regular fa-heart"/>
+                        <i id="heart" className="fa-regular fa-heart"
+                           onClick={() => {
+                               console.log("clicked me <3")
+                               if (tuit.liked === true) {
+                                   // try {
+                                   //     const id = tuit._id;
+                                   // }
+                                   // catch (Error) {
+                                   //     createTuit(dispatch, tuit)
+                                   // }
+                                   updateTuit(dispatch, {
+                                       ...tuit,
+                                       likes: tuit.likes - 1,
+                                       liked: false
+                                   })
+                                   document.getElementById("heart").style.color = "red";
+                               } else {
+                                   if (tuit._id === undefined) {
+                                       console.log("hi")
+                                       createTuit(dispatch, tuit)
+                                   }
+                                   updateTuit(dispatch, {
+                                       ...tuit,
+                                       likes: tuit.likes + 1,
+                                       liked: true
+                                   })
+                                   document.getElementById("heart").style.color = "transparent";
+                               }
+                           }}/>
                         <span className="ps-3">{tuit.likes}</span>
                     </h6>
                     <h6 className="text-secondary m-0">

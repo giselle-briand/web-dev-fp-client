@@ -12,7 +12,7 @@ const Search = () => {
     const location = useLocation()
 
     const client = tumblr.createClient({ consumer_key: 'aVWxuentDtiSQRwKjIv7rJtkeWRuslHqOMe5Sqkgubo2cyZ2No' });
-
+    let post_id;
     const searchPostsByKeyword = async () => {
         client.taggedPosts(tagRef.current.value, function (err, data) {
             // console.log(data);
@@ -21,6 +21,7 @@ const Search = () => {
             filteredData.map(updatedPost => {
                 const duplicatePost = updatedPost;
                 updatedPost = {}
+                updatedPost["api-post-id"] = duplicatePost.id_string;
                 updatedPost.tuit = duplicatePost.summary;
                 updatedPost.likes = duplicatePost.note_count;
                 updatedPost.dislikes = 0;
@@ -61,9 +62,6 @@ const Search = () => {
             }
         });
     }
-    const goToDetails = async (post) => {
-        navigate(`/search/details/${post.id_string}`, {state: [post, location.pathname]});
-    }
     useEffect(() => {
         if(searchString) {
             tagRef.current.value = searchString
@@ -94,7 +92,7 @@ const Search = () => {
                 {
                     posts.map(post =>
                         // <li className="list-group-item" >
-                    <div onClick={() => goToDetails(post)}>
+                    <div>
                             <Tuit tuit={post}/>
                     </div>)}
                         {/*<Link to={`/search/details/${post.id_string}`}>*/}
