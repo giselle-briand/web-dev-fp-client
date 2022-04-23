@@ -30,7 +30,7 @@ const WhatsHappening = () => {
                     <a href="#"><i className="fa fa-calendar wd-icon-spacing"/></a>
                 </div>
                     <button className="btn btn-primary wd-tuit-override-button-home col-12"
-                            onClick={() => createTuit(dispatch, newTuit)}>
+                            onClick={() => createTuit(dispatch, profile._id, newTuit)}>
                         Tuit
                     </button>
                 </div>

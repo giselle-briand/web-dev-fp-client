@@ -4,6 +4,11 @@ import axios from 'axios';
 const API_BASE = process.env.REACT_APP_API_BASE;
 const USERS_API = `${API_BASE}/users`;
 
+const api = axios.create({
+    withCredentials: true
+});
+
+
 export const createUser = async (user) => {
     const response = await axios.post(USERS_API, user)
     return response.data;
@@ -17,4 +22,9 @@ export const deleteUsers = async (user) => {
 export const updateUser = async (user) => {
     const response = await axios.put(`${USERS_API}/${user._id}`, user);
     return response.data;
+}
+
+export const findCommentsByUserId = async (userid) => {
+    const response = await api.get(`${USERS_API}/${userid}/tuits`)
+    return response.data
 }
