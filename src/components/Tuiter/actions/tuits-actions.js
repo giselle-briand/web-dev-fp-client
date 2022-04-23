@@ -5,8 +5,8 @@ export const FIND_ALL_TUITS = 'FIND_ALL_TUITS';
 export const UPDATE_TUIT = 'UPDATE_TUIT';
 export const DELETE_TUIT = 'DELETE_TUIT';
 
-export const createTuit = async (dispatch, tuit) => {
-    const newTuit = await service.createTuit(tuit);
+export const createTuit = async (dispatch, userId, tuit) => {
+    const newTuit = await service.createTuit(userId, tuit);
     dispatch({
         type: CREATE_TUIT,
         newTuit

@@ -4,8 +4,8 @@ import axios from 'axios';
 const API_BASE = process.env.REACT_APP_API_BASE;
 const TUITS_API = `${API_BASE}/tuits`;
 
-export const createTuit = async (tuit) => {
-    const response = await axios.post(TUITS_API, tuit)
+export const createTuit = async (userId ,tuit) => {
+    const response = await axios.post(`${TUITS_API}/users/${userId}`, tuit)
     return response.data;
 }
 export const findAllTuits = async () => {
