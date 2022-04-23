@@ -9,7 +9,7 @@ const NavigationSidebar = (
 ) => {
     const location = useLocation()
     const profile = useProfile()
-    const user = profile
+    const loggedInUser = profile
     active = location.pathname;
     return(
         <>
@@ -23,7 +23,7 @@ const NavigationSidebar = (
                     <i className="fa-solid fa-hashtag wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Search</div>
                 </Link>
-                <Link to={`/profile/${user.profile.username}`} state={{giveUser: user}} className={`list-group-item list-group-item-action ${active === '/profile' ? 'active' : ''}`}>
+                <Link to="/profile" className={`list-group-item list-group-item-action ${active === '/profile' ? 'active' : ''}`}>
                     <i className="fa-solid fa-user wd-float-left pt-1 pe-1"/>
                     <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Profile</div>
                 </Link>

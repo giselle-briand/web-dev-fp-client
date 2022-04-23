@@ -51,11 +51,12 @@ function App() {
                       <Route index element={<HomeScreen/>}/>
                       <Route path="search" element={<SearchScreen/>}/>
                       <Route path="search/:searchString" element={<SearchScreen/>}/>
-                      <Route path="profile/:username" element={
+                      <Route path="profile" element={
                           <SecureRoute>
                               <ProfilePage/>
                           </SecureRoute>
                       }>
+                          <Route path="profile/:username" element={<ProfilePage/>}/>
                           <Route index element={<Posts/>}/>
                           <Route path="comments" element={<Comments/>}/>
                           <Route path="likes" element={<Likes/>}/>
@@ -67,17 +68,17 @@ function App() {
                   </Route>
               </Routes>
 
-                  {isOpen && <Popup
-                      content={<>
-                          <b>Design your Popup</b>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                              occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                      </>}
-                      handleClose={togglePopupFalse}
-                  />}
+                  {/*{isOpen && <Popup*/}
+                  {/*    content={<>*/}
+                  {/*        <b>Design your Popup</b>*/}
+                  {/*        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor*/}
+                  {/*            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud*/}
+                  {/*            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in*/}
+                  {/*            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint*/}
+                  {/*            occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>*/}
+                  {/*    </>}*/}
+                  {/*    handleClose={togglePopupFalse}*/}
+                  {/*/>}*/}
               </BrowserRouter>
       </ProfileProvider>
   );

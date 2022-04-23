@@ -41,8 +41,13 @@ const ProfilePage = ({
 
     }
     const location = useLocation()
-    const newuser = location.state.giveUser;
-    console.log(newuser);
+    console.log(location)
+    const s = location.state
+    // const location = useLocation()
+    // const {loggedIn} = location.state;
+    // const {giveUser} = location.state.giveUser;
+    user = profile;
+    console.log(s);
     return(
         <div className="container-fluid">
             <div className="up-down-padding row">
@@ -67,7 +72,7 @@ const ProfilePage = ({
                 <span> <span className="bold">{user.followerCount}</span> Follower</span>
             </div>
 
-            <ProfileNavigation user={user}/>
+            <ProfileNavigation user={user} previous_path={location.pathname}/>
             <Outlet/>
         </div>
     );

@@ -22,7 +22,8 @@ const ProfileNavigation = (
             likes: [],
             email: "rosanwang@yahoo.com",
             phoneNumber: String
-        }
+        },
+        previous_path = ""
     }
 ) => {
     const location = useLocation()
@@ -48,17 +49,31 @@ const ProfileNavigation = (
             commentsDiv.style.backgroundColor = "transparent";
         }
     }
+    let comments_path;
+    let tuits_path;
+    let likes_path;
+    if (previous_path === "/profile") {
+        comments_path = "profile/comments";
+        tuits_path = "profile/";
+        likes_path = "profile/likes";
+    }
+    else {
+        comments_path = previous_path.concat("/comments");
+        tuits_path = previous_path;
+        likes_path = previous_path.concat("/likes");;
+    }
+
     return(
         <>
             <div className="nav nav-tabs nav-fill" >
                 <div  className={`nav-item col-3`}>
-                    <Link id="posts" className={`nav-link ${active === "/profile" ? "active" : ""}`} to={`profile/${user.username}`} onClick={() => {highlight("posts")}}>Tuits</Link>
+                    <Link id="posts" className={`nav-link ${active === "/profile" ? "active" : ""}`} to={"/profile"} onClick={() => {highlight("posts")}}>Tuits</Link>
                 </div>
                 <div className={`nav-item col-3 `}>
-                    <Link id="comments" className="nav-link" to={`profile/${user.username}/comments`} onClick={() => {highlight("comments")}}>Comments</Link>
+                    <Link id="comments" className="nav-link" to={"/profile/comments"} onClick={() => {highlight("comments")}}>Comments</Link>
                 </div>
                 <div className={`nav-item col-3`}>
-                    <Link id="likes" className="nav-link" to={`profile/${user.username}/likes`} onClick={() => {highlight("likes")}}>Likes</Link>
+                    <Link id="likes" className="nav-link" to={"/profile/likes"} onClick={() => {highlight("likes")}}>Likes</Link>
                 </div>
             </div>
         </>
