@@ -4569,7 +4569,7 @@ comments:
 comments-dollar:
   changes:
     - 5.3.0
-  label: Comments Dollar
+  label: Bookmarks Dollar
   search:
     terms:
       - bubble

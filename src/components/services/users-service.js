@@ -28,3 +28,8 @@ export const findCommentsByUserId = async (userid) => {
     const response = await api.get(`${USERS_API}/${userid}/tuits`)
     return response.data
 }
+
+export const findLikedTuitsByUserId = async (userid) => {
+    const response = await api.get(`${USERS_API}/${userid}/likes/tuits`)
+    return response.data
+}
