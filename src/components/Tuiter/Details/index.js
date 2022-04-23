@@ -2,6 +2,8 @@ import axios from "axios";
 import React from "react";
 import Tuit from "../Tuit";
 import TuitStats from "../TuitStats/TuitStats";
+import TuitListItem from "../TuitList/TuitListItem";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const api = axios.create({
     withCredentials: true
@@ -28,15 +30,27 @@ const Details = ({
         },
         title: "",
         topic: "",
+        image: "",
+        video: "",
         "avatar-image": "../media/emptypp.webp"
-    }
+    },
+    previous_path = ""
 }) => {
+    console.log(tuit);
+    console.log(previous_path);
+    const navigate = useNavigate()
+    const {state} = useLocation()
+    tuit = state[0] || {};
+    previous_path = state[1]
+    const goBack = () => {
+        navigate(previous_path);
+    }
     return (
         <div >
             <div className="row">
                 <div className="col-1 d-flex align-items-center">
-                    <i className="fa-solid fa-arrow-left ps-3 text-white"/>
-                </div> 
+                    <i className="fa-solid fa-arrow-left ps-3 text-white" onClick={goBack}/>
+                </div>
                 <div className="col-11 m-0 ps-4">
                     <h5 className="m-0 fw-bold">Tuit</h5>
                 </div> 
@@ -59,7 +73,7 @@ const Details = ({
                                 </div>
                             </div>
                             <div>
-                                <h6 className="text-secondary m-0"><i class="fa-solid fa-ellipsis"></i></h6>
+                                <h6 className="text-secondary m-0"><i className="fa-solid fa-ellipsis"/></h6>
                             </div>
                         </div>
                        
@@ -74,7 +88,7 @@ const Details = ({
 
                     {/* Tuit Media */}
                     <div className=" mt-3">
-                    <img src={`${tuit.hasOwnProperty("image") ? tuit.image : ""}`}
+                        <img src={`${tuit.hasOwnProperty("image") ? tuit.image : ""}`}
                             className={`${tuit.hasOwnProperty("image") ? "w-100 wd-tuit-image" : "wd-no-display"}`}/>
                         <iframe width="500" height="300" src={`${tuit.hasOwnProperty("video") ? tuit.video : ""}`}
                         className={`${tuit.hasOwnProperty("video") ? "w-100 wd-tuit-image" : "wd-no-display"}`}
@@ -84,11 +98,11 @@ const Details = ({
 
                     {/* Tuit Details */}
                     <div className=" mt-3">
-                        <h6 className="text-secondary"><span>{tuit.date.time} · </span><span>{tuit.date.month + " " + tuit.date.day + ", " + tuit.date.year} · </span><span>Tuiter Web App</span></h6>
+                        <h6 className="text-secondary"><span>{tuit.date.time} · </span><span>{tuit.date.month + "-" + tuit.date.day + "-" + tuit.date.year} · </span><span>Tuiter Web App</span></h6>
                         <hr/>
                         <div className="d-inline-flex justify-content-between" >
                             <div>
-                                <h6 className="fw-bold m-0">{tuit.retuits} <span className="text-secondary fw-normal">Retweets</span></h6>
+                                <h6 className="fw-bold m-0">{tuit.retuits} <span className="text-secondary fw-normal">Retuits</span></h6>
                             </div>
                             <div>
                                 <h6 className="ms-4 fw-bold m-0">{tuit.likes} <span className="text-secondary fw-normal">Likes</span></h6>
@@ -99,15 +113,18 @@ const Details = ({
                         </div>
                         <hr/>
                         <div className="d-inline-flex justify-content-between w-100 ps-5 pe-5">
-                            <h6 className="text-secondary m-0"><i class="fa-regular fa-comment fa-lg"></i></h6>
-                            <h6 className="text-secondary m-0"><i class="fa-solid fa-retweet fa-lg"></i></h6>
-                            <h6 className="text-secondary m-0"><i class="fa-regular fa-heart fa-lg"></i></h6>
-                            <h6 className="text-secondary m-0"><i class="fa-solid fa-arrow-up-from-bracket fa-lg"></i></h6>
+                            <h6 className="text-secondary m-0"><i className="fa-regular fa-comment fa-lg"/></h6>
+                            <h6 className="text-secondary m-0"><i className="fa-solid fa-retweet fa-lg"/></h6>
+                            <h6 className="text-secondary m-0"><i className="fa-regular fa-heart fa-lg"/></h6>
+                            <h6 className="text-secondary m-0"><i className="fa-solid fa-arrow-up-from-bracket fa-lg"/></h6>
                         </div>
                         <hr/>
-                        <div className={`${tuit.comments > 0 ? "" : "wd-no-display"} `}>
-                            <Tuit />
-
+                        <div className={`${tuit.comments.length > 0 ? "" : "wd-no-display"} `}>
+                            {
+                                tuit.comments.map && tuit.comments.map(comment =>
+                                    <Tuit tuit={comment}/>
+                                )
+                            }
                         </div>
                         <div>
                             <h5 className="ps-3 fw-bold mb-4">More Tuits</h5>

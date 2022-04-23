@@ -9,22 +9,23 @@ const LoginPage = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const navigate = useNavigate()
-    const {signin} = useProfile()
+    const {profile, signin} = useProfile()
     const handleSigninBtn = async () => {
         try {
             await signin(
                 emailRef.current.value,
                 passwordRef.current.value
             )
-            navigate('/profile')
         } catch (e) {
             alert('oops')
         }
+        const user = profile
+        navigate('/');
     }
 
     return(
         <div className="container-fluid">
-            <h5>Look's like you're not logged in! Log in to unlock more actions and features.</h5>
+            <h5>Look's like you're not logged in! Log in to access your profile and interact with other users.</h5>
             <br/>
             <div className="mb-3">
                 <label htmlFor="exampleFormControlInput1" className="form-label">

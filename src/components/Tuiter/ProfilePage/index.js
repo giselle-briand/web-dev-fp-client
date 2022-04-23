@@ -1,12 +1,12 @@
 import React from "react";
 import '../../../css/profile.css'
 import {useProfile} from "../../../contexts/profile-context";
-import {Outlet, useNavigate} from "react-router-dom";
-import ProfileNavigation from "./sub-pages"
 import {useSelector} from "react-redux";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import ProfileNavigation from "./sub-pages"
 
 const ProfilePage = ({
-/*                         user = {
+                         user = {
                              name: "rosan wang",
                              username: "WangRosan",
                              password: "",
@@ -15,15 +15,16 @@ const ProfilePage = ({
                              bio: "Hi! Welcome to my Bio!",
                              followerCount: 1,
                              followingCount: 1,
-                             followers: "idk",
-                             following: "idk",
+                             followers: [],
+                             following: [],
                              loggedIn: Boolean,
-                             tuits: "idk",
+                             tuits: [],
+                             comments: [],
                              tuitsCount: 0,
-                             likes: "idk",
+                             likes: [],
                              email: "rosanwang@yahoo.com",
                              phoneNumber: String
-                         }*/
+                         }
                      }) => {
 
     const {profile, signout} = useProfile()
@@ -38,19 +39,23 @@ const ProfilePage = ({
         }
 
     }
-
-
-    const user = profile
-
+    const location = useLocation()
+    console.log(location)
+    const s = location.state
+    // const location = useLocation()
+    // const {loggedIn} = location.state;
+    // const {giveUser} = location.state.giveUser;
+    user = profile;
+    console.log(s);
     return(
         <div className="container-fluid">
             <div className="up-down-padding row">
-                <div className="col-1 d-flex align-items-center">
-                    <i className="fa-solid fa-arrow-left ps-3 col-1 white-text"/>
-                </div>
+                {/*<div className="col-1 d-flex align-items-center">*/}
+                {/*    <i className="fa-solid fa-arrow-left ps-3 col-1 white-text"/>*/}
+                {/*</div>*/}
                 <div className="ps-5 inline col-11">
                     <div className="bold white-text">{user.name}</div>
-                    <div className="white-text">{user.tuitsCount} tweets</div>
+                    <div className="white-text">{user.tuitsCount} tuits</div>
                 </div>
             </div>
             <img className="background-pic" src={user.header}/>
@@ -65,8 +70,7 @@ const ProfilePage = ({
                 <span> <span className="bold">{user.followingCount}</span> Following</span>
                 <span> <span className="bold">{user.followerCount}</span> Follower</span>
             </div>
-
-            <ProfileNavigation active={<Outlet/>}/>
+            <ProfileNavigation user={user} previous_path={location.pathname}/>
             <Outlet/>
         </div>
     );

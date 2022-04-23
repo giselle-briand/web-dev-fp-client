@@ -7,20 +7,18 @@ import Tuiter from "./components/Tuiter";
 import React, {useState, useEffect} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {ProfileProvider} from "./contexts/profile-context"
-import ExploreScreen from "./components/Tuiter/ExploreScreen/ExploreScreen";
+import SearchScreen from "./components/Tuiter/Search/SearchScreen";
 import HomeScreen from "./components/Tuiter/HomeScreen";
 import ProfilePage from "./components/Tuiter/ProfilePage";
 import LoginPage from "./components/Tuiter/ProfilePage/login";
 import SignUp from "./components/Tuiter/ProfilePage/signup";
 import Popup from "./components/Tuiter/Privacy";
 import SecureRoute from "./components/secure-route";
-import SearchTwitter from "./components/Tuiter/Search/Search";
-import SearchTumblr from "./components/Tuiter/Search/Search";
 import PrivacyPage from "./components/Tuiter/Privacy/PrivacyPage";
 import Details from './components/Tuiter/Details';
-import Posts from './components/Tuiter/ProfilePage/sub-pages/posts'
-import Comments from './components/Tuiter/ProfilePage/sub-pages/comments'
-import Likes from './components/Tuiter/ProfilePage/sub-pages/likes'
+import Posts from "./components/Tuiter/ProfilePage/sub-pages/posts";
+import Comments from "./components/Tuiter/ProfilePage/sub-pages/comments";
+import Likes from "./components/Tuiter/ProfilePage/sub-pages/likes";
 
 function App() {
     const [isOpen, setIsOpen] = useState(true);
@@ -51,13 +49,14 @@ function App() {
               <Routes>
                   <Route path="/" element={<Tuiter/>}>
                       <Route index element={<HomeScreen/>}/>
-                      <Route path="search" element={<ExploreScreen/>}/>
-                      <Route path="search/:searchString" element={<ExploreScreen/>}/>
+                      <Route path="search" element={<SearchScreen/>}/>
+                      <Route path="search/:searchString" element={<SearchScreen/>}/>
                       <Route path="profile" element={
                           <SecureRoute>
                               <ProfilePage/>
                           </SecureRoute>
                       }>
+                          <Route path="profile/:username" element={<ProfilePage/>}/>
                           <Route index element={<Posts/>}/>
                           <Route path="comments" element={<Comments/>}/>
                           <Route path="likes" element={<Likes/>}/>
@@ -65,22 +64,21 @@ function App() {
                       <Route path="login" element={<LoginPage/>}/>
                       <Route path="signup" element={<SignUp/>}/>
                       <Route path="privacy" element={<PrivacyPage/>}/>
-                      <Route path="explore" element={<ExploreScreen/>}/>
-                      <Route path="details" element={<Details/>}/>
+                      <Route path="search/details/:username" element={<Details/>}/>
                   </Route>
               </Routes>
 
-                  {isOpen && <Popup
-                      content={<>
-                          <b>Design your Popup</b>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                              occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                      </>}
-                      handleClose={togglePopupFalse}
-                  />}
+                  {/*{isOpen && <Popup*/}
+                  {/*    content={<>*/}
+                  {/*        <b>Design your Popup</b>*/}
+                  {/*        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor*/}
+                  {/*            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud*/}
+                  {/*            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in*/}
+                  {/*            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint*/}
+                  {/*            occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>*/}
+                  {/*    </>}*/}
+                  {/*    handleClose={togglePopupFalse}*/}
+                  {/*/>}*/}
               </BrowserRouter>
       </ProfileProvider>
   );
