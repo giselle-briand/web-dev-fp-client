@@ -12,7 +12,6 @@ const SignUp = () => {
     const navigate = useNavigate()
     const test = useProfile()
 
-    //TODO possibly change to useRef
     const [user, setUser] = useState({
             name: "",
             username: "",
@@ -23,7 +22,6 @@ const SignUp = () => {
     });
 
     const createUserClickHandler = async () => {
-        //TODO make sure that you can't create user without required fields
         try {
             await test.signup(user)
             navigate('/profile')

@@ -10,15 +10,23 @@ const Search = () => {
     const tagRef = useRef()
     const navigate = useNavigate()
     const location = useLocation()
-
+    // const [user, setUser] = useState({
+    //     name: "",
+    //     username: "",
+    //     password: "",
+    //     bio: "",
+    //     email: "",
+    //     phone_num: "",
+    //     "avatar-image": ""
+    // });
     const client = tumblr.createClient({ consumer_key: 'aVWxuentDtiSQRwKjIv7rJtkeWRuslHqOMe5Sqkgubo2cyZ2No' });
-    let post_id;
     const searchPostsByKeyword = async () => {
         client.taggedPosts(tagRef.current.value, function (err, data) {
-            // console.log(data);
             setPosts([]);
             const filteredData = data.filter(postToCheck => postToCheck.summary !== "");
             filteredData.map(updatedPost => {
+                let profpic;
+                let profname;
                 const duplicatePost = updatedPost;
                 updatedPost = {}
                 updatedPost["api-post-id"] = duplicatePost.id_string;
@@ -32,8 +40,10 @@ const Search = () => {
                 updatedPost.username = duplicatePost.blog.name;
                 if (duplicatePost.blog.title === "") {
                     updatedPost.name = duplicatePost.blog.name
+                    profname = duplicatePost.blog.name;
                 } else {
                     updatedPost.name = duplicatePost.blog.title;
+                    profname = duplicatePost.blog.title;
                 }
                 updatedPost.verified = false;
                 updatedPost.time = "";
@@ -44,15 +54,30 @@ const Search = () => {
                 updatedPost.date.time = duplicatePost.date.substring(11, 16);
                 try {
                     updatedPost["avatar-image"] = duplicatePost.trail[0].blog.theme.header_image;
+                    profpic = duplicatePost.trail[0].blog.theme.header_image;
                 }
                 catch (TypeError){
                     updatedPost["avatar-image"] = "../media/emptypp.webp"
+                    profpic = "../media/emptypp.webp";
                 }
                 if (duplicatePost.type === "photo") {
                     updatedPost.image = duplicatePost.photos[0].original_size.url;
                 }
-                setPosts(oldPosts =>([...oldPosts, updatedPost]));
+                const user = {
+                    email: duplicatePost.blog_name.concat("@mail.com"),
+                    password: duplicatePost.reblog_key,
+                    username: duplicatePost.blog.name,
+                    "avatar-image": profpic,
+                    bio: duplicatePost.blog.description,
+                    name: profname
+                };
+                console.log("new user:")
+                console.log(user)
+                setPosts(oldPosts =>([...oldPosts, {post: updatedPost, u: user}]));
+                console.log("posts:")
+                console.log(posts)
             })
+
             navigate(`/search/${tagRef.current.value}`);
             const landingContentDiv = document.getElementById("landing-content");
             const searchContentDiv = document.getElementById("search-content");
@@ -91,16 +116,11 @@ const Search = () => {
             <div id="search-content" className="list-group">
                 {
                     posts.map(post =>
-                        // <li className="list-group-item" >
-                    <div>
-                            <Tuit tuit={post}/>
-                    </div>)}
-                        {/*<Link to={`/search/details/${post.id_string}`}>*/}
-                        {/*    {post.blog.title}*/}
-                        {/*</Link>*/}
-                        {/*</li>*/}
-                    {/*)*/}
-                {/*}*/}
+                        <div>
+                            <Tuit tuit={post.post} user={post.u}/>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );

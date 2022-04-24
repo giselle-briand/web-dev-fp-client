@@ -8,6 +8,11 @@ const api = axios.create({
     withCredentials: true
 });
 
+export const findUserByCredentials = async (user) => {
+    const response = await axios.post(`${USERS_API}/credentials`, user)
+    return response.data
+}
+
 
 export const createUser = async (user) => {
     const response = await axios.post(USERS_API, user)
