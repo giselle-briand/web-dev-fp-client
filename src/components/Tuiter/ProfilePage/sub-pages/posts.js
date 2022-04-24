@@ -22,15 +22,15 @@ const Posts = () => {
         <ul className="list-group">
             {
                 comments && comments.map(comment =>
-                    <li className="list-group-item">
-                        <Tuit tuit={comment}/>
+                    // <li className="list-group-item">
+                        <Tuit tuit={comment}/>)}
                         {/*                        <Link to={`/omdb/details/${comment.imdbID}`}>
                             {comment && comment.comment}
                             {comment.imdbID}
                         </Link>*/}
-                    </li>
-                )
-            }
+                    {/*</li>*/}
+                {/*)*/}
+            {/*}*/}
         </ul>
     )
 };

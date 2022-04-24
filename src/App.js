@@ -20,18 +20,6 @@ import Bookmarks from "./components/Tuiter/ProfilePage/sub-pages/bookmarks";
 import Likes from "./components/Tuiter/ProfilePage/sub-pages/likes";
 
 function App() {
-
- /*  useEffect(() => {
-       let popup_status = localStorage.getItem('prviacy_popup');
-       if (popup_status === 'false') {
-           setIsOpen(true);
-           localStorage.setItem('privacy_popup', 'true');
-       } else {
-           setIsOpen(false);
-       }
-    }, []);*/
-
-    // <Route path="profile" element={<ProfilePage/>}/>
   return (
       <ProfileProvider>
               <BrowserRouter>
@@ -45,7 +33,11 @@ function App() {
                               <ProfilePage/>
                           </SecureRoute>
                       }>
-                          <Route path="profile/:username" element={<ProfilePage/>}/>
+                          <Route index element={<Posts/>}/>
+                          <Route path="bookmarks" element={<Bookmarks/>}/>
+                          <Route path="likes" element={<Likes/>}/>
+                      </Route>
+                      <Route path="profile/:username" element={<ProfilePage/>}>
                           <Route index element={<Posts/>}/>
                           <Route path="bookmarks" element={<Bookmarks/>}/>
                           <Route path="likes" element={<Likes/>}/>

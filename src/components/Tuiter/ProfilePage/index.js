@@ -39,23 +39,40 @@ const ProfilePage = ({
         }
 
     }
+    let parent_path;
     const location = useLocation()
-    console.log(location)
+    // const {aUser} = location.state
     const s = location.state
-    // const location = useLocation()
-    // const {loggedIn} = location.state;
-    // const {giveUser} = location.state.giveUser;
-    user = profile;
-    console.log(s);
+    console.log(location.state)
+    // user = s.aUser
+    // previous_path = s.previous_path
+    // console.log(s)
+
+    if (location.pathname === "/profile") {
+        console.log("in the profile if")
+        user = profile;
+    } else {
+        user = s.aUser;
+        parent_path = s.previous_path;
+        if (user === undefined) {
+            user = s[0]
+            parent_path = s[1]
+        }
+    }
+    const goBack = () => {
+        navigate(parent_path);
+    }
+    console.log("user is:")
+    console.log(user)
     return(
         <div className="container-fluid">
             <div className="up-down-padding row">
-                {/*<div className="col-1 d-flex align-items-center">*/}
-                {/*    <i className="fa-solid fa-arrow-left ps-3 col-1 white-text"/>*/}
-                {/*</div>*/}
+                {
+                    (parent_path !== undefined) && <div className="col-1 d-flex align-items-center"><i className="fa-solid fa-arrow-left ps-3 col-1 white-text" onClick={goBack}/></div>
+                }
                 <div className="ps-5 inline col-11">
                     <div className="bold white-text">{user.name}</div>
-                    <div className="white-text">{user.tuitsCount} tuits</div>
+                    <div className="white-text">{user.tuits.length} tuits</div>
                 </div>
             </div>
             <img className="background-pic" src={user.header}/>
@@ -70,7 +87,7 @@ const ProfilePage = ({
                 <span> <span className="bold">{user.followingCount}</span> Following</span>
                 <span> <span className="bold">{user.followerCount}</span> Follower</span>
             </div>
-            <ProfileNavigation user={user} previous_path={location.pathname}/>
+            <ProfileNavigation user={user} previous_path={location.pathname} parent_path={parent_path}/>
             <Outlet/>
         </div>
     );

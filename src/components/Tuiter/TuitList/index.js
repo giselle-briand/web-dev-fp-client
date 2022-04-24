@@ -14,10 +14,6 @@ const TuitList = () => {
             {
                 tuits.map && tuits.map(tuit =>
                     <Tuit tuit={tuit}/>
-                    // <li className="list-group-item wd-suggested-follows-primary-text">
-                    //     <TuitListItem key={tuit._id} tuit={tuit}/>
-                    //     <TuitStats tuit={tuit}/>
-                    // </li>
                 )
             }
         </ul>

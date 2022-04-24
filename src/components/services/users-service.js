@@ -9,10 +9,14 @@ const api = axios.create({
 });
 
 export const findUserByCredentials = async (user) => {
-    const response = await axios.post(`${USERS_API}/credentials`, user)
-    return response.data
+    const response = await axios.post(`${USERS_API}/credentials`, user);
+    return response.data;
 }
 
+export const findUser = async (userId) => {
+    const response = await axios.get(`${USERS_API}/${userId}`)
+    return response.data;
+}
 
 export const createUser = async (user) => {
     const response = await axios.post(USERS_API, user)

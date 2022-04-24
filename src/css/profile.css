@@ -14,7 +14,9 @@
     border-style: solid;
 }
 
-
+.spacing {
+    margin-bottom: 15px;
+}
 .username-text-align {
     position: relative;
     left: 15px;

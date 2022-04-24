@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {updateTuit} from "../actions/tuits-actions";
 import {createTuit} from "../../services/tuits-service";
 import {useDispatch} from "react-redux";
@@ -7,7 +7,7 @@ import {useProfile} from "../../../contexts/profile-context";
 import {createUser} from "../actions/users-actions";
 import axios from "axios";
 import SecureContent from "../../secure-content";
-import {findUserByCredentials} from "../../services/users-service";
+import {findUser, findUserByCredentials} from "../../services/users-service";
 
 const Tuit = ({
 
@@ -49,6 +49,10 @@ const Tuit = ({
     const location = useLocation();
     const [isLiked, setIsLiked] = useState(false);
     const test = useProfile();
+    const goToProfile = async () => {
+        const tuitUser = await findUser(tuit.creator);
+        navigate(`/profile/${tuit.username}`, {state: [tuitUser, location.pathname]})
+    }
     const goToDetails = async (post) => {
         if (post._id === undefined) {
             navigate(`/search/details/${post["api-post-id"]}`, {state: [post, location.pathname]});
@@ -60,37 +64,52 @@ const Tuit = ({
         //withCredentials: false
         withCredentials: true
     })
+    const {checkLoggedIn} = useProfile()
+    const [loggedIn, setLoggedIn] = useState(false)
+    const check = async () => {
+        try {
+            await checkLoggedIn()
+            setLoggedIn(true)
+        } catch (e) {
+            setLoggedIn(false)
+        }
+    }
+    useEffect(() => { check() }, [])
     const likeIt = async () => {
-        if (tuit.liked === true) {
-            updateTuit(dispatch, {
-                ...tuit,
-                likes: tuit.likes - 1,
-                liked: false
-            });
-            setIsLiked(false);
-            //document.getElementById("heart").style.color = "transparent";
-        } else {
-            if (tuit._id === undefined) {
-                try {
-                    const isUser = await findUserByCredentials(user);
-                    user = isUser
+        if(loggedIn) {
+            if (tuit.liked === true) {
+                updateTuit(dispatch, {
+                    ...tuit,
+                    likes: tuit.likes - 1,
+                    liked: false
+                });
+                setIsLiked(false);
+                //document.getElementById("heart").style.color = "transparent";
+            } else {
+                if (tuit._id === undefined) {
+                    try {
+                        const isUser = await findUserByCredentials(user);
+                        user = isUser
+                    } catch (e) {
+                        const response = await api.post("http://localhost:4000/api/signup", user)
+                        const createdUser = response.data
+                        user = createdUser
+                    }
+                    const responseTuit = await createTuit(user._id, tuit)
+                    // tuit = responseTuit;
                 }
-                catch (e) {
-                    const response = await api.post("http://localhost:4000/api/signup", user)
-                    const createdUser = response.data
-                    user = createdUser
-                }
-                const responseTuit = await createTuit(user._id, tuit)
-                // tuit = responseTuit;
+                updateTuit(dispatch, {
+                    ...tuit,
+                    likes: tuit.likes + 1,
+                    liked: true
+                })
+                console.log("updated tuit")
+                setIsLiked(true);
+                //document.getElementById("heart").style.color = "red";
             }
-            updateTuit(dispatch, {
-                ...tuit,
-                likes: tuit.likes + 1,
-                liked: true
-            })
-            console.log("updated tuit")
-            setIsLiked(true);
-            //document.getElementById("heart").style.color = "red";
+        }
+        else {
+            navigate('/login')
         }
     }
     return (
@@ -100,7 +119,7 @@ const Tuit = ({
             </div>
             <div className="col-11 mb-2">
                 <div className="d-inline-flex justify-content-between w-100">
-                    <h6 className="fw-bold m-0">{tuit.name}
+                    <h6 className="fw-bold m-0" onClick={goToProfile}>{tuit.name}
                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
                     <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "-" + tuit.date.day}</span></h6>
                     <h6 className="text-secondary m-0"><i className="fa-solid fa-ellipsis"/></h6>
@@ -128,7 +147,7 @@ const Tuit = ({
                         <span className="ps-3">{tuit.retuits}</span>
                     </h6>
                     <h6 className="text-secondary m-0">
-                        <i id="heart" className={`fa-regular fa-heart ${isLiked ? "fa-solid" : ""}`}
+                        <i id="heart" className={`fa-regular fa-heart ${isLiked ? "fa-solid" : "fa-regular"}`}
                            onClick={likeIt}/>
                         <span className="ps-3">{tuit.likes}</span>
                     </h6>
