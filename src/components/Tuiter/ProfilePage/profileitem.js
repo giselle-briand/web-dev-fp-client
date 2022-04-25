@@ -21,7 +21,8 @@ const ProfileItem = ({
                                        liked_tuits: [],
                                        verified: true,
                                        email: "rosanwang@yahoo.com",
-                                       phoneNumber: String
+                                       phoneNumber: "",
+                                       admin: false
                                    }
                                }) => {
     const {profile} = useProfile()

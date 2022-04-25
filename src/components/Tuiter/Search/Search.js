@@ -61,7 +61,8 @@ const Search = () => {
                     "avatar-image": profpic,
                     bio: duplicatePost.blog.description,
                     name: profname,
-                    phoneNumber: "123-456-7890"
+                    phoneNumber: "123-456-7890",
+                    admin: false
                 };
                 console.log("new user:")
                 console.log(user)

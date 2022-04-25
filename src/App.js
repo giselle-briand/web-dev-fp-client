@@ -11,7 +11,7 @@ import SearchScreen from "./components/Tuiter/Search/SearchScreen";
 import HomeScreen from "./components/Tuiter/HomeScreen";
 import ProfilePage from "./components/Tuiter/ProfilePage";
 import LoginPage from "./components/Tuiter/ProfilePage/login";
-import SignUp from "./components/Tuiter/ProfilePage/signup";
+import Register from "./components/Tuiter/ProfilePage/register";
 import SecureRoute from "./components/secure-route";
 import PrivacyPage from "./components/Tuiter/Privacy/PrivacyPage";
 import Details from './components/Tuiter/Details';
@@ -53,7 +53,7 @@ function App() {
                       <Route path="profile/:username/followers" element={<Followers/>}/>
                       <Route path="profile/:username/following" element={<Following/>}/>
                       <Route path="login" element={<LoginPage/>}/>
-                      <Route path="signup" element={<SignUp/>}/>
+                      <Route path="register" element={<Register/>}/>
                       <Route path="privacy" element={<PrivacyPage/>}/>
                       <Route path="search/details/:username" element={<Details/>}/>
                   </Route>

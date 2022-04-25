@@ -45,10 +45,10 @@ const LoginPage = () => {
             </div>
             <button type="button" onClick={handleSigninBtn} className="btn btn-primary">Sign in</button>
             <div>
-                Don't have an account? <Link to="/signup"> Sign Up</Link>
+                Don't have an account? <Link to="/register"> Register here.</Link>
             </div>
             {
-                alertStatus && <div className="color-red">Invalid credentials. Email and/or password are incorrect. If you don't have an account, please click the sign up link to create one.</div>
+                alertStatus && <div className="color-red">Invalid credentials. Email and/or password are incorrect. If you don't have an account, please click the register link to create one.</div>
             }
         </div>
     );

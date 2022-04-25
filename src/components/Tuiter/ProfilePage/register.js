@@ -1,13 +1,14 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import {createUser} from "../actions/users-actions";
+import '../../../css/profile.css'
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
 
 const api = axios.create({withCredentials: true})
 
-const SignUp = () => {
+const Register = () => {
     //const dispatch = useDispatch();
     const navigate = useNavigate()
     const test = useProfile()
@@ -18,7 +19,8 @@ const SignUp = () => {
             password: "",
             bio: "",
             email: "",
-            phoneNumber:""
+            phoneNumber:"",
+            admin: false
     });
 
     const createUserClickHandler = async () => {
@@ -28,7 +30,14 @@ const SignUp = () => {
         } catch (e) {
             alert('oops')
         }
+    }
 
+    const adminResponse = (e) => {
+        const adminValue = (e.target.value === "yes");
+        setUser({
+            ...user,
+            admin: adminValue
+        })
     }
 
     return(
@@ -115,6 +124,17 @@ const SignUp = () => {
                 </div>
             </div>
 
+            <div className="mb-3 row">
+                <p className="col-sm-2 col-form-label">Admin</p>
+                <div className="col-sm-10"
+                     onChange={(e) => adminResponse(e)}>
+                    <label htmlFor="yes">Yes</label>
+                    <input type="radio" className="space-radio" name="adminselection" id="yes" value="yes"/>
+                    <label htmlFor="no">No</label>
+                    <input type="radio" className="space-radio" name="adminselection" id="no" value="no"/>
+                </div>
+            </div>
+
             <button type="button" className="btn btn-primary" onClick={createUserClickHandler}>
                 Create User
             </button>
@@ -122,4 +142,4 @@ const SignUp = () => {
     );
 }
 
-export default SignUp;
+export default Register;

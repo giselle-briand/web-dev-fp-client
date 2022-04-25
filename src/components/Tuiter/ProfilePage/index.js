@@ -4,7 +4,7 @@ import {useProfile} from "../../../contexts/profile-context";
 import {useDispatch, useSelector} from "react-redux";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import ProfileNavigation from "./sub-pages"
-import {updateUser} from "../actions/users-actions";
+import {deleteUser, updateUser} from "../actions/users-actions";
 import SecureContent from "../../secure-content";
 
 const ProfilePage = ({
@@ -22,7 +22,8 @@ const ProfilePage = ({
                              liked_tuits: [],
                              verified: true,
                              email: "rosanwang@yahoo.com",
-                             phoneNumber: String
+                             phoneNumber: "",
+                             admin: false
                          }
                      }) => {
     const {profile, signout} = useProfile()
@@ -41,7 +42,11 @@ const ProfilePage = ({
 
     }
     const editProfile = async () => {
-        //
+        // TODO: add edit profile ability
+    }
+    const deleteAccount = () => {
+        deleteUser(dispatch, user)
+        navigate("/")
     }
     const followUser = () => {
         const loggedInUser = profile
@@ -155,6 +160,9 @@ const ProfilePage = ({
             }
             {
                 (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && checkIfFollowing()) && <SecureContent><button type="button" onClick={unfollowUser} className="btn btn-primary wd-float-right space-button">{followingButtonText}</button></SecureContent>
+            }
+            {
+                profile.admin && <button type="button" onClick={deleteAccount} className="btn btn-primary wd-float-right space-button">Delete Account</button>
             }
             <div className="username-text-align bold">{user.name}</div>
             <div className="username-text-align">@{user.username}</div>

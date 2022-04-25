@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {updateTuit} from "../actions/tuits-actions";
+import {deleteTuit, updateTuit} from "../actions/tuits-actions";
 import {createTuit} from "../../services/tuits-service";
 import {useDispatch} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -42,7 +42,8 @@ const Tuit = ({
                       bio: "",
                       email: "",
                       phoneNumber:"",
-                      "avatar-image":""
+                      "avatar-image":"",
+                      admin: false
                   }
 }) => {
     const dispatch = useDispatch();
@@ -133,7 +134,9 @@ const Tuit = ({
                     <h6 className="fw-bold m-0" onClick={goToProfile}>{tuit.name}
                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
                     <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "-" + tuit.date.day}</span></h6>
-                    <h6 className="text-secondary m-0"><i className="fa-solid fa-ellipsis"/></h6>
+                    {
+                        profile.admin && <h6 className="text-secondary m-0"><i className="fas fa-remove float-end" onClick={() => deleteTuit(dispatch, tuit)}/></h6>
+                    }
                 </div>
                 <div onClick={() => goToDetails(tuit)}>
                     <p className="text-white">

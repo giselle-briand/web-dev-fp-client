@@ -1,6 +1,7 @@
 import React from "react";
 import {Link, useLocation} from "react-router-dom";
 import '../../../../css/profile.css'
+import {useProfile} from "../../../../contexts/profile-context";
 
 const ProfileNavigation = (
     {
@@ -16,13 +17,11 @@ const ProfileNavigation = (
             followingCount: 1,
             followers: [],
             following: [],
-            loggedIn: Boolean,
-            tuits: [],
-            comments: [],
-            tuitsCount: 0,
-            likes: [],
+            liked_tuits: [],
+            verified: true,
             email: "rosanwang@yahoo.com",
-            phoneNumber: String
+            phoneNumber: "",
+            admin: false
         },
         previous_path = "",
         parent_path= ""
@@ -30,6 +29,7 @@ const ProfileNavigation = (
 ) => {
     const location = useLocation()
     active = location.pathname;
+    const profile = useProfile()
     const highlight = (id) => {
         const selectedDiv = document.getElementById(id);
         const postsDiv = document.getElementById("posts");
@@ -54,7 +54,8 @@ const ProfileNavigation = (
     let bookmarks_path;
     let tuits_path;
     let likes_path;
-    if (previous_path === "/profile" || previous_path === "/profile/bookmarks" || previous_path === "/profile/likes") {
+    const PREVIOUS_PATHS_FOR_LOGGED_IN_USER = ["/profile", "/profile/bookmarks", "/profile/likes"]
+    if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path)) {
         bookmarks_path = "/profile/bookmarks";
         tuits_path = "/profile";
         likes_path = "/profile/likes";
@@ -74,13 +75,6 @@ const ProfileNavigation = (
                           state={{aUser: user, previous_path: parent_path}}
                           onClick={() => {highlight("posts")}}>Posts</Link>
                 </div>
-                <div  className={`nav-item col-3`}>
-                    <Link id="bookmarks"
-                          className="nav-link"
-                          to={bookmarks_path}
-                          state={{aUser: user, previous_path: parent_path}}
-                          onClick={() => {highlight("bookmarks")}}>Bookmarks</Link>
-                </div>
                 <div className={`nav-item col-3`}>
                     <Link id="likes"
                           className="nav-link"
@@ -88,6 +82,16 @@ const ProfileNavigation = (
                           state={{aUser: user, previous_path: parent_path}}
                           onClick={() => {highlight("likes")}}>Likes</Link>
                 </div>
+                {
+                    (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || profile.admin) &&
+                        <div  className={`nav-item col-3`}>
+                            <Link id="bookmarks"
+                                  className="nav-link"
+                                  to={bookmarks_path}
+                                  state={{aUser: user, previous_path: parent_path}}
+                                  onClick={() => {highlight("bookmarks")}}>Bookmarks</Link>
+                        </div>
+                }
             </div>
         </>
     );
