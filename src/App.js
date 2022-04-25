@@ -11,27 +11,17 @@ import SearchScreen from "./components/Tuiter/Search/SearchScreen";
 import HomeScreen from "./components/Tuiter/HomeScreen";
 import ProfilePage from "./components/Tuiter/ProfilePage";
 import LoginPage from "./components/Tuiter/ProfilePage/login";
-import SignUp from "./components/Tuiter/ProfilePage/signup";
+import Register from "./components/Tuiter/ProfilePage/register";
 import SecureRoute from "./components/secure-route";
 import PrivacyPage from "./components/Tuiter/Privacy/PrivacyPage";
 import Details from './components/Tuiter/Details';
 import Posts from "./components/Tuiter/ProfilePage/sub-pages/posts";
 import Bookmarks from "./components/Tuiter/ProfilePage/sub-pages/bookmarks";
 import Likes from "./components/Tuiter/ProfilePage/sub-pages/likes";
+import Followers from "./components/Tuiter/ProfilePage/followers";
+import Following from "./components/Tuiter/ProfilePage/following";
 
 function App() {
-
- /*  useEffect(() => {
-       let popup_status = localStorage.getItem('prviacy_popup');
-       if (popup_status === 'false') {
-           setIsOpen(true);
-           localStorage.setItem('privacy_popup', 'true');
-       } else {
-           setIsOpen(false);
-       }
-    }, []);*/
-
-    // <Route path="profile" element={<ProfilePage/>}/>
   return (
       <ProfileProvider>
               <BrowserRouter>
@@ -45,13 +35,25 @@ function App() {
                               <ProfilePage/>
                           </SecureRoute>
                       }>
-                          <Route path="profile/:username" element={<ProfilePage/>}/>
                           <Route index element={<Posts/>}/>
                           <Route path="bookmarks" element={<Bookmarks/>}/>
                           <Route path="likes" element={<Likes/>}/>
+                          {/*<Route path="followers" element={<Followers/>}/>*/}
+                          {/*<Route path="following" element={<Following/>}/>*/}
                       </Route>
+                      <Route path="profile/:username" element={<ProfilePage/>}>
+                          <Route index element={<Posts/>}/>
+                          <Route path="bookmarks" element={<Bookmarks/>}/>
+                          <Route path="likes" element={<Likes/>}/>
+                          {/*<Route path="followers" element={<Followers/>}/>*/}
+                          {/*<Route path="following" element={<Following/>}/>*/}
+                      </Route>
+                      <Route path="profile/followers" element={<Followers/>}/>
+                      <Route path="profile/following" element={<Following/>}/>
+                      <Route path="profile/:username/followers" element={<Followers/>}/>
+                      <Route path="profile/:username/following" element={<Following/>}/>
                       <Route path="login" element={<LoginPage/>}/>
-                      <Route path="signup" element={<SignUp/>}/>
+                      <Route path="register" element={<Register/>}/>
                       <Route path="privacy" element={<PrivacyPage/>}/>
                       <Route path="search/details/:username" element={<Details/>}/>
                   </Route>

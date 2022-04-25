@@ -1,8 +1,9 @@
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
 import {useNavigate} from "react-router";
+import '../../../css/profile.css'
 
 const LoginPage = () => {
 
@@ -10,22 +11,24 @@ const LoginPage = () => {
     const passwordRef = useRef()
     const navigate = useNavigate()
     const {profile, signin} = useProfile()
+    const [alertStatus, setAlertStatus] = useState(false);
     const handleSigninBtn = async () => {
         try {
             await signin(
                 emailRef.current.value,
                 passwordRef.current.value
             )
+            const user = profile
+            navigate('/');
         } catch (e) {
-            alert('oops')
+            setAlertStatus(true);
+            // alert('oops')
         }
-        const user = profile
-        navigate('/');
     }
 
     return(
         <div className="container-fluid">
-            <h5>Look's like you're not logged in! Log in to access your profile and interact with other users.</h5>
+            <h5>Looks like you're not logged in! Log in to access your profile and interact with other users.</h5>
             <br/>
             <div className="mb-3">
                 <label htmlFor="exampleFormControlInput1" className="form-label">
@@ -42,8 +45,11 @@ const LoginPage = () => {
             </div>
             <button type="button" onClick={handleSigninBtn} className="btn btn-primary">Sign in</button>
             <div>
-                Don't have an account? <Link to="/signup"> Sign Up</Link>
+                Don't have an account? <Link to="/register"> Register here.</Link>
             </div>
+            {
+                alertStatus && <div className="color-red">Invalid credentials. Email and/or password are incorrect. If you don't have an account, please click the register link to create one.</div>
+            }
         </div>
     );
 }

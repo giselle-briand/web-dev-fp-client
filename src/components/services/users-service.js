@@ -8,6 +8,15 @@ const api = axios.create({
     withCredentials: true
 });
 
+export const findUserByCredentials = async (user) => {
+    const response = await axios.post(`${USERS_API}/credentials`, user);
+    return response.data;
+}
+
+export const findUser = async (userId) => {
+    const response = await axios.get(`${USERS_API}/${userId}`)
+    return response.data;
+}
 
 export const createUser = async (user) => {
     const response = await axios.post(USERS_API, user)
@@ -31,5 +40,15 @@ export const findCommentsByUserId = async (userid) => {
 
 export const findLikedTuitsByUserId = async (userid) => {
     const response = await api.get(`${USERS_API}/${userid}/likes/tuits`)
+    return response.data
+}
+
+export const findFollowersByUserId = async (userid) => {
+    const response = await api.get(`${USERS_API}/${userid}/followers`)
+    return response.data
+}
+
+export const findFollowingByUserId = async (userid) => {
+    const response = await api.get(`${USERS_API}/${userid}/following`)
     return response.data
 }

@@ -1,5 +1,7 @@
 import React from "react";
 import {Link, useLocation} from "react-router-dom";
+import '../../../../css/profile.css'
+import {useProfile} from "../../../../contexts/profile-context";
 
 const ProfileNavigation = (
     {
@@ -15,19 +17,19 @@ const ProfileNavigation = (
             followingCount: 1,
             followers: [],
             following: [],
-            loggedIn: Boolean,
-            tuits: [],
-            comments: [],
-            tuitsCount: 0,
-            likes: [],
+            liked_tuits: [],
+            verified: true,
             email: "rosanwang@yahoo.com",
-            phoneNumber: String
+            phoneNumber: "",
+            admin: false
         },
-        previous_path = ""
+        previous_path = "",
+        parent_path= ""
     }
 ) => {
     const location = useLocation()
     active = location.pathname;
+    const profile = useProfile()
     const highlight = (id) => {
         const selectedDiv = document.getElementById(id);
         const postsDiv = document.getElementById("posts");
@@ -52,31 +54,44 @@ const ProfileNavigation = (
     let bookmarks_path;
     let tuits_path;
     let likes_path;
-    if (previous_path === "/profile") {
-        bookmarks_path = "profile/bookmarks";
-        tuits_path = "profile/";
-        likes_path = "profile/likes";
+    const PREVIOUS_PATHS_FOR_LOGGED_IN_USER = ["/profile", "/profile/bookmarks", "/profile/likes"]
+    if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path)) {
+        bookmarks_path = "/profile/bookmarks";
+        tuits_path = "/profile";
+        likes_path = "/profile/likes";
     }
     else {
-        bookmarks_path = previous_path.concat("/bookmarks");
-        tuits_path = previous_path;
-        likes_path = previous_path.concat("/likes");;
+        bookmarks_path = `/profile/${user.username}/bookmarks`;
+        tuits_path = `/profile/${user.username}`;
+        likes_path = `/profile/${user.username}/likes`;
     }
-
-    //
-
     return(
         <>
-            <div className="nav nav-tabs nav-fill" >
+            <div className="nav nav-tabs nav-fill spacing" >
                 <div className={`nav-item col-3 `}>
-                    <Link id="posts" className={`nav-link ${active === "/profile" ? "active" : ""}`} to={"/profile"} onClick={() => {highlight("posts")}}>Posts</Link>
-                </div>
-                <div  className={`nav-item col-3`}>
-                    <Link id="bookmarks" className="nav-link" to={"/profile/bookmarks"} onClick={() => {highlight("bookmarks")}}>Bookmarks</Link>
+                    <Link id="posts"
+                          className={`nav-link ${active === "/profile" || active === `/profile/${user.username}` ? "active" : ""}`}
+                          to={tuits_path}
+                          state={{aUser: user, previous_path: parent_path}}
+                          onClick={() => {highlight("posts")}}>Posts</Link>
                 </div>
                 <div className={`nav-item col-3`}>
-                    <Link id="likes" className="nav-link" to={"/profile/likes"} onClick={() => {highlight("likes")}}>Likes</Link>
+                    <Link id="likes"
+                          className="nav-link"
+                          to={likes_path}
+                          state={{aUser: user, previous_path: parent_path}}
+                          onClick={() => {highlight("likes")}}>Likes</Link>
                 </div>
+                {
+                    (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || profile.admin) &&
+                        <div  className={`nav-item col-3`}>
+                            <Link id="bookmarks"
+                                  className="nav-link"
+                                  to={bookmarks_path}
+                                  state={{aUser: user, previous_path: parent_path}}
+                                  onClick={() => {highlight("bookmarks")}}>Bookmarks</Link>
+                        </div>
+                }
             </div>
         </>
     );

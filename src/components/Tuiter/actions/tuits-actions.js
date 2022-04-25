@@ -15,8 +15,8 @@ export const createTuit = async (dispatch, userId, tuit) => {
 export const findAllTuits = async (dispatch) => {
     const tuits = await service.findAllTuits();
     dispatch({
-        type: 'FIND_ALL_TUITS',
-        tuits: tuits
+        type: FIND_ALL_TUITS,
+        tuits: tuits.reverse()
     });
 }
 export const updateTuit = async (dispatch, tuit) => {
