@@ -18,7 +18,7 @@ const SignUp = () => {
             password: "",
             bio: "",
             email: "",
-            phone_num:""
+            phoneNumber:""
     });
 
     const createUserClickHandler = async () => {
@@ -97,7 +97,7 @@ const SignUp = () => {
                            onChange={(e) =>
                                setUser({
                                    ...user,
-                                   phone_num: e.target.value
+                                   phoneNumber: e.target.value
                                })} required/>
                 </div>
             </div>

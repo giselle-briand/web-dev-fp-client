@@ -17,6 +17,9 @@
 .spacing {
     margin-bottom: 15px;
 }
+.space-button {
+    margin: 10px;
+}
 .username-text-align {
     position: relative;
     left: 15px;
@@ -31,7 +34,12 @@
 .bold {
     font-weight: bold;
 }
-
+.sizing {
+    font-size: 12px;
+}
+.color-red {
+    color: red;
+}
 .up-down-padding {
     padding-top: 10px;
     padding-bottom: 10px;

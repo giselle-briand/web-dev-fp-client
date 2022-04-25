@@ -18,6 +18,8 @@ import Details from './components/Tuiter/Details';
 import Posts from "./components/Tuiter/ProfilePage/sub-pages/posts";
 import Bookmarks from "./components/Tuiter/ProfilePage/sub-pages/bookmarks";
 import Likes from "./components/Tuiter/ProfilePage/sub-pages/likes";
+import Followers from "./components/Tuiter/ProfilePage/followers";
+import Following from "./components/Tuiter/ProfilePage/following";
 
 function App() {
   return (
@@ -36,12 +38,20 @@ function App() {
                           <Route index element={<Posts/>}/>
                           <Route path="bookmarks" element={<Bookmarks/>}/>
                           <Route path="likes" element={<Likes/>}/>
+                          {/*<Route path="followers" element={<Followers/>}/>*/}
+                          {/*<Route path="following" element={<Following/>}/>*/}
                       </Route>
                       <Route path="profile/:username" element={<ProfilePage/>}>
                           <Route index element={<Posts/>}/>
                           <Route path="bookmarks" element={<Bookmarks/>}/>
                           <Route path="likes" element={<Likes/>}/>
+                          {/*<Route path="followers" element={<Followers/>}/>*/}
+                          {/*<Route path="following" element={<Following/>}/>*/}
                       </Route>
+                      <Route path="profile/followers" element={<Followers/>}/>
+                      <Route path="profile/following" element={<Following/>}/>
+                      <Route path="profile/:username/followers" element={<Followers/>}/>
+                      <Route path="profile/:username/following" element={<Following/>}/>
                       <Route path="login" element={<LoginPage/>}/>
                       <Route path="signup" element={<SignUp/>}/>
                       <Route path="privacy" element={<PrivacyPage/>}/>

@@ -10,15 +10,6 @@ const Search = () => {
     const tagRef = useRef()
     const navigate = useNavigate()
     const location = useLocation()
-    // const [user, setUser] = useState({
-    //     name: "",
-    //     username: "",
-    //     password: "",
-    //     bio: "",
-    //     email: "",
-    //     phone_num: "",
-    //     "avatar-image": ""
-    // });
     const client = tumblr.createClient({ consumer_key: 'aVWxuentDtiSQRwKjIv7rJtkeWRuslHqOMe5Sqkgubo2cyZ2No' });
     const searchPostsByKeyword = async () => {
         client.taggedPosts(tagRef.current.value, function (err, data) {
@@ -69,7 +60,8 @@ const Search = () => {
                     username: duplicatePost.blog.name,
                     "avatar-image": profpic,
                     bio: duplicatePost.blog.description,
-                    name: profname
+                    name: profname,
+                    phoneNumber: "123-456-7890"
                 };
                 console.log("new user:")
                 console.log(user)

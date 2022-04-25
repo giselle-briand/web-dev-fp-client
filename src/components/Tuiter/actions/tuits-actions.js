@@ -16,7 +16,7 @@ export const findAllTuits = async (dispatch) => {
     const tuits = await service.findAllTuits();
     dispatch({
         type: FIND_ALL_TUITS,
-        tuits: tuits
+        tuits: tuits.reverse()
     });
 }
 export const updateTuit = async (dispatch, tuit) => {

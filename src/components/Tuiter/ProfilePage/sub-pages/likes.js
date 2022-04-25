@@ -17,11 +17,8 @@ const Likes = ({
                        followingCount: 1,
                        followers: [],
                        following: [],
-                       loggedIn: Boolean,
-                       tuits: [],
-                       comments: [],
-                       tuitsCount: 0,
-                       likes: [],
+                       liked_tuits: [],
+                       verified: true,
                        email: "rosanwang@yahoo.com",
                        phoneNumber: String
                    }
@@ -31,7 +28,7 @@ const Likes = ({
     const [likes, setLikes] = useState([])
     const location = useLocation()
     const s = location.state
-
+    console.log(s)
     if (location.pathname === "/profile/likes") {
         user = profile;
     } else {

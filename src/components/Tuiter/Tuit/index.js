@@ -8,6 +8,7 @@ import {createUser} from "../actions/users-actions";
 import axios from "axios";
 import SecureContent from "../../secure-content";
 import {findUser, findUserByCredentials} from "../../services/users-service";
+import {updateUser} from "../actions/users-actions";
 
 const Tuit = ({
 
@@ -40,7 +41,7 @@ const Tuit = ({
                       password: "",
                       bio: "",
                       email: "",
-                      phone_num:"",
+                      phoneNumber:"",
                       "avatar-image":""
                   }
 }) => {
@@ -48,18 +49,7 @@ const Tuit = ({
     const navigate = useNavigate();
     const location = useLocation();
     const [isLiked, setIsLiked] = useState(false);
-    const test = useProfile();
-    const goToProfile = async () => {
-        const tuitUser = await findUser(tuit.creator);
-        navigate(`/profile/${tuit.username}`, {state: [tuitUser, location.pathname]})
-    }
-    const goToDetails = async (post) => {
-        if (post._id === undefined) {
-            navigate(`/search/details/${post["api-post-id"]}`, {state: [post, location.pathname]});
-        } else {
-            navigate(`/search/details/${post._id}`, {state: [post, location.pathname]});
-        }
-    }
+    const profile = useProfile();
     const api = axios.create({
         //withCredentials: false
         withCredentials: true
@@ -75,6 +65,22 @@ const Tuit = ({
         }
     }
     useEffect(() => { check() }, [])
+    const goToProfile = async () => {
+        const tuitUser = await findUser(tuit.creator);
+        // console.log(loggedIn)
+        if (loggedIn && tuitUser.username === profile.username) {
+            navigate(`/profile`, {state: {aUser: tuitUser, previous_path: location.pathname}})
+        } else {
+            navigate(`/profile/${tuit.username}`, {state: {aUser: tuitUser, previous_path: location.pathname}})
+        }
+    }
+    const goToDetails = async (post) => {
+        if (post._id === undefined) {
+            navigate(`/search/details/${post["api-post-id"]}`, {state: [post, location.pathname]});
+        } else {
+            navigate(`/search/details/${post._id}`, {state: [post, location.pathname]});
+        }
+    }
     const likeIt = async () => {
         if(loggedIn) {
             if (tuit.liked === true) {
@@ -96,13 +102,18 @@ const Tuit = ({
                         user = createdUser
                     }
                     const responseTuit = await createTuit(user._id, tuit)
-                    // tuit = responseTuit;
+                    tuit = responseTuit;
                 }
                 updateTuit(dispatch, {
                     ...tuit,
                     likes: tuit.likes + 1,
                     liked: true
                 })
+                const currentUser = profile
+                updateUser(dispatch, {
+                    ...currentUser,
+                    liked_tuits: currentUser.liked_tuits.push(tuit._id)
+                });
                 console.log("updated tuit")
                 setIsLiked(true);
                 //document.getElementById("heart").style.color = "red";
