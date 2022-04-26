@@ -51,20 +51,9 @@ const Tuit = ({
     const api = axios.create({
         withCredentials: true
     })
-    const {checkLoggedIn} = useProfile()
-    const [loggedIn, setLoggedIn] = useState(false)
-    const check = async () => {
-        try {
-            await checkLoggedIn()
-            setLoggedIn(true)
-        } catch (e) {
-            setLoggedIn(false)
-        }
-    }
-    useEffect(() => { check() }, [])
     const goToProfile = async () => {
         const tuitUser = await findUser(tuit.creator);
-        if (loggedIn && tuitUser.username === profile.username) {
+        if ((profile !== "init") && tuitUser.username === profile.username) {
             navigate(`/profile`, {state: {aUser: tuitUser, previous_path: location.pathname}})
         } else {
             navigate(`/profile/${tuit.username}`, {state: {aUser: tuitUser, previous_path: location.pathname}})
@@ -72,62 +61,51 @@ const Tuit = ({
     }
     const goToDetails = async (post) => {
         if (post._id === undefined) {
-            navigate(`/details/${post["api-post-id"]}`, {state: [post, location.pathname]});
+            navigate(`/details/${post["api-post-id"]}`, {state: [post, location.pathname, user]});
         } else {
-            navigate(`/details/${post._id}`, {state: [post, location.pathname]});
+            navigate(`/details/${post._id}`, {state: [post, location.pathname, user]});
         }
     }
     const likeIt = async () => {
-        if(loggedIn) {
-            console.log("LOGGED IN USER AND TUIT PASSED INTO LIKEIT() FUNCTION IN TUIT/INDEX.JS")
-            console.log(profile)
-            console.log(tuit)
-            if (isLiked()) {
-                updateTuit(dispatch, {
-                    ...tuit,
-                    likes: tuit.likes - 1,
-                    liked_users: tuit.liked_users.filter(a_user => a_user._id !== profile._id)
-                });
-                updateUser(dispatch, {
-                    ...profile,
-                    liked_tuits: profile.liked_tuits.filter(a_tuit => a_tuit._id !== tuit._id)
-                });
-                //document.getElementById("heart").style.color = "transparent";
-            } else {
-                if (tuit._id === undefined) {
-                    try {
-                        const isUser = await findUserByCredentials(user);
-                        user = isUser
-                    } catch (e) {
-                        const response = await api.post("http://localhost:4000/api/signup", user)
-                        const createdUser = response.data
-                        user = createdUser
-                    }
-                    const responseTuit = await createTuit(user._id, tuit)
-                    tuit = responseTuit;
-                }
-                updateTuit(dispatch, {
-                    ...tuit,
-                    likes: tuit.likes + 1,
-                    liked_users: [...tuit.liked_users, profile._id]
-                })
-                updateUser(dispatch, {
-                    ...profile,
-                    liked_tuits: [...profile.liked_tuits, tuit._id]
-                });
-                console.log("updated tuit")
-                //document.getElementById("heart").style.color = "red";
-            }
-            console.log("RESULTING LOGGED IN USER JSON AND TUIT JSON AFTER LIKING/UNLIKING SOMETHING")
-            console.log(profile)
-            console.log(tuit)
-        }
-        else {
+        if (profile === "init") {
             navigate('/login')
+        } else {
+            if (tuit._id === undefined) {
+                try {
+                    user = await findUserByCredentials(user);
+                } catch (e) {
+                    const response = await api.post("http://localhost:4000/api/signup", user)
+                    user = response.data
+                }
+                tuit = await createTuit(user._id, tuit)
+            }
+            await updateTuit(dispatch, {
+                ...tuit,
+                likes: tuit.likes + 1,
+                liked_users: [...tuit.liked_users, profile._id]
+            })
+            await updateUser(dispatch, {
+                ...profile,
+                liked_tuits: [...profile.liked_tuits, tuit._id]
+            });
         }
     }
+    const unlikeIt = async () => {
+        await updateTuit(dispatch, {
+            ...tuit,
+            likes: tuit.likes - 1,
+            liked_users: tuit.liked_users.filter(a_user => a_user !== profile._id)
+        })
+        await updateUser(dispatch, {
+            ...profile,
+            liked_tuits: profile.liked_tuits.filter(a_tuit => a_tuit !== tuit._id)
+        });
+    }
     const isLiked = () => {
-        return tuit.liked_users.includes(profile._id);
+        return tuit.liked_users.includes(profile._id) //&& profile.liked_tuits.includes(tuit._id);
+    }
+    const isUnliked = () => {
+        return !profile.liked_tuits.includes(tuit._id)
     }
     const isBookmarked = () => {
         return tuit.bookmarked_users.includes(profile._id);
@@ -171,12 +149,12 @@ const Tuit = ({
                         <i className="fa-solid fa-retweet"/>
                         <span className="ps-3">{tuit.retuits}</span>
                     </h6>
-                    <h6 className="text-secondary m-0" onClick={likeIt}>
+                    <h6 className="text-secondary m-0">
                         {
-                            isLiked() && <i id="heart" className="fa-solid fa-heart"/>
+                            isLiked() && <i className="fa-solid fa-heart" onClick={unlikeIt}/>
                         }
                         {
-                            !isLiked() && <i id="heart" className="fa-regular fa-heart"/>
+                            !isLiked() && <i className="fa-regular fa-heart" onClick={likeIt}/>
                         }
                         <span className="ps-3">{tuit.likes}</span>
                     </h6>

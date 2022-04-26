@@ -71,18 +71,23 @@ const Search = () => {
         setPosts(oldPosts =>([...oldPosts, {post: updatedPost, u: user}]));
     }
     const searchPostsByKeyword = async () => {
-        client.taggedPosts(tagRef.current.value, function (err, data) {
-            setPosts([]);
-            const filteredData = data.filter(postToCheck => postToCheck.summary !== "");
-            filteredData.map(apiPost => convertAPIpostToTuitAndMakeUser(apiPost))
-            navigate(`/search/${tagRef.current.value}`);
-            const landingContentDiv = document.getElementById("landing-content");
-            const searchContentDiv = document.getElementById("search-content");
-            if (landingContentDiv.style.display !== "none") {
-                landingContentDiv.style.display = "none";
-                searchContentDiv.style.display = "block";
-            }
-        });
+        try {
+            client.taggedPosts(tagRef.current.value, function (err, data) {
+                setPosts([]);
+                const filteredData = data.filter(postToCheck => postToCheck.summary !== "");
+                filteredData.map(apiPost => convertAPIpostToTuitAndMakeUser(apiPost))
+                navigate(`/search/${tagRef.current.value}`);
+                const landingContentDiv = document.getElementById("landing-content");
+                const searchContentDiv = document.getElementById("search-content");
+                if (landingContentDiv.style.display !== "none") {
+                    landingContentDiv.style.display = "none";
+                    searchContentDiv.style.display = "block";
+                }
+            })
+        }
+        catch (e) {
+            navigate('/search')
+        }
     }
     useEffect(() => {
         if(searchString) {

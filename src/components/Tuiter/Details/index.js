@@ -5,6 +5,11 @@ import TuitStats from "../TuitStats/TuitStats";
 import TuitListItem from "../TuitList/TuitListItem";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
+import {findUserByCredentials} from "../../services/users-service";
+import {createTuit} from "../../services/tuits-service";
+import {updateTuit} from "../actions/tuits-actions";
+import {updateUser} from "../actions/users-actions";
+import {useDispatch} from "react-redux";
 
 const api = axios.create({
     withCredentials: true
@@ -34,15 +39,62 @@ const Details = ({
                          video: "",
                          "avatar-image": "../media/emptypp.webp"
                      },
-    previous_path = ""
+    previous_path = "",
+                     user ={
+                         name: "",
+                         username: "",
+                         password: "",
+                         bio: "",
+                         email: "",
+                         phoneNumber:"",
+                         "avatar-image":"",
+                         admin: false
+                     }
 }) => {
     const navigate = useNavigate()
     const {profile} = useProfile()
     const {state} = useLocation()
+    const dispatch = useDispatch()
     tuit = state[0] || {};
     previous_path = state[1]
+    user = state[2]
     const goBack = () => {
         navigate(previous_path);
+    }
+    const likeIt = async () => {
+        if (profile === "init") {
+            navigate('/login')
+        } else {
+            if (tuit._id === undefined) {
+                try {
+                    user = await findUserByCredentials(user);
+                } catch (e) {
+                    const response = await api.post("http://localhost:4000/api/signup", user)
+                    user = response.data
+                }
+                tuit = await createTuit(user._id, tuit)
+            }
+            await updateTuit(dispatch, {
+                ...tuit,
+                likes: tuit.likes + 1,
+                liked_users: [...tuit.liked_users, profile._id]
+            })
+            await updateUser(dispatch, {
+                ...profile,
+                liked_tuits: [...profile.liked_tuits, tuit._id]
+            });
+        }
+    }
+    const unlikeIt = async () => {
+        await updateTuit(dispatch, {
+            ...tuit,
+            likes: tuit.likes - 1,
+            liked_users: tuit.liked_users.filter(a_user => a_user !== profile._id)
+        })
+        await updateUser(dispatch, {
+            ...profile,
+            liked_tuits: profile.liked_tuits.filter(a_tuit => a_tuit !== tuit._id)
+        });
     }
     const isLiked = () => {
         return tuit.liked_users.includes(profile._id);
@@ -122,10 +174,10 @@ const Details = ({
                             <h6 className="text-secondary m-0"><i className="fa-solid fa-retweet fa-lg"/></h6>
                             <h6 className="text-secondary m-0">
                                 {
-                                    isLiked() && <i className="fa-solid fa-heart fa-lg"/>
+                                    isLiked() && <i className="fa-solid fa-heart fa-lg" onClick={unlikeIt}/>
                                 }
                                 {
-                                    !isLiked() && <i className="fa-regular fa-heart fa-lg"/>
+                                    !isLiked() && <i className="fa-regular fa-heart fa-lg" onClick={likeIt}/>
                                 }
                             </h6>
                             <h6 className="text-secondary m-0">
