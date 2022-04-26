@@ -7,7 +7,8 @@ import ProfileNavigation from "./sub-pages"
 import {deleteUser, updateUser} from "../actions/users-actions";
 import SecureContent from "../../secure-content";
 
-const ProfilePage = ({
+const ProfilePage = (
+    {
                          user = {
                              name: "rosan wang",
                              username: "WangRosan",
@@ -25,7 +26,9 @@ const ProfilePage = ({
                              phoneNumber: "",
                              admin: false
                          }
-                     }) => {
+                     }
+                     ) => {
+
     const {profile, signout} = useProfile()
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -96,10 +99,10 @@ const ProfilePage = ({
     const s = location.state
 
     if (location.pathname === "/profile") {
-        user = profile;
+        user = profile
     } else {
             try {
-                user = s.aUser;
+                user = s.aUser
                 parent_path = s.previous_path;
                 tuit = s.thePost;
             } catch (e) {
@@ -169,7 +172,7 @@ const ProfilePage = ({
                 <span onClick={goToFollowers}> <span className="bold">{user.followerCount}</span> Follower</span>
             </div>
             <ProfileNavigation user={user} previous_path={location.pathname} parent_path={parent_path}/>
-            <Outlet/>
+            <Outlet context={user}/>
         </div>
     );
 }

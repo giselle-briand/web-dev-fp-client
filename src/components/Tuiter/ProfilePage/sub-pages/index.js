@@ -28,7 +28,6 @@ const ProfileNavigation = (
     }
 ) => {
     const location = useLocation()
-    const params = useParams()
     active = location.pathname;
     const profile = useProfile()
 
@@ -36,27 +35,6 @@ const ProfileNavigation = (
     // previous_path = params.previous_path
     // parent_path = params.parent_path
 
-    const highlight = (id) => {
-        const selectedDiv = document.getElementById(id);
-        const postsDiv = document.getElementById("posts");
-        const bookmarksDiv = document.getElementById("bookmarks");
-        const likesDiv = document.getElementById("likes");
-        if (id === "bookmarks") {
-            selectedDiv.style.backgroundColor = "#2a9fd6";
-            postsDiv.style.backgroundColor = "transparent";
-            likesDiv.style.backgroundColor = "transparent";
-        }
-        else if (id === "posts") {
-            selectedDiv.style.backgroundColor = "#2a9fd6";
-            bookmarksDiv.style.backgroundColor = "transparent";
-            likesDiv.style.backgroundColor = "transparent";
-        }
-        else {
-            selectedDiv.style.backgroundColor = "#2a9fd6";
-            postsDiv.style.backgroundColor = "transparent";
-            bookmarksDiv.style.backgroundColor = "transparent";
-        }
-    }
     let bookmarks_path;
     let tuits_path;
     let likes_path;
@@ -73,6 +51,33 @@ const ProfileNavigation = (
     }
     console.log("USER GIVEN TO SUBPAGES:")
     console.log(user)
+
+    const highlight = (id) => {
+        const selectedDiv = document.getElementById(id);
+        const postsDiv = document.getElementById("posts");
+        const bookmarksDiv = document.getElementById("bookmarks");
+        const likesDiv = document.getElementById("likes");
+        if (id === "bookmarks") {
+            selectedDiv.style.backgroundColor = "#2a9fd6";
+            postsDiv.style.backgroundColor = "transparent";
+            likesDiv.style.backgroundColor = "transparent";
+        }
+        else if (id === "posts") {
+            selectedDiv.style.backgroundColor = "#2a9fd6";
+            if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || profile.admin) {
+                bookmarksDiv.style.backgroundColor = "transparent";
+            }
+            likesDiv.style.backgroundColor = "transparent";
+        }
+        else {
+            selectedDiv.style.backgroundColor = "#2a9fd6";
+            postsDiv.style.backgroundColor = "transparent";
+            if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || profile.admin) {
+                bookmarksDiv.style.backgroundColor = "transparent";
+            }
+        }
+    }
+
     return(
         <>
             <div className="nav nav-tabs nav-fill spacing" >

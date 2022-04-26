@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {useProfile} from "../../../../contexts/profile-context";
 import {findLikedTuitsByUserId} from "../../../services/users-service";
 import Tuit from "../../Tuit";
-import {useLocation} from "react-router-dom";
+import { useOutletContext} from "react-router-dom";
 
 const Likes = ({
                    user = {
@@ -20,29 +19,28 @@ const Likes = ({
                        liked_tuits: [],
                        verified: true,
                        email: "rosanwang@yahoo.com",
-                       phoneNumber: String
+                       phoneNumber: "",
+                       admin: false
                    }
-               }
-) => {
-    const {profile} = useProfile()
+               }) => {
+
     const [likes, setLikes] = useState([])
-    const location = useLocation()
-    const s = location.state
-    if (location.pathname === "/profile/likes") {
-        user = profile;
-    } else {
-        try {
-            user = s.aUser;
+
+    user = useOutletContext()
+
+/*    const findUser = async () => {
+        if (typeof username === "undefined") {
+            const {profile} = useProfile()
+            return profile;
+        } else {
+            return await findUserByCredentials(username);
         }
-        catch (e) {
-            console.log("the s in likes.js:")
-            console.log(s)
-        }
-    }
+    }*/
 
     const findMyLikes = async () => {
         const likes = await findLikedTuitsByUserId(user._id)
         setLikes(likes)
+        console.log(likes)
     }
 
     useEffect(() => {
@@ -59,6 +57,6 @@ const Likes = ({
             }
         </ul>
     )
-};
+}
 
 export default Likes;

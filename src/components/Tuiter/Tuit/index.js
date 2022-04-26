@@ -44,6 +44,7 @@ const Tuit = ({
                       admin: false
                   }
 }) => {
+    console.log("hello??")
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -78,6 +79,11 @@ const Tuit = ({
                 // }
                 tuit = await createTuit(user._id, tuit)
             }
+            console.log("profile")
+            //TODO profile.liked_tuits needs to be reupdated with the mongo db everytime a change is made
+            console.log(profile.liked_tuits)
+            const allLikedTuits = profile.liked_tuits.concat([tuit._id])
+
             await updateTuit(dispatch, {
                 ...tuit,
                 likes: tuit.likes + 1,
@@ -85,8 +91,10 @@ const Tuit = ({
             })
             await updateUser(dispatch, {
                 ...profile,
-                liked_tuits: [...profile.liked_tuits, tuit._id]
+                liked_tuits: allLikedTuits
+                    //[...profile.liked_tuits, tuit._id]
             });
+            console.log(allLikedTuits)
         }
     }
     const unlikeIt = async () => {
@@ -111,7 +119,7 @@ const Tuit = ({
     }
     console.log("TUIT PASSED INTO TUIT/INDEX.JS:")
     console.log(tuit)
-    console.log(tuit["avatar-image"])
+
     return (
         <div className="row ps-3 pe-3">
             <div className="col-1">
