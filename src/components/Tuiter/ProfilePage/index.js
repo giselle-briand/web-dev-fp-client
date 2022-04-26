@@ -29,7 +29,8 @@ const ProfilePage = (
                      }
                      ) => {
 
-    const {profile, signout} = useProfile()
+    const {profileState, signout} = useProfile()
+    const [profile, ] = profileState
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const [followButtonText, setFollowButtonText] = useState("Follow")

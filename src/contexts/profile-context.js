@@ -55,7 +55,12 @@ export const ProfileProvider = ({children}) => {
         }
     }
 
-    const value = {signout, signin, profile, signup, checkLoggedIn}
+    const value = {
+        signout,
+        signin,
+        profileState:[profile, setProfile],
+        signup:signup,
+        checkLoggedIn}
 
     return(
         <ProfileContext.Provider value={value}>

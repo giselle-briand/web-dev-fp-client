@@ -48,7 +48,8 @@ const Tuit = ({
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const {profile} = useProfile();
+    const {profileState} = useProfile();
+    const [profile, setProfile] = profileState;
 
     const goToProfile = async () => {
         const tuitUser = await findUser(tuit.creator);
@@ -79,37 +80,42 @@ const Tuit = ({
                 // }
                 tuit = await createTuit(user._id, tuit)
             }
-            console.log("profile")
-            //TODO profile.liked_tuits needs to be reupdated with the mongo db everytime a change is made
-            console.log(profile.liked_tuits)
-            const allLikedTuits = profile.liked_tuits.concat([tuit._id])
 
             await updateTuit(dispatch, {
                 ...tuit,
                 likes: tuit.likes + 1,
                 liked_users: [...tuit.liked_users, profile._id]
             })
-            await updateUser(dispatch, {
+
+            console.log(profile.liked_tuits)
+
+            const newUser = {
                 ...profile,
-                liked_tuits: allLikedTuits
-                    //[...profile.liked_tuits, tuit._id]
-            });
-            console.log(allLikedTuits)
+                liked_tuits: [...profile.liked_tuits, tuit._id]
+            }
+            console.log(newUser)
+
+            await updateUser(dispatch, newUser);
+            setProfile(newUser)
         }
     }
     const unlikeIt = async () => {
+
         await updateTuit(dispatch, {
             ...tuit,
             likes: tuit.likes - 1,
             liked_users: tuit.liked_users.filter(a_user => a_user !== profile._id)
         })
-        await updateUser(dispatch, {
+        const newUser = {
             ...profile,
             liked_tuits: profile.liked_tuits.filter(a_tuit => a_tuit !== tuit._id)
-        });
+        }
+
+        await updateUser(dispatch, newUser);
+        setProfile(newUser)
     }
     const isLiked = () => {
-        return tuit.liked_users.includes(profile._id) //&& profile.liked_tuits.includes(tuit._id);
+        return tuit.liked_users.includes(profile._id) && profile.liked_tuits.includes(tuit._id);
     }
     const isUnliked = () => {
         return !profile.liked_tuits.includes(tuit._id)
@@ -117,8 +123,8 @@ const Tuit = ({
     const isBookmarked = () => {
         return tuit.bookmarked_users.includes(profile._id);
     }
-    console.log("TUIT PASSED INTO TUIT/INDEX.JS:")
-    console.log(tuit)
+    //console.log("TUIT PASSED INTO TUIT/INDEX.JS:")
+    //console.log(tuit)
 
     return (
         <div className="row ps-3 pe-3">

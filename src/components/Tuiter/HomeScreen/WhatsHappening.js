@@ -5,7 +5,8 @@ import {useProfile} from "../../../contexts/profile-context";
 import {updateUser} from "../actions/users-actions";
 
 const WhatsHappening = () => {
-    const {profile} = useProfile()
+    const {profileState} = useProfile()
+    const [profile, ] = profileState
 
     const dispatch = useDispatch();
     const [newTuit, setNewTuit] = useState({tuit: 'New tuit'});
