@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import '../../../../css/profile.css'
 import {useProfile} from "../../../../contexts/profile-context";
 
@@ -28,8 +28,14 @@ const ProfileNavigation = (
     }
 ) => {
     const location = useLocation()
+    const params = useParams()
     active = location.pathname;
     const profile = useProfile()
+
+    // user = params.user
+    // previous_path = params.previous_path
+    // parent_path = params.parent_path
+
     const highlight = (id) => {
         const selectedDiv = document.getElementById(id);
         const postsDiv = document.getElementById("posts");
@@ -65,6 +71,8 @@ const ProfileNavigation = (
         tuits_path = `/profile/${user.username}`;
         likes_path = `/profile/${user.username}/likes`;
     }
+    console.log("USER GIVEN TO SUBPAGES:")
+    console.log(user)
     return(
         <>
             <div className="nav nav-tabs nav-fill spacing" >

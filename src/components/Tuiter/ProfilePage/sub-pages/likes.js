@@ -31,7 +31,13 @@ const Likes = ({
     if (location.pathname === "/profile/likes") {
         user = profile;
     } else {
-        user = s.aUser;
+        try {
+            user = s.aUser;
+        }
+        catch (e) {
+            console.log("the s in likes.js:")
+            console.log(s)
+        }
     }
 
     const findMyLikes = async () => {

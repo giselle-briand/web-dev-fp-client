@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import '../../../css/profile.css'
 import {useProfile} from "../../../contexts/profile-context";
 import {useDispatch, useSelector} from "react-redux";
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
 import ProfileNavigation from "./sub-pages"
 import {deleteUser, updateUser} from "../actions/users-actions";
 import SecureContent from "../../secure-content";
@@ -91,24 +91,30 @@ const ProfilePage = ({
             return false;
         }
     }
-    let parent_path;
+    let parent_path, tuit;
     const location = useLocation()
     const s = location.state
 
     if (location.pathname === "/profile") {
         user = profile;
     } else {
-        user = s.aUser;
-        parent_path = s.previous_path;
-        if (user === undefined) {
-            user = s[0]
-            parent_path = s[1]
-        }
+            try {
+                user = s.aUser;
+                parent_path = s.previous_path;
+                tuit = s.thePost;
+            } catch (e) {
+                console.log("s in propage is")
+                console.log(s)
+            }
+        // if (user === undefined) {
+        //     user = s[0]
+        //     parent_path = s[1]
+        // }
     }
     const LOGGED_IN_USER_PROFILE_PATHS = ["/profile", "/profile/bookmarks", "/profile/likes"];
     const OTHER_USER_PROFILE_PATHS = [`/profile/${user.username}`, `/profile/${user.username}/bookmarks`, `/profile/${user.username}/likes`]
     const goBack = () => {
-        navigate(parent_path);
+        navigate(parent_path, {state: {aUser: user, previous_path: parent_path, thePost: tuit}});
     }
     const goToFollowing = () => {
         if (LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname)) {

@@ -48,22 +48,21 @@ const Tuit = ({
     const navigate = useNavigate();
     const location = useLocation();
     const {profile} = useProfile();
-    const api = axios.create({
-        withCredentials: true
-    })
+
     const goToProfile = async () => {
         const tuitUser = await findUser(tuit.creator);
         if ((profile !== "init") && tuitUser.username === profile.username) {
-            navigate(`/profile`, {state: {aUser: tuitUser, previous_path: location.pathname}})
+            navigate(`/profile`, {state: {aUser: tuitUser, previous_path: location.pathname, thePost: tuit}})
         } else {
-            navigate(`/profile/${tuit.username}`, {state: {aUser: tuitUser, previous_path: location.pathname}})
+            navigate(`/profile/${tuit.username}`, {state: {aUser: tuitUser, previous_path: location.pathname, thePost: tuit}})
         }
     }
     const goToDetails = async (post) => {
+        const tuitUser = await findUser(tuit.creator);
         if (post._id === undefined) {
-            navigate(`/details/${post["api-post-id"]}`, {state: [post, location.pathname, user]});
+            navigate(`/details/${post["api-post-id"]}`, {state: {thePost: post, previous_path: location.pathname, aUser: tuitUser}});
         } else {
-            navigate(`/details/${post._id}`, {state: [post, location.pathname, user]});
+            navigate(`/details/${post._id}`, {state: {thePost: post, previous_path: location.pathname, aUser: tuitUser}});
         }
     }
     const likeIt = async () => {
@@ -71,12 +70,12 @@ const Tuit = ({
             navigate('/login')
         } else {
             if (tuit._id === undefined) {
-                try {
-                    user = await findUserByCredentials(user);
-                } catch (e) {
-                    const response = await api.post("http://localhost:4000/api/signup", user)
-                    user = response.data
-                }
+                // try {
+                //     user = await findUserByCredentials(user);
+                // } catch (e) {
+                //     const response = await api.post("http://localhost:4000/api/signup", user)
+                //     user = response.data
+                // }
                 tuit = await createTuit(user._id, tuit)
             }
             await updateTuit(dispatch, {
