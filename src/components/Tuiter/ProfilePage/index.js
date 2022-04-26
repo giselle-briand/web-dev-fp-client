@@ -49,7 +49,6 @@ const ProfilePage = ({
         navigate("/")
     }
     const followUser = () => {
-        const loggedInUser = profile
         updateUser(dispatch, {
             ...profile,
             following: [...profile.following, user._id],
@@ -61,15 +60,11 @@ const ProfilePage = ({
             followersCount: user.followersCount + 1
         });
         setFollowButtonText("Following");
-        console.log("logged in User:")
+        console.log("LOGGED IN USER JSON AND OTHER USER JSON AFTER THE ACTION IN FOLLOWUSER() IN PROFILEPAGE/INDEX.JS")
         console.log(profile)
-        console.log("otherUser:")
         console.log(user)
     }
     const unfollowUser = () => {
-        const loggedInUser = profile
-        const userToRemoveIndex = loggedInUser.following.indexOf(user._id)
-        const otherUserToRemoveIndex = user.following.indexOf(loggedInUser._id)
         updateUser(dispatch, {
             ...profile,
             following: profile.following.filter(a_user => a_user._id !== user._id),
@@ -80,18 +75,17 @@ const ProfilePage = ({
             followers: user.following.filter(a_user => a_user._id !== profile._id),
             followersCount: user.followersCount - 1
         });
+        console.log("LOGGED IN USER JSON AND OTHER USER JSON AFTER THE ACTION IN UNFOLLOWUSER() IN PROFILEPAGE/INDEX.JS")
         console.log(profile)
         console.log(user)
         setFollowingButtonText("Follow");
     }
     const checkIfFollowing = () => {
         try {
-            const loggedInUser = profile
-            console.log(loggedInUser)
-            const otherUsersId = user._id
+            console.log("LOGGED IN USER JSON AND OTHER USER JSON IN CHECKIFFOLLOWING() IN PROFILEPAGE/INDEX.JS")
+            console.log(profile)
             console.log(user)
-            // console.log(loggedInUser.following.includes(otherUsersId))
-            return user.followers.includes(loggedInUser._id);
+            return user.followers.includes(profile._id) && profile.following.includes(user._id);
         }
         catch (e) {
             return false;
@@ -100,7 +94,6 @@ const ProfilePage = ({
     let parent_path;
     const location = useLocation()
     const s = location.state
-    // console.log(location.state)
 
     if (location.pathname === "/profile") {
         user = profile;
@@ -114,7 +107,6 @@ const ProfilePage = ({
     }
     const LOGGED_IN_USER_PROFILE_PATHS = ["/profile", "/profile/bookmarks", "/profile/likes"];
     const OTHER_USER_PROFILE_PATHS = [`/profile/${user.username}`, `/profile/${user.username}/bookmarks`, `/profile/${user.username}/likes`]
-    // console.log(user)
     const goBack = () => {
         navigate(parent_path);
     }
@@ -132,7 +124,6 @@ const ProfilePage = ({
             navigate(`/profile/${user.username}/followers`, {state: {aUser: user}})
         }
     }
-
     return(
         <div className="container-fluid">
             <div className="up-down-padding row">

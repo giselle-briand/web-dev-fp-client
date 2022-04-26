@@ -4,46 +4,51 @@ import Tuit from "../Tuit";
 import TuitStats from "../TuitStats/TuitStats";
 import TuitListItem from "../TuitList/TuitListItem";
 import {useLocation, useNavigate} from "react-router-dom";
+import {useProfile} from "../../../contexts/profile-context";
 
 const api = axios.create({
     withCredentials: true
   });
 
 const Details = ({
-    tuit = {
-        tuit: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque augue quam, ornare id pellentesque at, ultrices nec erat. Mauris euismod placerat lacus, interdum elementum dui dictum in. Etiam tempor id est porttitor viverra. Etiam sed scelerisque mauris.",
-        likes: 14,
-        dislikes: 0,
-        comments: 1,
-        retuits: 3,
-        liked: true,
-        disliked: false,
-        name: "Stray Kids",
-        username: "stray_kids",
-        verified: false,
-        time: "Just now",
-        date: {
-            day: "14",
-            month: "Sep",
-            year: "2022",
-            time: "08:11 PM"
-        },
-        title: "",
-        topic: "",
-        image: "",
-        video: "",
-        "avatar-image": "../media/emptypp.webp"
-    },
+                     tuit = {
+                         tuit: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, laoreet vitae massa eget, elementum gravida mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                         likes: 14,
+                         dislikes: 0,
+                         comments: 0,
+                         retuits: 3,
+                         liked_users: [],
+                         "api-post-id": "",
+                         name: "A Name",
+                         username: "handle",
+                         creator: [],
+                         date: {
+                             day: "14",
+                             month: "Sep",
+                             year: "2022",
+                             time: "08:11 PM"
+                         },
+                         title: "",
+                         topic: "",
+                         image: "",
+                         video: "",
+                         "avatar-image": "../media/emptypp.webp"
+                     },
     previous_path = ""
 }) => {
-    console.log(tuit);
-    console.log(previous_path);
     const navigate = useNavigate()
+    const {profile} = useProfile()
     const {state} = useLocation()
     tuit = state[0] || {};
     previous_path = state[1]
     const goBack = () => {
         navigate(previous_path);
+    }
+    const isLiked = () => {
+        return tuit.liked_users.includes(profile._id);
+    }
+    const isBookmarked = () => {
+        return tuit.bookmarked_users.includes(profile._id);
     }
     return (
         <div >
@@ -115,8 +120,24 @@ const Details = ({
                         <div className="d-inline-flex justify-content-between w-100 ps-5 pe-5">
                             <h6 className="text-secondary m-0"><i className="fa-regular fa-comment fa-lg"/></h6>
                             <h6 className="text-secondary m-0"><i className="fa-solid fa-retweet fa-lg"/></h6>
-                            <h6 className="text-secondary m-0"><i className="fa-regular fa-heart fa-lg"/></h6>
-                            <h6 className="text-secondary m-0"><i className="fa-solid fa-arrow-up-from-bracket fa-lg"/></h6>
+                            <h6 className="text-secondary m-0">
+                                {
+                                    isLiked() && <i className="fa-solid fa-heart fa-lg"/>
+                                }
+                                {
+                                    !isLiked() && <i className="fa-regular fa-heart fa-lg"/>
+                                }
+                            </h6>
+                            <h6 className="text-secondary m-0">
+                                {/*//TODO: uncomment when bookmark logic is implemented*/}
+                                {/*{*/}
+                                {/*    isBookmarked() && <i className="fa-solid fa-bookmark fa-lg"/>*/}
+                                {/*}*/}
+                                {/*{*/}
+                                {/*    !isBookmarked() && <i className="fa-regular fa-bookmark fa-lg"/>*/}
+                                {/*}*/}
+                                <i className="fa-regular fa-bookmark fa-lg"/>
+                            </h6>
                         </div>
                         <hr/>
                         <div className={`${tuit.comments.length > 0 ? "" : "wd-no-display"} `}>

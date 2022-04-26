@@ -28,7 +28,6 @@ const Likes = ({
     const [likes, setLikes] = useState([])
     const location = useLocation()
     const s = location.state
-    console.log(s)
     if (location.pathname === "/profile/likes") {
         user = profile;
     } else {
@@ -48,14 +47,8 @@ const Likes = ({
     return(
         <ul className="list-group">
             {
-                likes && likes.map(likes =>
-                    <li className="list-group-item">
-                        <Tuit tuit={likes}/>
-                        {/*                        <Link to={`/omdb/details/${comment.imdbID}`}>
-                            {comment && comment.comment}
-                            {comment.imdbID}
-                        </Link>*/}
-                    </li>
+                likes && likes.map(like =>
+                    <Tuit tuit={like}/>
                 )
             }
         </ul>

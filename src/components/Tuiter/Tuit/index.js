@@ -11,29 +11,27 @@ import {findUser, findUserByCredentials} from "../../services/users-service";
 import {updateUser} from "../actions/users-actions";
 
 const Tuit = ({
-
     tuit = {
-        "tuit": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, laoreet vitae massa eget, elementum gravida mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "likes": 14,
-        "dislikes": 0,
-        "comments": 0,
-        "retuits": 3,
-        "liked": true,
-        "disliked": false,
-        "name": "A Name",
-        "username": "handle",
-        "verified": false,
-        "time": "Just now",
-        "date": {
-            "day": "14",
-            "month": "Sep",
-            "year": "2022",
-            "time": "08:11 PM"
+        tuit: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, laoreet vitae massa eget, elementum gravida mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        likes: 14,
+        dislikes: 0,
+        comments: 0,
+        retuits: 3,
+        liked_users: [],
+        "api-post-id": "",
+        name: "A Name",
+        username: "handle",
+        creator: [],
+        date: {
+            day: "14",
+            month: "Sep",
+            year: "2022",
+            time: "08:11 PM"
         },
-        "title": "",
-        "topic": "",
-        "image": "",
-        "video": "",
+        title: "",
+        topic: "",
+        image: "",
+        video: "",
         "avatar-image": "../media/emptypp.webp"
     }, user ={
                       name: "",
@@ -49,10 +47,8 @@ const Tuit = ({
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const [isLiked, setIsLiked] = useState(false);
-    const profile = useProfile();
+    const {profile} = useProfile();
     const api = axios.create({
-        //withCredentials: false
         withCredentials: true
     })
     const {checkLoggedIn} = useProfile()
@@ -68,7 +64,6 @@ const Tuit = ({
     useEffect(() => { check() }, [])
     const goToProfile = async () => {
         const tuitUser = await findUser(tuit.creator);
-        // console.log(loggedIn)
         if (loggedIn && tuitUser.username === profile.username) {
             navigate(`/profile`, {state: {aUser: tuitUser, previous_path: location.pathname}})
         } else {
@@ -77,20 +72,26 @@ const Tuit = ({
     }
     const goToDetails = async (post) => {
         if (post._id === undefined) {
-            navigate(`/search/details/${post["api-post-id"]}`, {state: [post, location.pathname]});
+            navigate(`/details/${post["api-post-id"]}`, {state: [post, location.pathname]});
         } else {
-            navigate(`/search/details/${post._id}`, {state: [post, location.pathname]});
+            navigate(`/details/${post._id}`, {state: [post, location.pathname]});
         }
     }
     const likeIt = async () => {
         if(loggedIn) {
-            if (tuit.liked === true) {
+            console.log("LOGGED IN USER AND TUIT PASSED INTO LIKEIT() FUNCTION IN TUIT/INDEX.JS")
+            console.log(profile)
+            console.log(tuit)
+            if (isLiked()) {
                 updateTuit(dispatch, {
                     ...tuit,
                     likes: tuit.likes - 1,
-                    liked: false
+                    liked_users: tuit.liked_users.filter(a_user => a_user._id !== profile._id)
                 });
-                setIsLiked(false);
+                updateUser(dispatch, {
+                    ...profile,
+                    liked_tuits: profile.liked_tuits.filter(a_tuit => a_tuit._id !== tuit._id)
+                });
                 //document.getElementById("heart").style.color = "transparent";
             } else {
                 if (tuit._id === undefined) {
@@ -108,26 +109,36 @@ const Tuit = ({
                 updateTuit(dispatch, {
                     ...tuit,
                     likes: tuit.likes + 1,
-                    liked: true
+                    liked_users: [...tuit.liked_users, profile._id]
                 })
-                const currentUser = profile
                 updateUser(dispatch, {
-                    ...currentUser,
-                    liked_tuits: currentUser.liked_tuits.push(tuit._id)
+                    ...profile,
+                    liked_tuits: [...profile.liked_tuits, tuit._id]
                 });
                 console.log("updated tuit")
-                setIsLiked(true);
                 //document.getElementById("heart").style.color = "red";
             }
+            console.log("RESULTING LOGGED IN USER JSON AND TUIT JSON AFTER LIKING/UNLIKING SOMETHING")
+            console.log(profile)
+            console.log(tuit)
         }
         else {
             navigate('/login')
         }
     }
+    const isLiked = () => {
+        return tuit.liked_users.includes(profile._id);
+    }
+    const isBookmarked = () => {
+        return tuit.bookmarked_users.includes(profile._id);
+    }
+    console.log("TUIT PASSED INTO TUIT/INDEX.JS:")
+    console.log(tuit)
+    console.log(tuit["avatar-image"])
     return (
         <div className="row ps-3 pe-3">
             <div className="col-1">
-            <img src={tuit['avatar-image']} className="wd-avatar-image"/>
+            <img src={tuit["avatar-image"]} className="wd-avatar-image"/>
             </div>
             <div className="col-11 mb-2">
                 <div className="d-inline-flex justify-content-between w-100">
@@ -160,12 +171,23 @@ const Tuit = ({
                         <i className="fa-solid fa-retweet"/>
                         <span className="ps-3">{tuit.retuits}</span>
                     </h6>
-                    <h6 className="text-secondary m-0">
-                        <i id="heart" className={`fa-regular fa-heart ${isLiked ? "fa-solid" : "fa-regular"}`}
-                           onClick={likeIt}/>
+                    <h6 className="text-secondary m-0" onClick={likeIt}>
+                        {
+                            isLiked() && <i id="heart" className="fa-solid fa-heart"/>
+                        }
+                        {
+                            !isLiked() && <i id="heart" className="fa-regular fa-heart"/>
+                        }
                         <span className="ps-3">{tuit.likes}</span>
                     </h6>
                     <h6 className="text-secondary m-0">
+                        {/*//TODO: uncomment when bookmark logic is implemented*/}
+                        {/*{*/}
+                        {/*    isBookmarked() && <i className="fa-solid fa-bookmark"/>*/}
+                        {/*}*/}
+                        {/*{*/}
+                        {/*    !isBookmarked() && <i className="fa-regular fa-bookmark"/>*/}
+                        {/*}*/}
                         <i className="fa-regular fa-bookmark"/>
                     </h6>
                 </div>

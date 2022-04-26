@@ -38,15 +38,11 @@ function App() {
                           <Route index element={<Posts/>}/>
                           <Route path="bookmarks" element={<Bookmarks/>}/>
                           <Route path="likes" element={<Likes/>}/>
-                          {/*<Route path="followers" element={<Followers/>}/>*/}
-                          {/*<Route path="following" element={<Following/>}/>*/}
                       </Route>
                       <Route path="profile/:username" element={<ProfilePage/>}>
                           <Route index element={<Posts/>}/>
                           <Route path="bookmarks" element={<Bookmarks/>}/>
                           <Route path="likes" element={<Likes/>}/>
-                          {/*<Route path="followers" element={<Followers/>}/>*/}
-                          {/*<Route path="following" element={<Following/>}/>*/}
                       </Route>
                       <Route path="profile/followers" element={<Followers/>}/>
                       <Route path="profile/following" element={<Following/>}/>
@@ -55,7 +51,7 @@ function App() {
                       <Route path="login" element={<LoginPage/>}/>
                       <Route path="register" element={<Register/>}/>
                       <Route path="privacy" element={<PrivacyPage/>}/>
-                      <Route path="search/details/:username" element={<Details/>}/>
+                      <Route path="details/:postId" element={<Details/>}/>
                   </Route>
               </Routes>
 
