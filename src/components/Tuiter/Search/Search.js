@@ -11,74 +11,83 @@ const Search = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const client = tumblr.createClient({ consumer_key: 'aVWxuentDtiSQRwKjIv7rJtkeWRuslHqOMe5Sqkgubo2cyZ2No' });
+    const checkProfpic = (updatedPost) => {
+        try {
+            return updatedPost.trail[0].blog.theme.header_image;
+        }
+        catch (TypeError){
+            return "../media/emptypp.webp";
+        }
+    }
+    const getName = (updatedPost) => {
+        if (updatedPost.blog.title === "") {
+            return updatedPost.blog.name;
+        } else {
+            return updatedPost.blog.title;
+        }
+    }
+    const updatePost = (apiPost, profpic, profname) => {
+        const duplicatePost = apiPost
+        apiPost = {}
+        apiPost.tuit = duplicatePost.summary;
+        apiPost.likes = duplicatePost.note_count;
+        apiPost.dislikes = 0;
+        apiPost.comments = 0;
+        apiPost.retuits = 0;
+        apiPost.liked_users = [];
+        apiPost.bookmarked_users = [];
+        apiPost.commented_users = [];
+        apiPost["api-post-id"] = duplicatePost.id_string;
+        apiPost.username = duplicatePost.blog.name;
+        apiPost.name = profname
+        apiPost.verified = false;
+        apiPost.time = "";
+        apiPost.date = {}
+        apiPost.date.day = duplicatePost.date.substring(8,10);
+        apiPost.date.month = duplicatePost.date.substring(5, 7);
+        apiPost.date.year = duplicatePost.date.substring(0, 4);
+        apiPost.date.time = duplicatePost.date.substring(11, 16);
+        apiPost["avatar-image"] = profpic;
+        if (duplicatePost.type === "photo") {
+            apiPost.image = duplicatePost.photos[0].original_size.url;
+        }
+        return apiPost
+    }
+    const convertAPIpostToTuitAndMakeUser = (apiPost) => {
+        const profpic = checkProfpic(apiPost);
+        const profname = getName(apiPost)
+        const user = {
+            email: apiPost.blog_name.concat("@mail.com"),
+            password: apiPost.reblog_key,
+            username: apiPost.blog.name,
+            "avatar-image": profpic,
+            bio: apiPost.blog.description,
+            name: profname,
+            phoneNumber: "123-456-7890",
+            admin: false,
+            likes: apiPost.note_count
+        };
+        const updatedPost = updatePost(apiPost, profpic, profname)
+        setPosts(oldPosts =>([...oldPosts, {post: updatedPost, u: user}]));
+    }
     const searchPostsByKeyword = async () => {
-        client.taggedPosts(tagRef.current.value, function (err, data) {
-            setPosts([]);
-            const filteredData = data.filter(postToCheck => postToCheck.summary !== "");
-            filteredData.map(updatedPost => {
-                let profpic;
-                let profname;
-                const duplicatePost = updatedPost;
-                updatedPost = {}
-                updatedPost["api-post-id"] = duplicatePost.id_string;
-                updatedPost.tuit = duplicatePost.summary;
-                updatedPost.likes = duplicatePost.note_count;
-                updatedPost.dislikes = 0;
-                updatedPost.comments = 0;
-                updatedPost.retuits = 0;
-                updatedPost.liked = false;
-                updatedPost.disliked = false;
-                updatedPost.username = duplicatePost.blog.name;
-                if (duplicatePost.blog.title === "") {
-                    updatedPost.name = duplicatePost.blog.name
-                    profname = duplicatePost.blog.name;
-                } else {
-                    updatedPost.name = duplicatePost.blog.title;
-                    profname = duplicatePost.blog.title;
+        try {
+            client.taggedPosts(tagRef.current.value, function (err, data) {
+                setPosts([]);
+                const filteredData = data.filter(postToCheck => postToCheck.summary !== "");
+                filteredData.map(apiPost => convertAPIpostToTuitAndMakeUser(apiPost))
+                navigate(`/search/${tagRef.current.value}`);
+                const landingContentDiv = document.getElementById("landing-content");
+                const searchContentDiv = document.getElementById("search-content");
+                if (landingContentDiv.style.display !== "none") {
+                    landingContentDiv.style.display = "none";
+                    searchContentDiv.style.display = "block";
                 }
-                updatedPost.verified = false;
-                updatedPost.time = "";
-                updatedPost.date = {}
-                updatedPost.date.day = duplicatePost.date.substring(8,10);
-                updatedPost.date.month = duplicatePost.date.substring(5, 7);
-                updatedPost.date.year = duplicatePost.date.substring(0, 4);
-                updatedPost.date.time = duplicatePost.date.substring(11, 16);
-                try {
-                    updatedPost["avatar-image"] = duplicatePost.trail[0].blog.theme.header_image;
-                    profpic = duplicatePost.trail[0].blog.theme.header_image;
-                }
-                catch (TypeError){
-                    updatedPost["avatar-image"] = "../media/emptypp.webp"
-                    profpic = "../media/emptypp.webp";
-                }
-                if (duplicatePost.type === "photo") {
-                    updatedPost.image = duplicatePost.photos[0].original_size.url;
-                }
-                const user = {
-                    email: duplicatePost.blog_name.concat("@mail.com"),
-                    password: duplicatePost.reblog_key,
-                    username: duplicatePost.blog.name,
-                    "avatar-image": profpic,
-                    bio: duplicatePost.blog.description,
-                    name: profname,
-                    phoneNumber: "123-456-7890",
-                    admin: false
-                };
-                console.log("new user:")
-                console.log(user)
-                setPosts(oldPosts =>([...oldPosts, {post: updatedPost, u: user}]));
-                console.log("posts:")
-                console.log(posts)
             })
-
-            navigate(`/search/${tagRef.current.value}`);
-            const landingContentDiv = document.getElementById("landing-content");
-            const searchContentDiv = document.getElementById("search-content");
-            if (landingContentDiv.style.display !== "none") {
-                landingContentDiv.style.display = "none";
-                searchContentDiv.style.display = "block";
-            }
-        });
+        }
+        catch (e) {
+            navigate('/search')
+        }
     }
     useEffect(() => {
         if(searchString) {

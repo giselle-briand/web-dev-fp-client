@@ -6,11 +6,10 @@ import {useNavigate} from "react-router";
 import '../../../css/profile.css'
 
 const LoginPage = () => {
-
     const emailRef = useRef()
     const passwordRef = useRef()
     const navigate = useNavigate()
-    const {profile, signin} = useProfile()
+    const {signin} = useProfile()
     const [alertStatus, setAlertStatus] = useState(false);
     const handleSigninBtn = async () => {
         try {
@@ -18,11 +17,9 @@ const LoginPage = () => {
                 emailRef.current.value,
                 passwordRef.current.value
             )
-            const user = profile
             navigate('/');
         } catch (e) {
             setAlertStatus(true);
-            // alert('oops')
         }
     }
 

@@ -39,9 +39,19 @@ const Register = () => {
             admin: adminValue
         })
     }
-
+    const goBack = () => {
+        navigate("/login")
+    }
     return(
         <div>
+            <div className="mb-3 row">
+                <div className="col-sm-2 col-form-label">
+                    <i className="fa-solid fa-arrow-left ps-3 col-1 white-text" onClick={goBack}/>
+                </div>
+                <div className="col-sm-10">
+                    <h5>Register</h5>
+                </div>
+            </div>
             <div className="mb-3 row">
                 <label htmlFor="name" className="col-sm-2 col-form-label">
                     Name</label>
