@@ -38,8 +38,13 @@ export const findCommentsByUserId = async (userid) => {
     return response.data
 }
 
+export const findBookmarksByUserId = async (userid) => {
+    const response = await api.get(`${USERS_API}/${userid}/bookmarks`)
+    return response.data
+}
+
 export const findLikedTuitsByUserId = async (userid) => {
-    const response = await api.get(`${USERS_API}/${userid}/likes/tuits`)
+    const response = await api.get(`${USERS_API}/${userid}/likes`)
     return response.data
 }
 

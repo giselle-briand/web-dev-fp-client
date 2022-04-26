@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useProfile} from "../../../../contexts/profile-context";
-//import {findCommentsByUserId} from "../../../services/users-service";
+import {findBookmarksByUserId} from "../../../services/users-service";
 import Tuit from "../../Tuit";
 import {Link, useLocation} from "react-router-dom";
 
@@ -33,19 +33,29 @@ const Bookmarks = ({
         user = s.aUser;
     }
 
-  /*  const findMyComments = async () => {
-        const comments = await findCommentsByUserId(user._id)
-        setComments(comments)
+    const findMyBookmarks = async () => {
+        const bookmarks = await findBookmarksByUserId(user._id)
+        setBookmarks(bookmarks)
     }
 
     useEffect(() => {
-        findMyComments()
-    }, [])*/
+        findMyBookmarks()
+    }, [])
 
 
     return(
         <ul className="list-group">
-            bookmarks
+            {
+                bookmarks && bookmarks.map(bookmark =>
+                    <li className="list-group-item">
+                        <Tuit tuit={bookmark}/>
+                        {/*                        <Link to={`/omdb/details/${comment.imdbID}`}>
+                            {comment && comment.comment}
+                            {comment.imdbID}
+                        </Link>*/}
+                    </li>
+                )
+            }
         </ul>
 
     )
