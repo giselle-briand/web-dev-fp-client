@@ -22,7 +22,8 @@ const Bookmarks = ({
                            phoneNumber: String
                        }
                    }) => {
-    const {profile} = useProfile()
+    const {profileState} = useProfile()
+    const [profile,] = profileState
     const [bookmarks, setBookmarks] = useState([])
     const location = useLocation()
     const s = location.state
