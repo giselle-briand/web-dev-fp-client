@@ -44,12 +44,13 @@ const Tuit = ({
                       admin: false
                   }
 }) => {
-    console.log("hello??")
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const {profileState} = useProfile();
     const [profile, setProfile] = profileState;
+
+    //TODO create a statement that updates profile with that of database on referesh
 
     const goToProfile = async () => {
         const tuitUser = await findUser(tuit.creator);
@@ -96,7 +97,9 @@ const Tuit = ({
             console.log(newUser)
 
             await updateUser(dispatch, newUser);
-            setProfile(newUser)
+            setProfile({...newUser})
+            //setProfile("heee")
+            console.log(profile)
         }
     }
     const unlikeIt = async () => {
@@ -112,9 +115,12 @@ const Tuit = ({
         }
 
         await updateUser(dispatch, newUser);
-        setProfile(newUser)
+
+        setProfile({...newUser})
+        //setProfile("yolo")
     }
     const isLiked = () => {
+        console.log(profile)
         return tuit.liked_users.includes(profile._id) && profile.liked_tuits.includes(tuit._id);
     }
     const isUnliked = () => {

@@ -29,7 +29,6 @@ const ProfileNavigation = (
 ) => {
     const location = useLocation()
     active = location.pathname;
-    const profile = useProfile()
 
     // user = params.user
     // previous_path = params.previous_path
@@ -64,7 +63,7 @@ const ProfileNavigation = (
         }
         else if (id === "posts") {
             selectedDiv.style.backgroundColor = "#2a9fd6";
-            if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || profile.admin) {
+            if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || user.admin) {
                 bookmarksDiv.style.backgroundColor = "transparent";
             }
             likesDiv.style.backgroundColor = "transparent";
@@ -72,7 +71,7 @@ const ProfileNavigation = (
         else {
             selectedDiv.style.backgroundColor = "#2a9fd6";
             postsDiv.style.backgroundColor = "transparent";
-            if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || profile.admin) {
+            if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || user.admin) {
                 bookmarksDiv.style.backgroundColor = "transparent";
             }
         }
@@ -96,7 +95,7 @@ const ProfileNavigation = (
                           onClick={() => {highlight("likes")}}>Likes</Link>
                 </div>
                 {
-                    (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || profile.admin) &&
+                    (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || user.admin) &&
                         <div  className={`nav-item col-3`}>
                             <Link id="bookmarks"
                                   className="nav-link"
