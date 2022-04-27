@@ -4,14 +4,11 @@ import {createTuit} from "../../services/tuits-service";
 import {useDispatch} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
-import {createUser} from "../actions/users-actions";
-import axios from "axios";
-import SecureContent from "../../secure-content";
 import {findUser, findUserByCredentials} from "../../services/users-service";
 import {updateUser} from "../actions/users-actions";
 
 const Tuit = ({
-    tuit = {
+    givenTuit = {
         tuit: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, laoreet vitae massa eget, elementum gravida mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         likes: 14,
         dislikes: 0,
@@ -21,7 +18,7 @@ const Tuit = ({
         "api-post-id": "",
         name: "A Name",
         username: "handle",
-        creator: [],
+        creator: "",
         date: {
             day: "14",
             month: "Sep",
@@ -49,8 +46,7 @@ const Tuit = ({
     const location = useLocation();
     const {profileState} = useProfile();
     const [profile, setProfile] = profileState;
-
-    //TODO create a statement that updates profile with that of database on referesh
+    const [tuit, setTuit] = useState(givenTuit);
 
     const goToProfile = async () => {
         const tuitUser = await findUser(tuit.creator);
@@ -72,65 +68,64 @@ const Tuit = ({
         if (profile === "init") {
             navigate('/login')
         } else {
+            let newTuit
+            let newUser
             if (tuit._id === undefined) {
-                // try {
-                //     user = await findUserByCredentials(user);
-                // } catch (e) {
-                //     const response = await api.post("http://localhost:4000/api/signup", user)
-                //     user = response.data
-                // }
-                tuit = await createTuit(user._id, tuit)
+                const createdTuit = await createTuit(user._id, tuit)
+                const createdTuitId = createdTuit._id
+                setTuit({...createdTuit})
+                newTuit = {
+                    ...tuit,
+                    likes: tuit.likes + 1,
+                    liked_users: [...tuit.liked_users, profile._id],
+                    _id: createdTuitId
+                }
+                newUser = {
+                    ...profile,
+                    liked_tuits: [...profile.liked_tuits, newTuit._id]
+                }
             }
-
-            await updateTuit(dispatch, {
-                ...tuit,
-                likes: tuit.likes + 1,
-                liked_users: [...tuit.liked_users, profile._id]
-            })
-
-            console.log(profile.liked_tuits)
-
-            const newUser = {
-                ...profile,
-                liked_tuits: [...profile.liked_tuits, tuit._id]
+            else {
+                newTuit = {
+                    ...tuit,
+                    likes: tuit.likes + 1,
+                    liked_users: [...tuit.liked_users, profile._id]
+                }
+                newUser = {
+                    ...profile,
+                    liked_tuits: [...profile.liked_tuits, tuit._id]
+                }
             }
-            console.log(newUser)
-
+            await updateTuit(dispatch, newTuit);
+            setTuit({...newTuit})
             await updateUser(dispatch, newUser);
             setProfile({...newUser})
-            //setProfile("heee")
-            console.log(profile)
         }
     }
     const unlikeIt = async () => {
-
-        await updateTuit(dispatch, {
+        const newTuit = {
             ...tuit,
             likes: tuit.likes - 1,
             liked_users: tuit.liked_users.filter(a_user => a_user !== profile._id)
-        })
+        }
         const newUser = {
             ...profile,
             liked_tuits: profile.liked_tuits.filter(a_tuit => a_tuit !== tuit._id)
         }
-
+        await updateTuit(dispatch, newTuit)
+        setTuit({...newTuit})
         await updateUser(dispatch, newUser);
-
         setProfile({...newUser})
-        //setProfile("yolo")
     }
     const isLiked = () => {
-        console.log(profile)
+        if (profile === "init") {
+            return false
+        }
         return tuit.liked_users.includes(profile._id) && profile.liked_tuits.includes(tuit._id);
-    }
-    const isUnliked = () => {
-        return !profile.liked_tuits.includes(tuit._id)
     }
     const isBookmarked = () => {
         return tuit.bookmarked_users.includes(profile._id);
     }
-    //console.log("TUIT PASSED INTO TUIT/INDEX.JS:")
-    //console.log(tuit)
 
     return (
         <div className="row ps-3 pe-3">

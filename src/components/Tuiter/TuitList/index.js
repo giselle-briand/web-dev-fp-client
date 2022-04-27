@@ -21,7 +21,7 @@ const TuitList = () => {
         <ul className="list-group wd-columns wd-float-done">
             {
                 tuits && tuits.map(tuit =>
-                    <Tuit tuit={tuit}/>
+                    <Tuit givenTuit={tuit}/>
                 )
             }
         </ul>

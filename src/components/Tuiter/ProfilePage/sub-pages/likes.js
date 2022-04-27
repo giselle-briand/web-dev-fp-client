@@ -52,7 +52,7 @@ const Likes = ({
         <ul className="list-group">
             {
                 likes && likes.map(like =>
-                    <Tuit tuit={like}/>
+                    <Tuit givenTuit={like}/>
                 )
             }
         </ul>
