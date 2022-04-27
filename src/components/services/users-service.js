@@ -9,27 +9,27 @@ const api = axios.create({
 });
 
 export const findUserByCredentials = async (user) => {
-    const response = await axios.post(`${USERS_API}/credentials`, user);
+    const response = await api.post(`${USERS_API}/credentials`, user);
     return response.data;
 }
 
 export const findUser = async (userId) => {
-    const response = await axios.get(`${USERS_API}/${userId}`)
+    const response = await api.get(`${USERS_API}/${userId}`)
     return response.data;
 }
 
 export const createUser = async (user) => {
-    const response = await axios.post(USERS_API, user)
+    const response = await api.post(USERS_API, user)
     return response.data;
 }
 
 export const deleteUsers = async (user) => {
-    const response = await axios.delete(`${USERS_API}/${user._id}`);
+    const response = await api.delete(`${USERS_API}/${user._id}`);
     return response.data;
 }
 
 export const updateUser = async (user) => {
-    const response = await axios.put(`${USERS_API}/${user._id}`, user);
+    const response = await api.put(`${USERS_API}/${user._id}`, user);
     return response.data;
 }
 

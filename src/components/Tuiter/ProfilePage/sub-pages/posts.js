@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {useProfile} from "../../../../contexts/profile-context";
 import {findCommentsByUserId} from "../../../services/users-service";
 import Tuit from "../../Tuit";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useOutletContext} from "react-router-dom";
 
 const Posts = ({
                    user = {
@@ -22,15 +21,18 @@ const Posts = ({
                        phoneNumber: String
                    }
                }) => {
-    const {profile} = useProfile()
+
     const [comments, setComments] = useState([])
-    const location = useLocation()
+/*    const location = useLocation()
     const s = location.state
     if (location.pathname === "/profile") {
         user = profile;
     } else {
         user = s.aUser;
-    }
+    }*/
+
+    user = useOutletContext()
+
     const findMyComments = async () => {
         const comments = await findCommentsByUserId(user._id)
         comments.reverse()

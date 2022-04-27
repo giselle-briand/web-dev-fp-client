@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 import PostSummaryList from "../PostSummaryList";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import Tuit from "../Tuit";
+import {findUserByCredentials} from "../../services/users-service";
+import axios from "axios";
 const tumblr = require('tumblr.js');
 
 const Search = () => {
@@ -11,6 +13,9 @@ const Search = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const client = tumblr.createClient({ consumer_key: 'aVWxuentDtiSQRwKjIv7rJtkeWRuslHqOMe5Sqkgubo2cyZ2No' });
+    const api = axios.create({
+        withCredentials: true
+    })
     const checkProfpic = (updatedPost) => {
         try {
             return updatedPost.trail[0].blog.theme.header_image;
@@ -26,7 +31,7 @@ const Search = () => {
             return updatedPost.blog.title;
         }
     }
-    const updatePost = (apiPost, profpic, profname) => {
+    const updatePost = (apiPost, profpic, profname, newUser) => {
         const duplicatePost = apiPost
         apiPost = {}
         apiPost.tuit = duplicatePost.summary;
@@ -38,10 +43,9 @@ const Search = () => {
         apiPost.bookmarked_users = [];
         apiPost.commented_users = [];
         apiPost["api-post-id"] = duplicatePost.id_string;
-        apiPost.username = duplicatePost.blog.name;
         apiPost.name = profname
-        apiPost.verified = false;
-        apiPost.time = "";
+        apiPost.username = duplicatePost.blog.name;
+        apiPost.creator = newUser._id;
         apiPost.date = {}
         apiPost.date.day = duplicatePost.date.substring(8,10);
         apiPost.date.month = duplicatePost.date.substring(5, 7);
@@ -53,7 +57,7 @@ const Search = () => {
         }
         return apiPost
     }
-    const convertAPIpostToTuitAndMakeUser = (apiPost) => {
+    const convertAPIpostToTuitAndMakeUser = async (apiPost) => {
         const profpic = checkProfpic(apiPost);
         const profname = getName(apiPost)
         const user = {
@@ -65,9 +69,15 @@ const Search = () => {
             name: profname,
             phoneNumber: "123-456-7890",
             admin: false,
-            likes: apiPost.note_count
         };
-        const updatedPost = updatePost(apiPost, profpic, profname)
+        let newUser
+        try {
+            newUser = await findUserByCredentials(user);
+        } catch (e) {
+            const response = await api.post("http://localhost:4000/api/signup", user)
+            newUser = response.data
+        }
+        const updatedPost = updatePost(apiPost, profpic, profname, newUser)
         setPosts(oldPosts =>([...oldPosts, {post: updatedPost, u: user}]));
     }
     const searchPostsByKeyword = async () => {

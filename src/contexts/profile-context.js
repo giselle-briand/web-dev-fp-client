@@ -23,6 +23,8 @@ export const ProfileProvider = ({children}) => {
         try {
             const response = await api
                 .post("http://localhost:4000/api/profile")
+
+            console.log(response.data)
             setProfile(response.data)
             return response.data
         } catch (e) {
@@ -55,7 +57,13 @@ export const ProfileProvider = ({children}) => {
         }
     }
 
-    const value = {signout, signin, profile, signup, checkLoggedIn}
+
+    const value = {
+        signout,
+        signin,
+        profileState: [profile, setProfile],
+        signup:signup,
+        checkLoggedIn}
 
     return(
         <ProfileContext.Provider value={value}>

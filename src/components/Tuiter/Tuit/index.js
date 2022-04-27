@@ -47,23 +47,25 @@ const Tuit = ({
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const {profile} = useProfile();
-    const api = axios.create({
-        withCredentials: true
-    })
+    const {profileState} = useProfile();
+    const [profile, setProfile] = profileState;
+
+    //TODO create a statement that updates profile with that of database on referesh
+
     const goToProfile = async () => {
         const tuitUser = await findUser(tuit.creator);
         if ((profile !== "init") && tuitUser.username === profile.username) {
-            navigate(`/profile`, {state: {aUser: tuitUser, previous_path: location.pathname}})
+            navigate(`/profile`, {state: {aUser: tuitUser, previous_path: location.pathname, thePost: tuit}})
         } else {
-            navigate(`/profile/${tuit.username}`, {state: {aUser: tuitUser, previous_path: location.pathname}})
+            navigate(`/profile/${tuit.username}`, {state: {aUser: tuitUser, previous_path: location.pathname, thePost: tuit}})
         }
     }
     const goToDetails = async (post) => {
+        const tuitUser = await findUser(tuit.creator);
         if (post._id === undefined) {
-            navigate(`/details/${post["api-post-id"]}`, {state: [post, location.pathname, user]});
+            navigate(`/details/${post["api-post-id"]}`, {state: {thePost: post, previous_path: location.pathname, aUser: tuitUser}});
         } else {
-            navigate(`/details/${post._id}`, {state: [post, location.pathname, user]});
+            navigate(`/details/${post._id}`, {state: {thePost: post, previous_path: location.pathname, aUser: tuitUser}});
         }
     }
     const likeIt = async () => {
@@ -71,38 +73,55 @@ const Tuit = ({
             navigate('/login')
         } else {
             if (tuit._id === undefined) {
-                try {
-                    user = await findUserByCredentials(user);
-                } catch (e) {
-                    const response = await api.post("http://localhost:4000/api/signup", user)
-                    user = response.data
-                }
+                // try {
+                //     user = await findUserByCredentials(user);
+                // } catch (e) {
+                //     const response = await api.post("http://localhost:4000/api/signup", user)
+                //     user = response.data
+                // }
                 tuit = await createTuit(user._id, tuit)
             }
+
             await updateTuit(dispatch, {
                 ...tuit,
                 likes: tuit.likes + 1,
                 liked_users: [...tuit.liked_users, profile._id]
             })
-            await updateUser(dispatch, {
+
+            console.log(profile.liked_tuits)
+
+            const newUser = {
                 ...profile,
                 liked_tuits: [...profile.liked_tuits, tuit._id]
-            });
+            }
+            console.log(newUser)
+
+            await updateUser(dispatch, newUser);
+            setProfile({...newUser})
+            //setProfile("heee")
+            console.log(profile)
         }
     }
     const unlikeIt = async () => {
+
         await updateTuit(dispatch, {
             ...tuit,
             likes: tuit.likes - 1,
             liked_users: tuit.liked_users.filter(a_user => a_user !== profile._id)
         })
-        await updateUser(dispatch, {
+        const newUser = {
             ...profile,
             liked_tuits: profile.liked_tuits.filter(a_tuit => a_tuit !== tuit._id)
-        });
+        }
+
+        await updateUser(dispatch, newUser);
+
+        setProfile({...newUser})
+        //setProfile("yolo")
     }
     const isLiked = () => {
-        return tuit.liked_users.includes(profile._id) //&& profile.liked_tuits.includes(tuit._id);
+        console.log(profile)
+        return tuit.liked_users.includes(profile._id) && profile.liked_tuits.includes(tuit._id);
     }
     const isUnliked = () => {
         return !profile.liked_tuits.includes(tuit._id)
@@ -110,9 +129,9 @@ const Tuit = ({
     const isBookmarked = () => {
         return tuit.bookmarked_users.includes(profile._id);
     }
-    console.log("TUIT PASSED INTO TUIT/INDEX.JS:")
-    console.log(tuit)
-    console.log(tuit["avatar-image"])
+    //console.log("TUIT PASSED INTO TUIT/INDEX.JS:")
+    //console.log(tuit)
+
     return (
         <div className="row ps-3 pe-3">
             <div className="col-1">

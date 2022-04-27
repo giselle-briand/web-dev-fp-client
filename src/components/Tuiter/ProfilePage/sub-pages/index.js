@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import '../../../../css/profile.css'
 import {useProfile} from "../../../../contexts/profile-context";
 
@@ -29,28 +29,11 @@ const ProfileNavigation = (
 ) => {
     const location = useLocation()
     active = location.pathname;
-    const profile = useProfile()
-    const highlight = (id) => {
-        const selectedDiv = document.getElementById(id);
-        const postsDiv = document.getElementById("posts");
-        const bookmarksDiv = document.getElementById("bookmarks");
-        const likesDiv = document.getElementById("likes");
-        if (id === "bookmarks") {
-            selectedDiv.style.backgroundColor = "#2a9fd6";
-            postsDiv.style.backgroundColor = "transparent";
-            likesDiv.style.backgroundColor = "transparent";
-        }
-        else if (id === "posts") {
-            selectedDiv.style.backgroundColor = "#2a9fd6";
-            bookmarksDiv.style.backgroundColor = "transparent";
-            likesDiv.style.backgroundColor = "transparent";
-        }
-        else {
-            selectedDiv.style.backgroundColor = "#2a9fd6";
-            postsDiv.style.backgroundColor = "transparent";
-            bookmarksDiv.style.backgroundColor = "transparent";
-        }
-    }
+
+    // user = params.user
+    // previous_path = params.previous_path
+    // parent_path = params.parent_path
+
     let bookmarks_path;
     let tuits_path;
     let likes_path;
@@ -65,6 +48,35 @@ const ProfileNavigation = (
         tuits_path = `/profile/${user.username}`;
         likes_path = `/profile/${user.username}/likes`;
     }
+    console.log("USER GIVEN TO SUBPAGES:")
+    console.log(user)
+
+    const highlight = (id) => {
+        const selectedDiv = document.getElementById(id);
+        const postsDiv = document.getElementById("posts");
+        const bookmarksDiv = document.getElementById("bookmarks");
+        const likesDiv = document.getElementById("likes");
+        if (id === "bookmarks") {
+            selectedDiv.style.backgroundColor = "#2a9fd6";
+            postsDiv.style.backgroundColor = "transparent";
+            likesDiv.style.backgroundColor = "transparent";
+        }
+        else if (id === "posts") {
+            selectedDiv.style.backgroundColor = "#2a9fd6";
+            if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || user.admin) {
+                bookmarksDiv.style.backgroundColor = "transparent";
+            }
+            likesDiv.style.backgroundColor = "transparent";
+        }
+        else {
+            selectedDiv.style.backgroundColor = "#2a9fd6";
+            postsDiv.style.backgroundColor = "transparent";
+            if (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || user.admin) {
+                bookmarksDiv.style.backgroundColor = "transparent";
+            }
+        }
+    }
+
     return(
         <>
             <div className="nav nav-tabs nav-fill spacing" >
@@ -83,7 +95,7 @@ const ProfileNavigation = (
                           onClick={() => {highlight("likes")}}>Likes</Link>
                 </div>
                 {
-                    (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || profile.admin) &&
+                    (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || user.admin) &&
                         <div  className={`nav-item col-3`}>
                             <Link id="bookmarks"
                                   className="nav-link"

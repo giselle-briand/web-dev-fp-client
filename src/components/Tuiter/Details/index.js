@@ -5,7 +5,7 @@ import TuitStats from "../TuitStats/TuitStats";
 import TuitListItem from "../TuitList/TuitListItem";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
-import {findUserByCredentials} from "../../services/users-service";
+import {findUser, findUserByCredentials} from "../../services/users-service";
 import {createTuit} from "../../services/tuits-service";
 import {updateTuit} from "../actions/tuits-actions";
 import {updateUser} from "../actions/users-actions";
@@ -55,17 +55,29 @@ const Details = ({
     const {profile} = useProfile()
     const {state} = useLocation()
     const dispatch = useDispatch()
-    tuit = state[0] || {};
-    previous_path = state[1]
-    user = state[2]
+    const location = useLocation()
+    const s = location.state
+    tuit = s.thePost
+    previous_path = s.previous_path
+    user = state.aUser
     const goBack = () => {
-        navigate(previous_path);
+        navigate(previous_path, {state: {aUser: user, previous_path: previous_path, thePost: tuit}});
+    }
+    const goToProfile = async () => {
+        const tuitUser = await findUser(tuit.creator);
+        if ((profile !== "init") && tuitUser.username === profile.username) {
+            navigate(`/profile`, {state: {aUser: tuitUser, previous_path: location.pathname}})
+        } else {
+            navigate(`/profile/${tuit.username}`, {state: {aUser: tuitUser, previous_path: location.pathname}})
+        }
     }
     const likeIt = async () => {
+        console.log("in Like it -- details")
         if (profile === "init") {
             navigate('/login')
         } else {
             if (tuit._id === undefined) {
+                console.log("tuit isn't a tuit yet, gonna try to make one")
                 try {
                     user = await findUserByCredentials(user);
                 } catch (e) {
@@ -73,6 +85,7 @@ const Details = ({
                     user = response.data
                 }
                 tuit = await createTuit(user._id, tuit)
+                console.log("made a user and a tuit")
             }
             await updateTuit(dispatch, {
                 ...tuit,
@@ -83,6 +96,8 @@ const Details = ({
                 ...profile,
                 liked_tuits: [...profile.liked_tuits, tuit._id]
             });
+            console.log("updated the tuit:")
+            console.log(tuit)
         }
     }
     const unlikeIt = async () => {
@@ -122,7 +137,7 @@ const Details = ({
                         <div className="d-inline-flex justify-content-between w-100">
                             <div className="ps-4 ps-md-2">
                                 <div className="m-0 ">
-                                    <h6 className="fw-bold m-0">{tuit.name} 
+                                    <h6 className="fw-bold m-0" onClick={goToProfile}>{tuit.name}
                                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span></h6>
                                 </div>
                                 <div className="">
