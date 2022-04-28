@@ -192,7 +192,7 @@ const Tuit = ({
             </div>
             <div className="col-11 mb-2">
                 <div className="d-inline-flex justify-content-between w-100">
-                    <h6 className="fw-bold m-0" onClick={goToProfile}>{tuit.name}
+                    <h6 className="fw-bold m-0" onClick={() => goToProfile()}>{tuit.name}
                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
                     <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "-" + tuit.date.day}</span></h6>
                     {
@@ -223,10 +223,10 @@ const Tuit = ({
                     </h6>
                     <h6 className="text-secondary m-0">
                         {
-                            isLiked() && <i className="fa-solid fa-heart" onClick={unlikeIt}/>
+                            isLiked() && <i className="fa-solid fa-heart" onClick={() => unlikeIt()}/>
                         }
                         {
-                            !isLiked() && <i className="fa-regular fa-heart" onClick={likeIt}/>
+                            !isLiked() && <i className="fa-regular fa-heart" onClick={() => likeIt()}/>
                         }
                         <span className="ps-3">{tuit.likes}</span>
                     </h6>

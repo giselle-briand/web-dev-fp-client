@@ -33,6 +33,11 @@ export const updateUser = async (user) => {
     return response.data;
 }
 
+export const updateOtherUser = async (user) => {
+    const response = await api.put(`${USERS_API}/other/${user._id}`, user);
+    return response.data;
+}
+
 export const findCommentsByUserId = async (userid) => {
     const response = await api.get(`${USERS_API}/${userid}/tuits`)
     return response.data

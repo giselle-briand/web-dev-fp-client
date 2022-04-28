@@ -2,6 +2,7 @@ import * as service from '../../services/users-service';
 
 export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_OTHER_USER = 'UPDATE_OTHER_USER';
 export const DELETE_USER = 'DELETE_USER';
 
 export const createUser = async (dispatch, user) => {
@@ -14,6 +15,14 @@ export const createUser = async (dispatch, user) => {
 
 export const updateUser = async (dispatch, user) => {
     const status = await service.updateUser(user);
+    dispatch({
+        type: UPDATE_USER,
+        user
+    });
+}
+
+export const updateOtherUser = async (dispatch, user) => {
+    const status = await service.updateOtherUser(user);
     dispatch({
         type: UPDATE_USER,
         user

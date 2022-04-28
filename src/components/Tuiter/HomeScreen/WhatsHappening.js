@@ -6,10 +6,10 @@ import {updateUser} from "../actions/users-actions";
 
 const WhatsHappening = () => {
     const {profileState} = useProfile()
-    const [profile, ] = profileState
-
+    const [profile, setProfile] = profileState
     const dispatch = useDispatch();
     const [newTuit, setNewTuit] = useState({tuit: 'New tuit'});
+
     const makeTuit = async () => {
         await createTuit(dispatch, profile._id, newTuit)
         const textbox = document.getElementById("textarea")

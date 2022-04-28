@@ -32,13 +32,13 @@ const ProfileItem = ({
     const [followButtonText, setFollowButtonText] = useState("Follow")
     const [followingButtonText, setFollowingButtonText] = useState("Following")
     const location = useLocation()
-    const s = location.state
+    // const s = location.state
 
-    if (location.pathname === "/profile/bookmarks") {
-        user = profile;
-    } else {
-        user = s.aUser;
-    }
+    // if (location.pathname === "/profile/bookmarks") {
+    //     user = profile;
+    // } else {
+    //     user = s.aUser;
+    // }
 
     const followUser = async () => {
         const loggedInUser = profile
@@ -87,16 +87,16 @@ const ProfileItem = ({
                 <img src={user['avatar-image']} className="wd-avatar-image"/>
             </div>
             <div className="col-11 mb-2">
-                <div className="d-inline-flex justify-content-between w-100" onClick={goToProfile}>
-                    <h6 className="fw-bold m-0">{user.name}
+                <div className="d-inline-flex justify-content-between w-100" onClick={() => goToProfile()}>
+                    <h6 className="fw-bold m-0 ps-2">{user.name}
                         <span><i className={`${user.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
                     </h6>
                     <h6 className="text-secondary m-0">
                         {
-                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && !checkIfFollowing()) && <button type="button" onClick={followUser} className="btn btn-primary wd-float-right space-button">{followButtonText}</button>
+                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && !checkIfFollowing()) && <button type="button" onClick={() => followUser()} className="btn btn-primary wd-float-right space-button">{followButtonText}</button>
                         }
                         {
-                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && checkIfFollowing()) && <button type="button" onClick={unfollowUser} className="btn btn-primary wd-float-right space-button">{followingButtonText}</button>
+                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && checkIfFollowing()) && <button type="button" onClick={() => unfollowUser()} className="btn btn-primary wd-float-right space-button">{followingButtonText}</button>
                         }
                     </h6>
                 </div>
