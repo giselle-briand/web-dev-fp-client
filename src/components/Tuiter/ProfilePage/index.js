@@ -74,7 +74,7 @@ const ProfilePage = (
 
     }
     const editProfile = async () => {
-        // TODO: add edit profile ability
+        navigate("/profile/edit")
     }
     const checkIfFollowing = () => {
         try {

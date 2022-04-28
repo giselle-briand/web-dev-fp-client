@@ -2,11 +2,8 @@ import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import {createUser} from "../actions/users-actions";
 import '../../../css/profile.css'
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
-
-const api = axios.create({withCredentials: true})
 
 const Register = () => {
     //const dispatch = useDispatch();
