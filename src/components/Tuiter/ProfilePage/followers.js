@@ -2,7 +2,6 @@ import {useProfile} from "../../../contexts/profile-context";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {findFollowersByUserId} from "../../services/users-service";
-import Tuit from "../Tuit";
 import ProfileItem from "./profileitem";
 import {useNavigate} from "react-router";
 
@@ -19,7 +18,6 @@ const Followers = () => {
     } else {
         user = s.aUser;
     }
-    console.log(user)
 
     const findFollowers = async () => {
           const followers = await findFollowersByUserId(user._id)

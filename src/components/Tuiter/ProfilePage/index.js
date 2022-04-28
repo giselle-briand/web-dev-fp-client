@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import '../../../css/profile.css'
 import {useProfile} from "../../../contexts/profile-context";
-import {useDispatch, useSelector} from "react-redux";
-import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import ProfileNavigation from "./sub-pages"
 import {deleteUser, updateUser, updateOtherUser} from "../actions/users-actions";
 import SecureContent from "../../secure-content";
@@ -31,11 +31,8 @@ const ProfilePage = (
 
     const {profileState, signout} = useProfile()
     const [profile, setProfile] = profileState
-    // const [user, setUser] = useState(givenUser)
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const [followButtonText, setFollowButtonText] = useState("Follow")
-    const [followingButtonText, setFollowingButtonText] = useState("Following")
 
     let parent_path, tuit;
     const location = useLocation()
@@ -43,7 +40,6 @@ const ProfilePage = (
 
     if (location.pathname === "/profile") {
         givenuser = profile
-        // setUser(profile)
     }
     else {
         try {
@@ -82,9 +78,6 @@ const ProfilePage = (
     }
     const checkIfFollowing = () => {
         try {
-            console.log("LOGGED IN USER JSON AND OTHER USER JSON IN CHECKIFFOLLOWING() IN PROFILEPAGE/INDEX.JS")
-            console.log(profile)
-            console.log(user)
             return user.followers.includes(profile._id) && profile.following.includes(user._id);
         }
         catch (e) {
@@ -94,58 +87,42 @@ const ProfilePage = (
     const followUser = async () => {
         const newU = {
             ...profile,
-            following: [...profile.following, user._id]
-        }
-        const newUser = {
-            ...newU,
+            following: [...profile.following, user._id],
             followingCount: profile.followingCount + 1
         }
-        updateUser(dispatch, newUser);
-        setProfile(newUser)
+        await updateUser(dispatch, newU);
+        setProfile({...newU})
+
         const otherUser = {
             ...user,
-            followers: [...user.followers, profile._id]
-        }
-        const newOtherUser = {
-            ...otherUser,
+            followers: [...user.followers, profile._id],
             followerCount: user.followerCount + 1
         }
-        // updateUser(dispatch, {
-        //     ...profile,
-        //     following: [...profile.following, user._id],
-        //     followingCount: profile.followingCount + 1
-        // });
-        // updateOtherUser(dispatch, {
-        //     ...user,
-        //     followers: [...user.followers, profile._id],
-        //     followersCount: user.followersCount + 1
-        // });
 
-        updateOtherUser(dispatch, newOtherUser);
-        setUser({...newOtherUser})
-        // setFollowButtonText("Following");
-        console.log("LOGGED IN USER JSON AND OTHER USER JSON AFTER THE ACTION IN FOLLOWUSER() IN PROFILEPAGE/INDEX.JS")
-        console.log(profile)
-        console.log(user)
+        await updateOtherUser(dispatch, otherUser);
+        setUser({...otherUser})
     }
-    const unfollowUser = () => {
-        updateUser(dispatch, {
+    const unfollowUser = async () => {
+        const newU = {
             ...profile,
-            following: profile.following.filter(a_user => a_user._id !== user._id),
+            following: profile.following.filter(a_user => a_user !== user._id),
             followingCount: profile.followingCount - 1
-        });
-        updateUser(dispatch, {
+        }
+
+        await updateUser(dispatch, newU);
+        setProfile({...newU})
+
+        const otherUser = {
             ...user,
-            followers: user.following.filter(a_user => a_user._id !== profile._id),
-            followersCount: user.followersCount - 1
-        });
-        console.log("LOGGED IN USER JSON AND OTHER USER JSON AFTER THE ACTION IN UNFOLLOWUSER() IN PROFILEPAGE/INDEX.JS")
-        console.log(profile)
-        console.log(user)
-        setFollowingButtonText("Follow");
+            followers: user.followers.filter(a_user => a_user !== profile._id),
+            followerCount: user.followerCount - 1
+        }
+
+        await updateOtherUser(dispatch, otherUser);
+        setUser({...otherUser})
     }
-    const deleteAccount = () => {
-        deleteUser(dispatch, user)
+    const deleteAccount = async () => {
+        await deleteUser(dispatch, user)
         navigate("/")
     }
     const goToFollowing = () => {

@@ -181,7 +181,6 @@ const Tuit = ({
         if (profile === "init") {
             return false
         }
-        console.log(tuit)
         return profile.bookmarks.includes(tuit._id) && tuit.bookmarked_users.includes(profile._id);
     }
 

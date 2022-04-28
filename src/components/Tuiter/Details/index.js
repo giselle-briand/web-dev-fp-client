@@ -51,7 +51,6 @@ const Details = ({
     const location = useLocation()
     const s = location.state
     const givenTuit = s.thePost
-    console.log(givenTuit)
     previous_path = s.previous_path
     user = s.aUser
 
@@ -184,7 +183,6 @@ const Details = ({
         if (profile === "init") {
             return false
         }
-        console.log(profile)
         return profile.bookmarks.includes(tuit._id) && tuit.bookmarked_users.includes(profile._id);
     }
 

@@ -48,8 +48,8 @@ const ProfileNavigation = (
         tuits_path = `/profile/${user.username}`;
         likes_path = `/profile/${user.username}/likes`;
     }
-    console.log("USER GIVEN TO SUBPAGES:")
-    console.log(user)
+    //console.log("USER GIVEN TO SUBPAGES:")
+    //console.log(user)
 
     const highlight = (id) => {
         const selectedDiv = document.getElementById(id);

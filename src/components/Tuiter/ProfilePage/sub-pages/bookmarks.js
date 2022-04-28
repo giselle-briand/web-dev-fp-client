@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useProfile} from "../../../../contexts/profile-context";
 import {findBookmarksByUserId} from "../../../services/users-service";
 import Tuit from "../../Tuit";
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 const Bookmarks = ({
                        user = {
@@ -43,7 +43,6 @@ const Bookmarks = ({
         findMyBookmarks()
     }, [])
 
-    console.log(bookmarks.length)
     return(
 
         <ul className="list-group">
