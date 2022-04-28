@@ -6,7 +6,6 @@ import {createUser} from "../components/Tuiter/actions/users-actions";
 const ProfileContext = React.createContext("");
 
 const api = axios.create({
-    //withCredentials: false
     withCredentials: true
 })
 
@@ -24,7 +23,6 @@ export const ProfileProvider = ({children}) => {
             const response = await api
                 .post("http://localhost:4000/api/profile")
 
-            console.log(response.data)
             setProfile(response.data)
             return response.data
         } catch (e) {
@@ -34,7 +32,6 @@ export const ProfileProvider = ({children}) => {
 
     const signup = async (user) => {
         try { // TODO: move this to service
-            console.log(user);
            const response = await api.post("http://localhost:4000/api/signup",
                user)
                //createUser(dispatch, user)

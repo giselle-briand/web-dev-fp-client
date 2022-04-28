@@ -1,14 +1,13 @@
 import {useProfile} from "../../../contexts/profile-context";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {findFollowersByUserId, findFollowingByUserId} from "../../services/users-service";
-import Tuit from "../Tuit";
+import {findFollowingByUserId} from "../../services/users-service";
 import ProfileItem from "./profileitem";
 import {useNavigate} from "react-router";
 
 const Following = () => {
     const {profileState} = useProfile()
-    const [profile, setProfile] = profileState
+    const [profile, ] = profileState
     const navigate = useNavigate()
     const [followings, setFollowings] = useState([])
     const location = useLocation()
@@ -22,7 +21,6 @@ const Following = () => {
 
     const findFollowing = async () => {
         const following = await findFollowingByUserId(user._id)
-        console.log(following)
         setFollowings(following)
     }
 
