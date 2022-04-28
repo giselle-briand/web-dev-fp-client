@@ -6,31 +6,15 @@ import Tuit from "../Tuit";
 import ProfileItem from "./profileitem";
 import {useNavigate} from "react-router";
 
-const Following = ({
-                       user = {
-                           name: "rosan wang",
-                           username: "WangRosan",
-                           password: "",
-                           avatar_image: "../../../media/profileimage.jpg",
-                           header: "../../../media/fall.png",
-                           bio: "Hi! Welcome to my Bio!",
-                           followerCount: 1,
-                           followingCount: 1,
-                           followers: [],
-                           following: [],
-                           liked_tuits: [],
-                           verified: true,
-                           email: "rosanwang@yahoo.com",
-                           phoneNumber: String
-                       }
-                   }) => {
-    const {profile} = useProfile()
+const Following = () => {
+    const {profileState} = useProfile()
+    const [profile, setProfile] = profileState
     const navigate = useNavigate()
     const [followings, setFollowings] = useState([])
     const location = useLocation()
     const s = location.state
-
-    if (location.pathname === "/profile/followers") {
+    let user
+    if (location.pathname === "/profile/following") {
         user = profile;
     } else {
         user = s.aUser;
@@ -38,6 +22,7 @@ const Following = ({
 
     const findFollowing = async () => {
         const following = await findFollowingByUserId(user._id)
+        console.log(following)
         setFollowings(following)
     }
 

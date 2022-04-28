@@ -1,4 +1,4 @@
-import {UPDATE_USER, CREATE_USER, DELETE_USER} from "../actions/users-actions";
+import {UPDATE_USER, CREATE_USER, DELETE_USER, UPDATE_OTHER_USER} from "../actions/users-actions";
 
 const usersReducer = (state = [], action) => {
     switch (action.type) {
@@ -10,6 +10,9 @@ const usersReducer = (state = [], action) => {
                 ...state
             ];
         case UPDATE_USER:
+            return state.map(
+                user => user._id === action.user._id ? action.user : user);
+        case UPDATE_OTHER_USER:
             return state.map(
                 user => user._id === action.user._id ? action.user : user);
         default:
