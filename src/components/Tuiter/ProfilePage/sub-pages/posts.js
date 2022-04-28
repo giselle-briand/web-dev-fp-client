@@ -48,7 +48,7 @@ const Posts = ({
         <ul className="list-group">
             {
                 comments && comments.map(comment =>
-                    <Tuit tuit={comment}/>
+                    <Tuit givenTuit={comment}/>
                 )
             }
         </ul>

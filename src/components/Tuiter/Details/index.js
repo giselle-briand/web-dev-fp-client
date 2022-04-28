@@ -1,44 +1,38 @@
 import axios from "axios";
-import React from "react";
+import React, {useState} from "react";
 import Tuit from "../Tuit";
-import TuitStats from "../TuitStats/TuitStats";
-import TuitListItem from "../TuitList/TuitListItem";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
-import {findUser, findUserByCredentials} from "../../services/users-service";
+import {findUser} from "../../services/users-service";
 import {createTuit} from "../../services/tuits-service";
 import {updateTuit} from "../actions/tuits-actions";
 import {updateUser} from "../actions/users-actions";
 import {useDispatch} from "react-redux";
 
-const api = axios.create({
-    withCredentials: true
-  });
-
 const Details = ({
-                     tuit = {
-                         tuit: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, laoreet vitae massa eget, elementum gravida mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                         likes: 14,
-                         dislikes: 0,
-                         comments: 0,
-                         retuits: 3,
-                         liked_users: [],
-                         "api-post-id": "",
-                         name: "A Name",
-                         username: "handle",
-                         creator: [],
-                         date: {
-                             day: "14",
-                             month: "Sep",
-                             year: "2022",
-                             time: "08:11 PM"
-                         },
-                         title: "",
-                         topic: "",
-                         image: "",
-                         video: "",
-                         "avatar-image": "../media/emptypp.webp"
-                     },
+                     // tuit = {
+                     //     tuit: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, laoreet vitae massa eget, elementum gravida mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                     //     likes: 14,
+                     //     dislikes: 0,
+                     //     comments: 0,
+                     //     retuits: 3,
+                     //     liked_users: [],
+                     //     "api-post-id": "",
+                     //     name: "A Name",
+                     //     username: "handle",
+                     //     creator: "",
+                     //     date: {
+                     //         day: "14",
+                     //         month: "Sep",
+                     //         year: "2022",
+                     //         time: "08:11 PM"
+                     //     },
+                     //     title: "",
+                     //     topic: "",
+                     //     image: "",
+                     //     video: "",
+                     //     "avatar-image": "../media/emptypp.webp"
+                     // },
     previous_path = "",
                      user ={
                          name: "",
@@ -52,14 +46,17 @@ const Details = ({
                      }
 }) => {
     const navigate = useNavigate()
-    const {profile} = useProfile()
-    const {state} = useLocation()
+    const {profileState} = useProfile();
+    const [profile, setProfile] = profileState;
     const dispatch = useDispatch()
     const location = useLocation()
     const s = location.state
-    tuit = s.thePost
+    const givenTuit = s.thePost
     previous_path = s.previous_path
-    user = state.aUser
+    user = s.aUser
+
+    const [tuit, setTuit] = useState(givenTuit);
+
     const goBack = () => {
         navigate(previous_path, {state: {aUser: user, previous_path: previous_path, thePost: tuit}});
     }
@@ -72,49 +69,69 @@ const Details = ({
         }
     }
     const likeIt = async () => {
-        console.log("in Like it -- details")
         if (profile === "init") {
             navigate('/login')
         } else {
+            let newTuit
+            let newUser
             if (tuit._id === undefined) {
-                console.log("tuit isn't a tuit yet, gonna try to make one")
-                try {
-                    user = await findUserByCredentials(user);
-                } catch (e) {
-                    const response = await api.post("http://localhost:4000/api/signup", user)
-                    user = response.data
+                const createdTuit = await createTuit(user._id, tuit)
+                const createdTuitId = createdTuit._id
+                setTuit({...createdTuit})
+                newTuit = {
+                    ...tuit,
+                    likes: tuit.likes + 1,
+                    liked_users: [...tuit.liked_users, profile._id],
+                    _id: createdTuitId
                 }
-                tuit = await createTuit(user._id, tuit)
-                console.log("made a user and a tuit")
+                newUser = {
+                    ...profile,
+                    liked_tuits: [...profile.liked_tuits, newTuit._id]
+                }
             }
-            await updateTuit(dispatch, {
-                ...tuit,
-                likes: tuit.likes + 1,
-                liked_users: [...tuit.liked_users, profile._id]
-            })
-            await updateUser(dispatch, {
-                ...profile,
-                liked_tuits: [...profile.liked_tuits, tuit._id]
-            });
-            console.log("updated the tuit:")
-            console.log(tuit)
+            else {
+                newTuit = {
+                    ...tuit,
+                    likes: tuit.likes + 1,
+                    liked_users: [...tuit.liked_users, profile._id]
+                }
+                newUser = {
+                    ...profile,
+                    liked_tuits: [...profile.liked_tuits, tuit._id]
+                }
+            }
+
+            await updateTuit(dispatch, newTuit);
+            setTuit({...newTuit})
+            await updateUser(dispatch, newUser);
+            setProfile({...newUser})
         }
     }
     const unlikeIt = async () => {
-        await updateTuit(dispatch, {
+        const newTuit = {
             ...tuit,
             likes: tuit.likes - 1,
             liked_users: tuit.liked_users.filter(a_user => a_user !== profile._id)
-        })
-        await updateUser(dispatch, {
+        }
+        const newUser = {
             ...profile,
             liked_tuits: profile.liked_tuits.filter(a_tuit => a_tuit !== tuit._id)
-        });
+        }
+        await updateTuit(dispatch, newTuit)
+        setTuit({...newTuit})
+        await updateUser(dispatch, newUser);
+        setProfile({...newUser})
     }
     const isLiked = () => {
-        return tuit.liked_users.includes(profile._id);
+        if (profile === "init") {
+            return false
+        }
+        return tuit.liked_users.includes(profile._id) && profile.liked_tuits.includes(tuit._id); //tuit.liked_users.includes(profile._id) &&
     }
     const isBookmarked = () => {
+        if (profile === "init") {
+            return false
+        }
         return tuit.bookmarked_users.includes(profile._id);
     }
     return (

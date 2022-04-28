@@ -78,7 +78,7 @@ const Search = () => {
             newUser = response.data
         }
         const updatedPost = updatePost(apiPost, profpic, profname, newUser)
-        setPosts(oldPosts =>([...oldPosts, {post: updatedPost, u: user}]));
+        setPosts(oldPosts =>([...oldPosts, {post: updatedPost, u: newUser}]));
     }
     const searchPostsByKeyword = async () => {
         try {
@@ -129,7 +129,7 @@ const Search = () => {
                 {
                     posts.map(post =>
                         <div>
-                            <Tuit tuit={post.post} user={post.u}/>
+                            <Tuit givenTuit={post.post} user={post.u}/>
                         </div>
                     )
                 }

@@ -14,7 +14,6 @@ export const createUser = async (dispatch, user) => {
 
 export const updateUser = async (dispatch, user) => {
     const status = await service.updateUser(user);
-    alert(status)
     dispatch({
         type: UPDATE_USER,
         user
