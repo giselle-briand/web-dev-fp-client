@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useProfile} from "../../../../contexts/profile-context";
-//import {findCommentsByUserId} from "../../../services/users-service";
+import {findBookmarksByUserId} from "../../../services/users-service";
 import Tuit from "../../Tuit";
 import {Link, useLocation} from "react-router-dom";
 
@@ -22,7 +22,8 @@ const Bookmarks = ({
                            phoneNumber: String
                        }
                    }) => {
-    const {profile} = useProfile()
+    const {profileState} = useProfile()
+    const [profile,] = profileState
     const [bookmarks, setBookmarks] = useState([])
     const location = useLocation()
     const s = location.state
@@ -33,19 +34,24 @@ const Bookmarks = ({
         user = s.aUser;
     }
 
-  /*  const findMyComments = async () => {
-        const comments = await findCommentsByUserId(user._id)
-        setComments(comments)
+    const findMyBookmarks = async () => {
+        const bookmarks = await findBookmarksByUserId(user._id)
+        setBookmarks(bookmarks)
     }
 
     useEffect(() => {
-        findMyComments()
-    }, [])*/
+        findMyBookmarks()
+    }, [])
 
-
+    console.log(bookmarks.length)
     return(
+
         <ul className="list-group">
-            bookmarks
+            {
+                bookmarks && bookmarks.map(bookmark =>
+                        <Tuit givenTuit={bookmark}/>
+                )
+            }
         </ul>
 
     )

@@ -1,4 +1,5 @@
 import * as service from '../../services/tuits-service';
+import {updateUser} from "./users-actions";
 
 export const CREATE_TUIT = 'CREATE_TUIT';
 export const FIND_ALL_TUITS = 'FIND_ALL_TUITS';
@@ -34,3 +35,37 @@ export const deleteTuit = async (dispatch, tuit) => {
         tuit
     })
 }
+
+/*
+export const likeTuit = async (dispatch, tuit, user) => {
+    let newTuit
+    let newUser
+    if (tuit._id === undefined) {
+        const createdTuit = await createTuit(user._id, tuit)
+        const createdTuitId = createdTuit._id
+        setTuit({...createdTuit})
+        newTuit = {
+            ...tuit,
+            likes: tuit.likes + 1,
+            liked_users: [...tuit.liked_users, profile._id],
+            _id: createdTuitId
+        }
+        newUser = {
+            ...profile,
+            liked_tuits: [...profile.liked_tuits, newTuit._id]
+        }
+    }
+    else {
+        newTuit = {
+            ...tuit,
+            likes: tuit.likes + 1,
+            liked_users: [...tuit.liked_users, profile._id]
+        }
+        newUser = {
+            ...profile,
+            liked_tuits: [...profile.liked_tuits, tuit._id]
+        }
+    }
+    await updateTuit(dispatch, newTuit);
+    await updateUser(dispatch, newUser);
+}*/

@@ -102,6 +102,7 @@ const Tuit = ({
             setProfile({...newUser})
         }
     }
+
     const unlikeIt = async () => {
         const newTuit = {
             ...tuit,
@@ -123,8 +124,65 @@ const Tuit = ({
         }
         return tuit.liked_users.includes(profile._id) && profile.liked_tuits.includes(tuit._id);
     }
+
+    const bookmarkIt = async () => {
+        if (profile === "init") {
+            navigate('/login')
+        } else {
+            let newTuit
+            let newUser
+            if (tuit._id === undefined) {
+                const createdTuit = await createTuit(user._id, tuit)
+                const createdTuitId = createdTuit._id
+                setTuit({...createdTuit})
+                newTuit = {
+                    ...tuit,
+                    bookmarked_users: [...tuit.bookmarked_users, profile._id],
+                    _id: createdTuitId
+                }
+                newUser = {
+                    ...profile,
+                    bookmarks: [...profile.bookmarks, newTuit._id]
+                }
+            }
+            else {
+                newTuit = {
+                    ...tuit,
+                    bookmarked_users: [...tuit.bookmarked_users, profile._id]
+                }
+                newUser = {
+                    ...profile,
+                    bookmarks: [...profile.bookmarks, newTuit._id]
+                }
+            }
+            await updateTuit(dispatch, newTuit);
+            setTuit({...newTuit})
+            await updateUser(dispatch, newUser);
+            setProfile({...newUser})
+        }
+    }
+
+    const unbookmarkIt = async () => {
+        const newTuit = {
+            ...tuit,
+            bookmarked_users: tuit.bookmarked_users.filter(a_user => a_user !== profile._id)
+        }
+        const newUser = {
+            ...profile,
+            bookmarks: profile.bookmarks.filter(a_tuit => a_tuit !== tuit._id)
+        }
+        await updateTuit(dispatch, newTuit)
+        setTuit({...newTuit})
+        await updateUser(dispatch, newUser);
+        setProfile({...newUser})
+    }
+
     const isBookmarked = () => {
-        return tuit.bookmarked_users.includes(profile._id);
+        if (profile === "init") {
+            return false
+        }
+        console.log(tuit)
+        return profile.bookmarks.includes(tuit._id) && tuit.bookmarked_users.includes(profile._id);
     }
 
     return (
@@ -173,14 +231,12 @@ const Tuit = ({
                         <span className="ps-3">{tuit.likes}</span>
                     </h6>
                     <h6 className="text-secondary m-0">
-                        {/*//TODO: uncomment when bookmark logic is implemented*/}
-                        {/*{*/}
-                        {/*    isBookmarked() && <i className="fa-solid fa-bookmark"/>*/}
-                        {/*}*/}
-                        {/*{*/}
-                        {/*    !isBookmarked() && <i className="fa-regular fa-bookmark"/>*/}
-                        {/*}*/}
-                        <i className="fa-regular fa-bookmark"/>
+                        {
+                            isBookmarked() && <i className="fa-solid fa-bookmark" onClick={unbookmarkIt}/>
+                        }
+                        {
+                            !isBookmarked() && <i className="fa-regular fa-bookmark" onClick={bookmarkIt}/>
+                        }
                     </h6>
                 </div>
             </div>
