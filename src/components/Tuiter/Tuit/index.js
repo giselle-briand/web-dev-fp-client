@@ -186,10 +186,10 @@ const Tuit = ({
 
     return (
         <div className="row ps-3 pe-3">
-            <div className="col-1">
+            <div className="ps-xl-1 1col-sm-1">
             <img src={tuit["avatar-image"]} className="wd-avatar-image"/>
             </div>
-            <div className="col-11 mb-2">
+            <div className="col-sm-11 mb-2">
                 <div className="d-inline-flex justify-content-between w-100">
                     <h6 className="fw-bold m-0" onClick={() => goToProfile()}>{tuit.name}
                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
