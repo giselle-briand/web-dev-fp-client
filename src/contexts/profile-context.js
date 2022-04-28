@@ -1,15 +1,21 @@
 import React, { useContext, useState} from "react";
 import axios from "axios";
-import {useDispatch} from "react-redux";
 import {createUser} from "../components/Tuiter/actions/users-actions";
+import {updateUser} from "../components/services/users-service";
+import {updateTuit} from "../components/Tuiter/actions/tuits-actions";
 
+
+//notes, using useDispatch will kill everything. everything.
 const ProfileContext = React.createContext("");
 
 const api = axios.create({
     withCredentials: true
 })
 
+
+
 export const ProfileProvider = ({children}) => {
+    //const dispatch = useDispatch()
     const [profile, setProfile] = useState("init")
 
     const signout = async () => {
@@ -55,11 +61,21 @@ export const ProfileProvider = ({children}) => {
     }
 
 
+    const editUser = async (user) => {
+        try {
+            await updateUser(user)
+        } catch (e) {
+           throw e
+        }
+    }
+
+
     const value = {
         signout,
         signin,
         profileState: [profile, setProfile],
         signup:signup,
+        editUser,
         checkLoggedIn}
 
     return(
