@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, {useState} from "react";
 import Tuit from "../Tuit";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -52,6 +51,7 @@ const Details = ({
     const location = useLocation()
     const s = location.state
     const givenTuit = s.thePost
+    console.log(givenTuit)
     previous_path = s.previous_path
     user = s.aUser
 
@@ -75,7 +75,7 @@ const Details = ({
             let newTuit
             let newUser
             if (tuit._id === undefined) {
-                const createdTuit = await createTuit(user._id, tuit)
+                const createdTuit = createTuit(dispatch, user._id, tuit)
                 const createdTuitId = createdTuit._id
                 setTuit({...createdTuit})
                 newTuit = {
@@ -128,12 +128,66 @@ const Details = ({
         }
         return tuit.liked_users.includes(profile._id) && profile.liked_tuits.includes(tuit._id); //tuit.liked_users.includes(profile._id) &&
     }
+    const bookmarkIt = async () => {
+        if (profile === "init") {
+            navigate('/login')
+        } else {
+            let newTuit
+            let newUser
+            if (tuit._id === undefined) {
+                const createdTuit = await createTuit(user._id, tuit)
+                const createdTuitId = createdTuit._id
+                setTuit({...createdTuit})
+                newTuit = {
+                    ...tuit,
+                    bookmarked_users: [...tuit.bookmarked_users, profile._id],
+                    _id: createdTuitId
+                }
+                newUser = {
+                    ...profile,
+                    bookmarks: [...profile.bookmarks, newTuit._id]
+                }
+            }
+            else {
+                newTuit = {
+                    ...tuit,
+                    bookmarked_users: [...tuit.bookmarked_users, profile._id]
+                }
+                newUser = {
+                    ...profile,
+                    bookmarks: [...profile.bookmarks, newTuit._id]
+                }
+            }
+            await updateTuit(dispatch, newTuit);
+            setTuit({...newTuit})
+            await updateUser(dispatch, newUser);
+            setProfile({...newUser})
+        }
+    }
+
+    const unbookmarkIt = async () => {
+        const newTuit = {
+            ...tuit,
+            bookmarked_users: tuit.bookmarked_users.filter(a_user => a_user !== profile._id)
+        }
+        const newUser = {
+            ...profile,
+            bookmarks: profile.bookmarks.filter(a_tuit => a_tuit !== tuit._id)
+        }
+        await updateTuit(dispatch, newTuit)
+        setTuit({...newTuit})
+        await updateUser(dispatch, newUser);
+        setProfile({...newUser})
+    }
+
     const isBookmarked = () => {
         if (profile === "init") {
             return false
         }
-        return tuit.bookmarked_users.includes(profile._id);
+        console.log(profile)
+        return profile.bookmarks.includes(tuit._id) && tuit.bookmarked_users.includes(profile._id);
     }
+
     return (
         <div >
             <div className="row">
@@ -213,14 +267,12 @@ const Details = ({
                                 }
                             </h6>
                             <h6 className="text-secondary m-0">
-                                {/*//TODO: uncomment when bookmark logic is implemented*/}
-                                {/*{*/}
-                                {/*    isBookmarked() && <i className="fa-solid fa-bookmark fa-lg"/>*/}
-                                {/*}*/}
-                                {/*{*/}
-                                {/*    !isBookmarked() && <i className="fa-regular fa-bookmark fa-lg"/>*/}
-                                {/*}*/}
-                                <i className="fa-regular fa-bookmark fa-lg"/>
+                                {
+                                    isBookmarked() && <i className="fa-solid fa-bookmark fa-lg" onClick={unbookmarkIt}/>
+                                }
+                                {
+                                    !isBookmarked() && <i className="fa-regular fa-bookmark fa-lg" onClick={bookmarkIt}/>
+                                }
                             </h6>
                         </div>
                         <hr/>

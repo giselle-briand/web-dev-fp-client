@@ -43,18 +43,13 @@ const Bookmarks = ({
         findMyBookmarks()
     }, [])
 
-
+    console.log(bookmarks.length)
     return(
+
         <ul className="list-group">
             {
                 bookmarks && bookmarks.map(bookmark =>
-                    <li className="list-group-item">
-                        <Tuit tuit={bookmark}/>
-                        {/*                        <Link to={`/omdb/details/${comment.imdbID}`}>
-                            {comment && comment.comment}
-                            {comment.imdbID}
-                        </Link>*/}
-                    </li>
+                        <Tuit givenTuit={bookmark}/>
                 )
             }
         </ul>
