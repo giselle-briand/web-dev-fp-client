@@ -39,6 +39,7 @@ const Likes = ({
 
     const findMyLikes = async () => {
         const likes = await findLikedTuitsByUserId(user._id)
+        likes.reverse()
         setLikes(likes)
         console.log(likes)
     }

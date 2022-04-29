@@ -1,11 +1,13 @@
 import {useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
+import '../../../css/profile.css'
 
 const EditProfile = () => {
     const navigate = useNavigate()
     const {profileState, editUser} = useProfile()
     const [profile,] = profileState;
+    const [alertStatus, setAlertStatus] = useState(false);
 
     const refName = useRef(profile.name)
     const refUsername = useRef(profile.username)
@@ -30,20 +32,11 @@ const EditProfile = () => {
             await editUser(user)
             navigate('/profile')
         } catch (e) {
-            alert("Updating User Failed. " +
-                "If you updated your email, check to make sure you do not have " +
-                "another account associated with new email.")
+            setAlertStatus(true)
         }
 
     }
 
-/*    const adminResponse = (e) => {
-        const adminValue = (e.target.value === "yes");
-       setProfile({
-            ...profile,
-            admin: adminValue
-        })
-    }*/
     const goBack = () => {
         navigate("/profile")
     }
@@ -113,6 +106,10 @@ const EditProfile = () => {
                                ref={refBio} defaultValue={refBio.current}/>
                 </div>
             </div>
+
+            {
+                alertStatus && <div className="color-red">Unable to update user. The email given is already associated with another account. If you updated your email, check to make sure you do not have another account with this email.</div>
+            }
 
             <button type="button" className="btn btn-primary" onClick={ updateUserClickHandler}>
                 Update User
