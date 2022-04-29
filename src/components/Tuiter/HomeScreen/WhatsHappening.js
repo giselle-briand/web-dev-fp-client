@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {createTuit} from "../actions/tuits-actions";
 import {useProfile} from "../../../contexts/profile-context";
-import {updateUser} from "../actions/users-actions";
 
 const WhatsHappening = () => {
     const {profileState} = useProfile()
@@ -10,8 +9,9 @@ const WhatsHappening = () => {
     const dispatch = useDispatch();
     const [newTuit, setNewTuit] = useState({tuit: 'New tuit'});
 
-    const makeTuit = () => {
-        createTuit(dispatch, profile._id, newTuit)
+    const makeTuit = async () => {
+        //await createTuit(dispatch, profile._id, newTuit)
+        await createTuit(dispatch, profile._id, newTuit)
         const textbox = document.getElementById("textarea")
         textbox.value = "";
     }
@@ -42,7 +42,7 @@ const WhatsHappening = () => {
                     <a href="#"><i className="fa fa-grin wd-icon-spacing"/></a>
                     <a href="#"><i className="fa fa-calendar wd-icon-spacing"/></a>
                 </div>
-                    <button className="btn btn-primary wd-tuit-override-button-home col-12"
+                    <button type="button" className="btn btn-primary wd-tuit-override-button-home col-12"
                             onClick={() => makeTuit()}>
 
                         Tuit

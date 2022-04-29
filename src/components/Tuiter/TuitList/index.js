@@ -5,10 +5,12 @@ import Tuit from "../Tuit";
 // import {findAllTuits} from "../../services/tuits-service";
 
 const TuitList = () => {
+    //const [tuits, setTuits] = useState([]);
     const tuits = useSelector(state => state.tuits);
     const dispatch = useDispatch();
     useEffect(() => findAllTuits(dispatch), []);
-    // const [tuits, setTuits] = useState([]);
+    //setTuits(newtuits)
+
     // const findTuits = async () => {
     //     const theTuits = await findAllTuits()
     //     theTuits.reverse()
@@ -19,10 +21,12 @@ const TuitList = () => {
     // }, [])
     // const tuits = findAllTuits()
     console.log(tuits)
+    console.log("OUTER HELP")
     return (
         <ul className="list-group wd-columns wd-float-done">
             {
-                tuits && tuits.map(tuit =>
+                tuits.map && tuits.map(tuit =>
+
                     <Tuit givenTuit={tuit}/>
                 )
             }
