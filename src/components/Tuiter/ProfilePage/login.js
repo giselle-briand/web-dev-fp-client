@@ -40,7 +40,7 @@ const LoginPage = () => {
                 <input type="password" className="form-control"
                        id="exampleFormControlInput2" ref={passwordRef}/>
             </div>
-            <button type="button" onClick={handleSigninBtn} className="btn btn-primary">Sign in</button>
+            <button type="button" onClick={handleSigninBtn} className="btn btn-primary wd-rounded-button">Sign in</button>
             <div>
                 Don't have an account? <Link to="/register"> Register here.</Link>
             </div>

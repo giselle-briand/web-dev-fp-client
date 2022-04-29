@@ -93,10 +93,10 @@ const ProfileItem = ({
                     </h6>
                     <h6 className="text-secondary m-0">
                         {
-                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && !checkIfFollowing()) && <button type="button" onClick={() => followUser()} className="btn btn-primary wd-float-right space-button">{followButtonText}</button>
+                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && !checkIfFollowing()) && <button type="button" onClick={() => followUser()} className="btn btn-primary wd-float-right space-button wd-rounded-button">{followButtonText}</button>
                         }
                         {
-                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && checkIfFollowing()) && <button type="button" onClick={() => unfollowUser()} className="btn btn-primary wd-float-right space-button">{followingButtonText}</button>
+                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && checkIfFollowing()) && <button type="button" onClick={() => unfollowUser()} className="btn btn-primary wd-float-right space-button wd-rounded-button">{followingButtonText}</button>
                         }
                     </h6>
                 </div>

@@ -186,20 +186,22 @@ const Tuit = ({
     }
 
     return (
-        <div className="row ps-3 pe-3">
-            <div className="ps-xl-1 1col-sm-1">
-            <img src={tuit["avatar-image"]} className="wd-avatar-image"/>
+        <div className="row ps-3 pe-3 m-0">
+            {/* <div className="col-1 p-0"> */}
+            <div className="d-flex col-2 col-sm-1 p-0 justify-content-center">
+                <img src={tuit["avatar-image"]} className="wd-avatar-image wd-cursor-pointer" onClick={() => goToProfile()}/>
             </div>
-            <div className="col-sm-11 mb-2">
+            {/* <div className="ps-sm-4 ps-md-2 ps-lg-3 ps-xl-4 ps-xxl-2 col-11 mb-2"> */}
+            <div className="col-10 col-sm-11 ps-sm-4 pe-md-0 mb-2">
                 <div className="d-inline-flex justify-content-between w-100">
-                    <h6 className="fw-bold m-0" onClick={() => goToProfile()}>{tuit.name}
+                    <h6 className="fw-bold m-0 wd-cursor-pointer" onClick={() => goToProfile()}>{tuit.name}
                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
-                    <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "-" + tuit.date.day}</span></h6>
+                    <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "/" + tuit.date.day}</span></h6>
                     {
                         profile.admin && <h6 className="text-secondary m-0"><i className="fas fa-remove float-end" onClick={() => deleteTuit(dispatch, tuit)}/></h6>
                     }
                 </div>
-                <div onClick={() => goToDetails(tuit)}>
+                <div className="wd-cursor-pointer" onClick={() => goToDetails(tuit)}>
                     <p className="text-white">
                         {tuit.tuit}
                     </p>
@@ -221,18 +223,18 @@ const Tuit = ({
                         <i className="fa-solid fa-retweet"/>
                         <span className="ps-3">{tuit.retuits}</span>
                     </h6>
-                    <h6 className="text-secondary m-0">
+                    <h6 className="text-secondary m-0 wd-cursor-pointer">
                         {
-                            isLiked() && <i className="fa-solid fa-heart" onClick={() => unlikeIt()}/>
+                            isLiked() && <i className="fa-solid fa-heart wd-red" onClick={() => unlikeIt()}/>
                         }
                         {
                             !isLiked() && <i className="fa-regular fa-heart" onClick={() => likeIt()}/>
                         }
                         <span className="ps-3">{tuit.likes}</span>
                     </h6>
-                    <h6 className="text-secondary m-0">
+                    <h6 className="text-secondary m-0 wd-cursor-pointer">
                         {
-                            isBookmarked() && <i className="fa-solid fa-bookmark" onClick={unbookmarkIt}/>
+                            isBookmarked() && <i className="fa-solid fa-bookmark text-white" onClick={unbookmarkIt}/>
                         }
                         {
                             !isBookmarked() && <i className="fa-regular fa-bookmark" onClick={bookmarkIt}/>

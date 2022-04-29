@@ -145,7 +145,7 @@ const Register = () => {
                 </div>
             </div>
 
-            <button type="button" className="btn btn-primary" onClick={createUserClickHandler}>
+            <button type="button" className="btn btn-primary wd-rounded-button" onClick={createUserClickHandler}>
                 Create User
             </button>
         </div>

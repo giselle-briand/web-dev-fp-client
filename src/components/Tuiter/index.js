@@ -19,13 +19,13 @@ const Tuiter = () => {
     return(
         <Provider store={store}>
             <div className="row mt-2 sp">
-                <div className="col-2 col-md-2 col-lg-1 col-xl-2">
+                <div className="col-2 col-lg-1 col-xl-2">
                     <NavigationSidebar/>
                 </div>
-                <div className="col-xxl-6 col-xl-6 col-lg-7 col-md-10 col-sm-10 mt-2" style={{"position": "relative"}}>
+                <div className="col-10 col-lg-7 col-xl-6 mt-2" style={{"position": "relative"}}>
                     <Outlet/>
                 </div>
-                <div className="d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
+                <div className="d-none d-lg-block col-lg-4 col-xl-4">
                     <WhoToFollowList/>
                 </div>
             </div>
