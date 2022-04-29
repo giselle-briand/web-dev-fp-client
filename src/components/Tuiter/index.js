@@ -9,6 +9,7 @@ import {Provider} from "react-redux";
 import '../../css/universal.css';
 import '../../css/explore.css';
 import WhoToFollowList from "./WhoToFollowList";
+import StatusBar from "./LoginStatusBar/StatusBar";
 
 const reducer = combineReducers({
     tuits: tuitsReducer, who: whoReducer, users: usersReducer
@@ -26,6 +27,7 @@ const Tuiter = () => {
                     <Outlet/>
                 </div>
                 <div className="d-none d-lg-block col-lg-4 col-xl-4">
+                    <StatusBar/>
                     <WhoToFollowList/>
                 </div>
             </div>

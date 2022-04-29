@@ -36,6 +36,7 @@ const Bookmarks = ({
 
     const findMyBookmarks = async () => {
         const bookmarks = await findBookmarksByUserId(user._id)
+        bookmarks.reverse()
         setBookmarks(bookmarks)
     }
 
