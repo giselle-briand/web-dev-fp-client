@@ -41,7 +41,6 @@ const Likes = ({
         const likes = await findLikedTuitsByUserId(user._id)
         likes.reverse()
         setLikes(likes)
-        console.log(likes)
     }
 
     useEffect(() => {

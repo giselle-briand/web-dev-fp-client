@@ -13,7 +13,6 @@ const Tuit = ({
         likes: 14,
         dislikes: 0,
         comments: 0,
-        retuits: 3,
         liked_users: [],
         "api-post-id": "",
         name: "A Name",
@@ -218,10 +217,7 @@ const Tuit = ({
                         <i className="fa-regular fa-comment"/>
                         <span className="ps-3">{tuit.comments}</span>
                     </h6>
-                    <h6 className="text-secondary m-0">
-                        <i className="fa-solid fa-retweet"/>
-                        <span className="ps-3">{tuit.retuits}</span>
-                    </h6>
+
                     <h6 className="text-secondary m-0 wd-cursor-pointer">
                         {
                             isLiked() && <i className="fa-solid fa-heart wd-red" onClick={() => unlikeIt()}/>

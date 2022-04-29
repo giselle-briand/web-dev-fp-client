@@ -4,34 +4,12 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
 import {findUser} from "../../services/users-service";
 import {createTuit} from "../../services/tuits-service";
+//import {createTuit} from "../actions/tuits-actions";
 import {updateTuit} from "../actions/tuits-actions";
 import {updateUser} from "../actions/users-actions";
 import {useDispatch} from "react-redux";
 
 const Details = ({
-                     // tuit = {
-                     //     tuit: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus dolor, laoreet vitae massa eget, elementum gravida mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                     //     likes: 14,
-                     //     dislikes: 0,
-                     //     comments: 0,
-                     //     retuits: 3,
-                     //     liked_users: [],
-                     //     "api-post-id": "",
-                     //     name: "A Name",
-                     //     username: "handle",
-                     //     creator: "",
-                     //     date: {
-                     //         day: "14",
-                     //         month: "Sep",
-                     //         year: "2022",
-                     //         time: "08:11 PM"
-                     //     },
-                     //     title: "",
-                     //     topic: "",
-                     //     image: "",
-                     //     video: "",
-                     //     "avatar-image": "../media/emptypp.webp"
-                     // },
     previous_path = "",
                      user ={
                          name: "",
@@ -74,7 +52,8 @@ const Details = ({
             let newTuit
             let newUser
             if (tuit._id === undefined) {
-                const createdTuit = createTuit(dispatch, user._id, tuit)
+                //TODO possibly change to dispatch?
+                let createdTuit =  await createTuit(user._id, tuit)
                 const createdTuitId = createdTuit._id
                 setTuit({...createdTuit})
                 newTuit = {
@@ -125,7 +104,8 @@ const Details = ({
         if (profile === "init") {
             return false
         }
-        return tuit.liked_users.includes(profile._id) && profile.liked_tuits.includes(tuit._id); //tuit.liked_users.includes(profile._id) &&
+        return tuit.liked_users.includes(profile._id) &&
+            profile.liked_tuits.includes(tuit._id); //tuit.liked_users.includes(profile._id) &&
     }
     const bookmarkIt = async () => {
         if (profile === "init") {
@@ -134,7 +114,7 @@ const Details = ({
             let newTuit
             let newUser
             if (tuit._id === undefined) {
-                const createdTuit = await createTuit(user._id, tuit)
+                const createdTuit = await createTuit(dispatch, user._id, tuit)
                 const createdTuitId = createdTuit._id
                 setTuit({...createdTuit})
                 newTuit = {
@@ -226,7 +206,6 @@ const Details = ({
                     <div>
                         <p className="fs-5 fw-bold text-white">{tuit.tuit}</p>
                     </div>
-
                     {/* Tuit Media */}
                     <div className=" mt-3">
                         <img src={`${tuit.hasOwnProperty("image") ? tuit.image : ""}`}
@@ -243,9 +222,6 @@ const Details = ({
                         <hr/>
                         <div className="d-inline-flex justify-content-between" >
                             <div>
-                                <h6 className="fw-bold m-0">{tuit.retuits} <span className="text-secondary fw-normal">Retuits</span></h6>
-                            </div>
-                            <div>
                                 <h6 className="ms-4 fw-bold m-0">{tuit.likes} <span className="text-secondary fw-normal">Likes</span></h6>
                             </div>
                             <div>
@@ -255,7 +231,6 @@ const Details = ({
                         <hr/>
                         <div className="d-inline-flex justify-content-between w-100 ps-5 pe-5">
                             <h6 className="text-secondary m-0"><i className="fa-regular fa-comment fa-lg"/></h6>
-                            <h6 className="text-secondary m-0"><i className="fa-solid fa-retweet fa-lg"/></h6>
                             <h6 className="text-secondary m-0">
                                 {
                                     isLiked() && <i className="fa-solid fa-heart fa-lg wd-red wd-cursor-pointer" onClick={unlikeIt}/>

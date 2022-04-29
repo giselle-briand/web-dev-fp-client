@@ -4,7 +4,7 @@ import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import Tuit from "../Tuit";
 import {findUserByCredentials} from "../../services/users-service";
 import axios from "axios";
-const tumblr = require('tumblr.js');
+import tumblr from "tumblr.js";
 
 const Search = () => {
     const [posts, setPosts] = useState([])
@@ -36,9 +36,9 @@ const Search = () => {
         apiPost = {}
         apiPost.tuit = duplicatePost.summary;
         apiPost.likes = duplicatePost.note_count;
-        apiPost.dislikes = 0;
+        //apiPost.dislikes = 0;
         apiPost.comments = 0;
-        apiPost.retuits = 0;
+        //apiPost.retuits = 0;
         apiPost.liked_users = [];
         apiPost.bookmarked_users = [];
         apiPost.commented_users = [];
@@ -81,7 +81,6 @@ const Search = () => {
         setPosts(oldPosts =>([...oldPosts, {post: updatedPost, u: newUser}]));
     }
     const searchPostsByKeyword = async () => {
-        console.log(tagRef.current.value)
         if (tagRef.current.value === "") {
             navigate("/search")
         }
@@ -91,12 +90,12 @@ const Search = () => {
                 const filteredData = data.filter(postToCheck => postToCheck.summary !== "");
                 filteredData.map(apiPost => convertAPIpostToTuitAndMakeUser(apiPost))
                 navigate(`/search/${tagRef.current.value}`);
-                const landingContentDiv = document.getElementById("landing-content");
-                const searchContentDiv = document.getElementById("search-content");
-                if (landingContentDiv.style.display !== "none") {
+                //const landingContentDiv = document.getElementById("landing-content");
+                //const searchContentDiv = document.getElementById("search-content");
+/*                if (landingContentDiv.style.display !== "none") {
                     landingContentDiv.style.display = "none";
                     searchContentDiv.style.display = "block";
-                }
+                }*/
             })
         }
     }
@@ -104,6 +103,8 @@ const Search = () => {
         if(searchString) {
             tagRef.current.value = searchString
             searchPostsByKeyword()
+        } else {
+
         }
     }, [])
     return(
@@ -123,13 +124,13 @@ const Search = () => {
                     </button>
                 </div>
             </div>
-            <div id="landing-content">
+{/*            <div id="landing-content">
                 <div className="mb-3">
                     <img src="../../../media/starship.jpg" className="wd-explore-image"/>
                     <h3 className="wd-covere-image-title ps-3">SpaceX's Starship</h3>
                 </div>
                 <PostSummaryList/>
-            </div>
+            </div>*/}
             <div id="search-content" className="list-group">
                 {
                     posts.map(post =>

@@ -19,7 +19,6 @@ const TuitListItem = (
             "avatar-image": "../../../images/react-blue.png",
             "tuits": "122K",
             "comments": 123,
-            "retuits": 234,
             "likes": 345
         }
     }
