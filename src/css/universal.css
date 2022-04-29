@@ -11,12 +11,39 @@
     left: 16px;
     /*width: 570px;*/
 }
-
+.wd-avatar-image {
+    width: 50px;
+    height: 50px;
+    float: left;
+    border-radius: 100%;
+    /*align-content: center;*/
+}
+.wd-avatar-image-small {
+    width: 30px;
+    height: 30px;
+    float: right;
+    border-radius: 100%;
+    margin-bottom: 10px;
+    /*align-content: center;*/
+}
+.wd-inline {
+    display: inline-block;
+    text-align: left;
+}
+.wd-signin-button {
+    width: 90px;
+    /*margin-right: 10px;*/
+    /*margin-bottom: 10px;*/
+    /*float: right;*/
+}
 .wd-float-left {
     float: left;
 }
 .wd-float-right {
     float: right;
+}
+.wd-margin-right {
+    margin-right: 10px;
 }
 .wd-float-done {
     clear: both;

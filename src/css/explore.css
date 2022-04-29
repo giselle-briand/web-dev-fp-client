@@ -149,6 +149,9 @@
 .spacing-left {
     margin-left: 12px;
 }
+.wd-float-end {
+    float: end;
+}
 .sp {
     max-width: 100%;
 }

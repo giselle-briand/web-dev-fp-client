@@ -44,7 +44,6 @@ const ProfilePage = (
     else {
         try {
             givenuser = s.aUser
-            // setUser(s.aUser)
             parent_path = s.previous_path;
             tuit = s.thePost;
         } catch (e) {

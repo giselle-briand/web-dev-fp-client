@@ -81,7 +81,11 @@ const Search = () => {
         setPosts(oldPosts =>([...oldPosts, {post: updatedPost, u: newUser}]));
     }
     const searchPostsByKeyword = async () => {
-        try {
+        console.log(tagRef.current.value)
+        if (tagRef.current.value === "") {
+            navigate("/search")
+        }
+        else {
             client.taggedPosts(tagRef.current.value, function (err, data) {
                 setPosts([]);
                 const filteredData = data.filter(postToCheck => postToCheck.summary !== "");
@@ -94,9 +98,6 @@ const Search = () => {
                     searchContentDiv.style.display = "block";
                 }
             })
-        }
-        catch (e) {
-            navigate('/search')
         }
     }
     useEffect(() => {
