@@ -5,9 +5,11 @@ import Tuit from "../Tuit";
 import {findUserByCredentials} from "../../services/users-service";
 import axios from "axios";
 import tumblr from "tumblr.js";
+import {findPopularTuits} from "../../services/tuits-service";
 
 const Search = () => {
     const [posts, setPosts] = useState([])
+    const [tuits, setTuits] = useState([])
     const {searchString} = useParams()
     const tagRef = useRef()
     const navigate = useNavigate()
@@ -16,6 +18,14 @@ const Search = () => {
     const api = axios.create({
         withCredentials: true
     })
+
+    const popularTuits = async () => {
+       const temp =  await findPopularTuits();
+       console.log(temp)
+        setTuits(temp);
+        return temp;
+    }
+
     const checkProfpic = (updatedPost) => {
         try {
             return updatedPost.trail[0].blog.theme.header_image;
@@ -36,9 +46,7 @@ const Search = () => {
         apiPost = {}
         apiPost.tuit = duplicatePost.summary;
         apiPost.likes = duplicatePost.note_count;
-        //apiPost.dislikes = 0;
         apiPost.comments = 0;
-        //apiPost.retuits = 0;
         apiPost.liked_users = [];
         apiPost.bookmarked_users = [];
         apiPost.commented_users = [];
@@ -90,23 +98,23 @@ const Search = () => {
                 const filteredData = data.filter(postToCheck => postToCheck.summary !== "");
                 filteredData.map(apiPost => convertAPIpostToTuitAndMakeUser(apiPost))
                 navigate(`/search/${tagRef.current.value}`);
-                //const landingContentDiv = document.getElementById("landing-content");
-                //const searchContentDiv = document.getElementById("search-content");
-/*                if (landingContentDiv.style.display !== "none") {
+                const landingContentDiv = document.getElementById("landing-content");
+                const searchContentDiv = document.getElementById("search-content");
+               if (landingContentDiv.style.display !== "none") {
                     landingContentDiv.style.display = "none";
                     searchContentDiv.style.display = "block";
-                }*/
+                }
             })
         }
     }
-    useEffect(() => {
+
+    useEffect( () => {
         if(searchString) {
             tagRef.current.value = searchString
             searchPostsByKeyword()
-        } else {
-
         }
     }, [])
+
     return(
         <div>
             <div className="wd-search-div row">
@@ -124,13 +132,16 @@ const Search = () => {
                     </button>
                 </div>
             </div>
-{/*            <div id="landing-content">
-                <div className="mb-3">
-                    <img src="../../../media/starship.jpg" className="wd-explore-image"/>
-                    <h3 className="wd-covere-image-title ps-3">SpaceX's Starship</h3>
-                </div>
-                <PostSummaryList/>
-            </div>*/}
+           <div id="landing-content" className="row">
+               <h4 className="fw-bold">Explore Popular Tuits!</h4>
+               <ul className="list-group wd-columns wd-float-done">
+                   {
+                       popularTuits() && tuits.map(tuit =>
+                           <Tuit givenTuit={tuit}/>
+                       )
+                   }
+               </ul>
+            </div>
             <div id="search-content" className="list-group">
                 {
                     posts.map(post =>
