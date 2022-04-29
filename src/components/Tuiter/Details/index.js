@@ -190,7 +190,7 @@ const Details = ({
         <div >
             <div className="row">
                 <div className="col-1 d-flex align-items-center">
-                    <i className="fa-solid fa-arrow-left ps-3 text-white" onClick={goBack}/>
+                    <i className="fa-solid fa-arrow-left ps-3 text-white wd-cursor-pointer" onClick={goBack}/>
                 </div>
                 <div className="col-11 m-0 ps-4">
                     <h5 className="m-0 fw-bold">Tuit</h5>

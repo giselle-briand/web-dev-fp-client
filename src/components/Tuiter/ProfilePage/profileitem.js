@@ -39,6 +39,14 @@ const ProfileItem = ({
                     <h6 className="fw-bold m-0 ps-2">{user.name}
                         <span><i className={`${user.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
                     </h6>
+                    <h6 className="text-secondary m-0">
+                        {
+                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && !checkIfFollowing()) && <button type="button" onClick={() => followUser()} className="btn btn-primary wd-float-right space-button wd-rounded-button">{followButtonText}</button>
+                        }
+                        {
+                            (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && checkIfFollowing()) && <button type="button" onClick={() => unfollowUser()} className="btn btn-primary wd-float-right space-button wd-rounded-button">{followingButtonText}</button>
+                        }
+                    </h6>
                 </div>
                 <div>
                     <p className="fw-light text-secondary ps-2">

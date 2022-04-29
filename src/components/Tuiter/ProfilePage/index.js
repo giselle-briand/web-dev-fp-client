@@ -145,10 +145,10 @@ const ProfilePage = (
                 {
                     OTHER_USER_PROFILE_PATHS.includes(location.pathname) && <div className="col-1 d-flex align-items-center"><i className="fa-solid fa-arrow-left ps-3 col-1 white-text" onClick={() => goBack()}/></div>
                 }
-                <div className="ps-5 inline col-11">
+                <div className="inline col-11">
                     <div className="bold white-text">{user.name}</div>
                     {
-                        LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <div className="white-text sizing">{user.email} · {user.phoneNumber}</div>
+                        LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <div className="white-text sizing">{user.email} {`${user.phoneNumber ? "·" + user.phoneNumber : ""}`}</div>
                     }
 
                 </div>
@@ -156,10 +156,10 @@ const ProfilePage = (
             <img className="background-pic" src={user.header}/>
             <img className="pfp" src={user["avatar-image"]}/>
             {
-                LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <button type="button" onClick={() => logout()} className="btn btn-primary wd-float-right space-button">Logout</button>
+                LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <button type="button" onClick={() => logout()} className="btn btn-primary wd-float-right space-button wd-rounded-button">Logout</button>
             }
             {
-                LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <button type="button" onClick={() => editProfile()} className="btn btn-primary wd-float-right space-button">Edit Profile</button>
+                LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <button type="button" onClick={() => editProfile()} className="btn btn-primary wd-float-right space-button wd-rounded-button">Edit Profile</button>
             }
             {
                 (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && !checkIfFollowing()) && <SecureContent><button type="button" onClick={() => followUser()} className="btn btn-primary wd-float-right space-button">Follow</button></SecureContent>

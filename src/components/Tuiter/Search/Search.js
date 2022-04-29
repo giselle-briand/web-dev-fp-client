@@ -107,21 +107,25 @@ const Search = () => {
     }, [])
     return(
         <div>
-            <div className="wd-search-div">
-                <label className="wd-search-bar mb-2">
-                    <i className="fa-solid fa-magnifying-glass wd-search-icon"/>
-                    <input ref={tagRef} className="wd-search-bar-content wd-search-bar" placeholder="Search Tuiter"/>
-                </label>
-                <button
-                    onClick={searchPostsByKeyword}
-                    className="btn btn-primary float-end">
-                    Search
-                </button>
+            <div className="wd-search-div row">
+                <div className="col-9 col-sm-10">
+                    <label className="wd-search-bar w-100 mb-2">
+                        <i className="fa-solid fa-magnifying-glass wd-search-icon"/>
+                        <input ref={tagRef} className="wd-search-bar-content wd-search-bar" placeholder="Search Tuiter"/>
+                    </label>
+                </div>
+                <div className="col-3 col-sm-2">
+                    <button
+                        onClick={searchPostsByKeyword}
+                        className="btn btn-primary float-end wd-rounded-button">
+                        Search
+                    </button>
+                </div>
             </div>
             <div id="landing-content">
-                <div>
+                <div className="mb-3">
                     <img src="../../../media/starship.jpg" className="wd-explore-image"/>
-                    <h3 className="wd-covere-image-title">SpaceX's Starship</h3>
+                    <h3 className="wd-covere-image-title ps-3">SpaceX's Starship</h3>
                 </div>
                 <PostSummaryList/>
             </div>
