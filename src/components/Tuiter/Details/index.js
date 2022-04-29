@@ -243,9 +243,6 @@ const Details = ({
                         <hr/>
                         <div className="d-inline-flex justify-content-between" >
                             <div>
-                                <h6 className="fw-bold m-0">{tuit.retuits} <span className="text-secondary fw-normal">Retuits</span></h6>
-                            </div>
-                            <div>
                                 <h6 className="ms-4 fw-bold m-0">{tuit.likes} <span className="text-secondary fw-normal">Likes</span></h6>
                             </div>
                             <div>
@@ -255,7 +252,6 @@ const Details = ({
                         <hr/>
                         <div className="d-inline-flex justify-content-between w-100 ps-5 pe-5">
                             <h6 className="text-secondary m-0"><i className="fa-regular fa-comment fa-lg"/></h6>
-                            <h6 className="text-secondary m-0"><i className="fa-solid fa-retweet fa-lg"/></h6>
                             <h6 className="text-secondary m-0">
                                 {
                                     isLiked() && <i className="fa-solid fa-heart fa-lg wd-red wd-cursor-pointer" onClick={unlikeIt}/>

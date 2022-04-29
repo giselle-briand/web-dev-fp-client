@@ -10,10 +10,6 @@ const TuitStats = ({tuit}) => {
                 <i className="fa fa-comment wd-icon-spacing-2"/>
                 {tuit.comments}
             </div>
-            <div className="wd-float-left wd-tuit-icon-spacing-3">
-                <i className="fa-solid fa-retweet wd-icon-spacing-2"/>
-                {tuit.retuits}
-            </div>
             <span className="wd-float-left wd-tuit-icon-spacing-3"
                   onClick={() => {
                       if (tuit.liked === true) {
