@@ -47,6 +47,9 @@ const Posts = ({
     return(
         <ul className="list-group">
             {
+                comments.length === 0 && <h6 className="fw-bold m-6">No posts yet.</h6>
+            }
+            {
                 comments && comments.map(comment =>
                     <Tuit givenTuit={comment}/>
                 )

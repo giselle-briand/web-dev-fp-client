@@ -48,6 +48,9 @@ const Bookmarks = ({
 
         <ul className="list-group">
             {
+                bookmarks.length === 0 && <h6 className="fw-bold m-6">No bookmarks yet.</h6>
+            }
+            {
                 bookmarks && bookmarks.map(bookmark =>
                         <Tuit givenTuit={bookmark}/>
                 )

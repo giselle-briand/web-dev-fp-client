@@ -44,7 +44,10 @@ const TuitList = () => {
     return (
         <ul className="list-group wd-columns wd-float-done">
             {
-                tuits && tuits.map(tuit =>
+                tuits.length === 0 && <h6 className="fw-bold">No tuits to show. Follow more users to get some personalized content!</h6>
+            }
+            {
+                tuits.length !== 0 && tuits.map(tuit =>
 
                     <Tuit givenTuit={tuit}/>
                 )
