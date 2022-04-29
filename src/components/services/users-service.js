@@ -18,6 +18,11 @@ export const findUser = async (userId) => {
     return response.data;
 }
 
+export const findAllUsers = async () => {
+    const response = await api.get(USERS_API);
+    return response.data;
+}
+
 export const createUser = async (user) => {
     const response = await api.post(USERS_API, user)
     return response.data;

@@ -1,7 +1,9 @@
-import {UPDATE_USER, CREATE_USER, DELETE_USER, UPDATE_OTHER_USER} from "../actions/users-actions";
+import {FIND_ALL_USERS, UPDATE_USER, CREATE_USER, DELETE_USER, UPDATE_OTHER_USER} from "../actions/users-actions";
 
 const usersReducer = (state = [], action) => {
     switch (action.type) {
+        case FIND_ALL_USERS:
+            return action.users;
         case DELETE_USER:
             return state.filter(user => user._id !== action.user._id);
         case CREATE_USER:

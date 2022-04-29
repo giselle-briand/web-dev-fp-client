@@ -1,5 +1,4 @@
 import * as service from '../../services/tuits-service';
-import {updateUser} from "./users-actions";
 
 export const CREATE_TUIT = 'CREATE_TUIT';
 export const FIND_ALL_TUITS = 'FIND_ALL_TUITS';
@@ -13,8 +12,8 @@ export const createTuit = async (dispatch, userId, tuit) => {
         newTuit
     });
 }
-export const findAllTuits = async (dispatch) => {
-    const tuits = await service.findAllTuits();
+export const findAllTuits = async (dispatch, profile) => {
+    const tuits = await service.findAllTuits(profile);
     dispatch({
         type: FIND_ALL_TUITS,
         tuits: tuits.reverse()
