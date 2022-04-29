@@ -9,6 +9,12 @@ const api = axios.create({
     withCredentials: true
 });
 
+export const findPopularTuits = async () => {
+    const response = await api.get(`${TUITS_API}/popular`)
+    console.log(response.data)
+    return response.data;
+}
+
 export const createTuit = async (userId ,tuit) => {
     const response = await api.post(`${TUITS_API}/users/${userId}`, tuit)
     return response.data;
