@@ -26,12 +26,8 @@ const Tuiter = () => {
                 <div className="col-10 col-lg-7 col-xl-6 mt-2" style={{"position": "relative"}}>
                     <Outlet/>
                 </div>
-<<<<<<< HEAD
                 <div className="d-none d-lg-block col-lg-4 col-xl-4">
-=======
-                <div className="d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
                     <StatusBar/>
->>>>>>> 0ed8b56... add status bar
                     <WhoToFollowList/>
                 </div>
             </div>
