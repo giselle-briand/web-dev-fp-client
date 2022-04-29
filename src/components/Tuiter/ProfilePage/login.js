@@ -40,12 +40,12 @@ const LoginPage = () => {
                 <input type="password" className="form-control"
                        id="exampleFormControlInput2" ref={passwordRef}/>
             </div>
-            <button type="button" onClick={handleSigninBtn} className="btn btn-primary">Sign in</button>
-            <div>
+            <button type="button" onClick={handleSigninBtn} className="btn btn-primary wd-rounded-button">Sign in</button>
+            <div className="mt-2">
                 Don't have an account? <Link to="/register"> Register here.</Link>
             </div>
             {
-                alertStatus && <div className="color-red">Invalid credentials. Email and/or password are incorrect. If you don't have an account, please click the register link to create one.</div>
+                alertStatus && <div className="color-red mt-2">Invalid credentials. Email and/or password are incorrect. If you don't have an account, please click the register link to create one.</div>
             }
         </div>
     );

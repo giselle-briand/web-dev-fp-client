@@ -14,25 +14,31 @@ const NavigationSidebar = (
     return(
         <>
             <div className="list-group spacing-left">
+                {/* <div className="d-block d-sm-none">XS</div>
+                <div className="d-none d-sm-block d-md-none">SM</div>
+                <div className="d-none d-md-block d-lg-none">MD</div>
+                <div className="d-none d-lg-block d-xl-none">LG</div>
+                <div className="d-none d-xl-block d-xxl-none">XL</div>
+                <div className="d-none d-xxl-block">XXL</div> */}
                 <div className="list-group-item"><i className="fa-brands fa-twitter"/></div>
                 <Link to="/" className={`list-group-item list-group-item-action ${active === "/" ? "active" : ""}`}>
                     <i className="fa-solid fa-house-chimney wd-float-left pt-1 pe-1"/>
-                    <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Home</div>
+                    <div className="wd-float-left d-none d-xl-block ps-1">Home</div>
                 </Link>
                 <Link to="/search" className={`list-group-item list-group-item-action ${active === '/search' ? 'active' : ''}`}>
                     <i className="fa-solid fa-hashtag wd-float-left pt-1 pe-1"/>
-                    <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Search</div>
+                    <div className="wd-float-left d-none d-xl-block ps-1">Search</div>
                 </Link>
                 <Link to="/profile" className={`list-group-item list-group-item-action ${active === '/profile' ? 'active' : ''}`}>
                     <i className="fa-solid fa-user wd-float-left pt-1 pe-1"/>
-                    <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Profile</div>
+                    <div className="wd-float-left d-none d-xl-block ps-1">Profile</div>
                 </Link>
                 <Link to="/privacy" className={`list-group-item list-group-item-action ${active === '/privacy' ? 'active' : ''}`}>
                     <span className="fa-stack wd-span-more-padding wd-float-left pt-1 pe-1">
                         <i className="fa-solid fa-circle fa-stack-1x"/>
                         <i className="fa-solid fa-ellipsis fa-stack-1x fa-inverse"/>
                     </span>
-                    <div className="wd-float-left d-xxl-block d-xl-block d-lg-none d-md-none d-sm-none">Privacy</div>
+                    <div className="wd-float-left d-none d-xl-block ps-1">Privacy</div>
                 </Link>
             </div>
         </>

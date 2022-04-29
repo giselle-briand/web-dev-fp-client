@@ -16,27 +16,33 @@ const WhatsHappening = () => {
         textbox.value = "";
     }
     return (
-        <div>
-            <div className="wd-float-left wd-write-tuit-avatar-width">
-                <img src={`${profile["avatar-image"]}`} className="wd-avatar-image wd-write-tuit-avatar"/>
+        <div >
+            {/* <div className="wd-float-left wd-write-tuit-avatar-width"> */}
+            <div className="d-flex justify-content-between ps-3 pe-3">
+                <div className="">
+                    <img src={`${profile["avatar-image"]}`} className="wd-avatar-image"/>
+                </div>
+                <div className="w-100">
+                    <textarea id="textarea"
+                                className="bg-black w-100 ms-3 border-0 text-white"
+                                placeholder="What's happening?"
+                                onChange={(e) =>
+                                    setNewTuit({
+                                        ...newTuit,
+                                        tuit: e.target.value
+                                    })}/>
+                </div>
             </div>
-            <div className="wd-float-right wd-tuit-texarea-width">
-                <textarea id="textarea"
-                          className="wd-tuit-textarea-home"
-                          placeholder="What's happening?"
-                          onChange={(e) =>
-                              setNewTuit({
-                                  ...newTuit,
-                                  tuit: e.target.value
-                              })}/>
-                <hr/>
+            <hr/>
+            {/* <div className="wd-float-right wd-tuit-texarea-width"> */}
+            <div className="ps-3 pe-3">
                 <div className="wd-float-left">
                     <a href="#"><i className="fa fa-image wd-icon-spacing"/></a>
                     <a href="#" ><i className="fa fa-chart-bar wd-icon-spacing"/></a>
                     <a href="#"><i className="fa fa-grin wd-icon-spacing"/></a>
                     <a href="#"><i className="fa fa-calendar wd-icon-spacing"/></a>
                 </div>
-                    <button className="btn btn-primary wd-tuit-override-button-home col-12"
+                    <button className="btn btn-primary wd-tuit-override-button-home wd-rounded-button col-12"
                             onClick={makeTuit}>
                         Tuit
                     </button>

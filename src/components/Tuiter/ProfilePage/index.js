@@ -143,12 +143,12 @@ const ProfilePage = (
         <div className="container-fluid">
             <div className="up-down-padding row">
                 {
-                    OTHER_USER_PROFILE_PATHS.includes(location.pathname) && <div className="col-1 d-flex align-items-center"><i className="fa-solid fa-arrow-left ps-3 col-1 white-text" onClick={() => goBack()}/></div>
+                    OTHER_USER_PROFILE_PATHS.includes(location.pathname) && <div className="col-1 d-flex align-items-center"><i className="fa-solid fa-arrow-left ps-3 col-1 white-text wd-cursor-pointer" onClick={() => goBack()}/></div>
                 }
-                <div className="ps-5 inline col-11">
+                <div className="inline col-11">
                     <div className="bold white-text">{user.name}</div>
                     {
-                        LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <div className="white-text sizing">{user.email} · {user.phoneNumber}</div>
+                        LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <div className="white-text sizing">{user.email} {`${user.phoneNumber ? "·" + user.phoneNumber : ""}`}</div>
                     }
 
                 </div>
@@ -156,16 +156,16 @@ const ProfilePage = (
             <img className="background-pic" src={user.header}/>
             <img className="pfp" src={user["avatar-image"]}/>
             {
-                LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <button type="button" onClick={() => logout()} className="btn btn-primary wd-float-right space-button">Logout</button>
+                LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <button type="button" onClick={() => logout()} className="btn btn-primary wd-float-right space-button wd-rounded-button">Logout</button>
             }
             {
-                LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <button type="button" onClick={() => editProfile()} className="btn btn-primary wd-float-right space-button">Edit Profile</button>
+                LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <button type="button" onClick={() => editProfile()} className="btn btn-primary wd-float-right space-button wd-rounded-button">Edit Profile</button>
             }
             {
-                (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && !checkIfFollowing()) && <SecureContent><button type="button" onClick={() => followUser()} className="btn btn-primary wd-float-right space-button">Follow</button></SecureContent>
+                (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && !checkIfFollowing()) && <SecureContent><button type="button" onClick={() => followUser()} className="btn btn-primary wd-float-right space-button wd-rounded-button">Follow</button></SecureContent>
             }
             {
-                (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && checkIfFollowing()) && <SecureContent><button type="button" onClick={() => unfollowUser()} className="btn btn-primary wd-float-right space-button">Following</button></SecureContent>
+                (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && checkIfFollowing()) && <SecureContent><button type="button" onClick={() => unfollowUser()} className="btn btn-primary wd-float-right space-button wd-rounded-button">Following</button></SecureContent>
             }
             {
                 profile.admin && <button type="button" onClick={() => deleteAccount()} className="btn btn-primary wd-float-right space-button">Delete Account</button>
@@ -174,8 +174,8 @@ const ProfilePage = (
             <div className="username-text-align">@{user.username}</div>
             <div className="username-text-align up-down-padding">{user.bio}</div>
             <div className="username-text-align">
-                <span onClick={() => goToFollowing()}> <span className="bold">{user.followingCount}</span> Following</span>
-                <span onClick={() => goToFollowers()}> <span className="bold">{user.followerCount}</span> Follower</span>
+                <span className="wd-cursor-pointer" onClick={() => goToFollowing()}> <span className="bold">{user.followingCount}</span> Following</span>
+                <span className="wd-cursor-pointer" onClick={() => goToFollowers()}> <span className="ps-3 bold">{user.followerCount}</span> Follower</span>
             </div>
             <ProfileNavigation user={user} previous_path={location.pathname} parent_path={parent_path}/>
             <Outlet context={user}/>

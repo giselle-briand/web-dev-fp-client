@@ -77,3 +77,15 @@
     max-width: 100%;
     object-fit: cover;
 }
+
+.wd-rounded-button {
+    border-radius: 40px !important;
+}
+
+.wd-cursor-pointer {
+    cursor: pointer;
+}
+
+.wd-red {
+    color:#ff7070;
+}
