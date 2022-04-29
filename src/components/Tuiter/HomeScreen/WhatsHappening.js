@@ -24,7 +24,7 @@ const WhatsHappening = () => {
                 </div>
                 <div className="w-100">
                     <textarea id="textarea"
-                                className="bg-black w-100 ms-3"
+                                className="bg-black w-100 ms-3 border-0 text-white"
                                 placeholder="What's happening?"
                                 onChange={(e) =>
                                     setNewTuit({

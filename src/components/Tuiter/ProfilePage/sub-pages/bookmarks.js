@@ -47,7 +47,7 @@ const Bookmarks = ({
 
         <ul className="list-group">
             {
-                bookmarks && bookmarks.map(bookmark =>
+                bookmarks && bookmarks.slice(0).reverse().map(bookmark =>
                         <Tuit givenTuit={bookmark}/>
                 )
             }

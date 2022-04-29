@@ -21,7 +21,7 @@ const Tuit = ({
         creator: "",
         date: {
             day: "14",
-            month: "Sep",
+            month: "09",
             year: "2022",
             time: "08:11 PM"
         },

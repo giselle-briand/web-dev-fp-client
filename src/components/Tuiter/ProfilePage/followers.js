@@ -40,8 +40,8 @@ const Followers = () => {
     }
     return(
         <div className="up-down-padding row">
-            <div className="col-1 d-flex align-items-center"><i className="fa-solid fa-arrow-left ps-3 col-1 white-text" onClick={goBack}/></div>
-            <div className="ps-5 inline col-11">
+            <div className="col-1 d-flex align-items-center"><i className="fa-solid fa-arrow-left ps-3 col-1 white-text wd-cursor-pointer" onClick={goBack}/></div>
+            <div className="ps-2 inline col-11">
                 <div className="bold white-text">Users who follow {user.name}</div>
             </div>
             <br/>

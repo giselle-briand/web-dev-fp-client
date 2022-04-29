@@ -200,13 +200,13 @@ const Details = ({
                 {/* Profile image and handle */}
                 <div className="mt-4 row">
                     <div className="col-1">
-                        <img src={tuit["avatar-image"]} className="wd-avatar-image"/>
+                        <img src={tuit["avatar-image"]} className="wd-avatar-image wd-cursor-pointer" onClick={goToProfile}/>
                     </div>
                     <div className="col-11 d-flex align-items-center">
                         <div className="d-inline-flex justify-content-between w-100">
                             <div className="ps-4 ps-md-2">
-                                <div className="m-0 ">
-                                    <h6 className="fw-bold m-0" onClick={goToProfile}>{tuit.name}
+                                <div className="m-0">
+                                    <h6 className="fw-bold m-0 wd-cursor-pointer" onClick={goToProfile}>{tuit.name}
                                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span></h6>
                                 </div>
                                 <div className="">
@@ -258,18 +258,18 @@ const Details = ({
                             <h6 className="text-secondary m-0"><i className="fa-solid fa-retweet fa-lg"/></h6>
                             <h6 className="text-secondary m-0">
                                 {
-                                    isLiked() && <i className="fa-solid fa-heart fa-lg" onClick={unlikeIt}/>
+                                    isLiked() && <i className="fa-solid fa-heart fa-lg wd-red wd-cursor-pointer" onClick={unlikeIt}/>
                                 }
                                 {
-                                    !isLiked() && <i className="fa-regular fa-heart fa-lg" onClick={likeIt}/>
+                                    !isLiked() && <i className="fa-regular fa-heart fa-lg wd-cursor-pointer" onClick={likeIt}/>
                                 }
                             </h6>
                             <h6 className="text-secondary m-0">
                                 {
-                                    isBookmarked() && <i className="fa-solid fa-bookmark fa-lg" onClick={unbookmarkIt}/>
+                                    isBookmarked() && <i className="fa-solid fa-bookmark fa-lg text-white wd-cursor-pointer" onClick={unbookmarkIt}/>
                                 }
                                 {
-                                    !isBookmarked() && <i className="fa-regular fa-bookmark fa-lg" onClick={bookmarkIt}/>
+                                    !isBookmarked() && <i className="fa-regular fa-bookmark fa-lg wd-cursor-pointer" onClick={bookmarkIt}/>
                                 }
                             </h6>
                         </div>

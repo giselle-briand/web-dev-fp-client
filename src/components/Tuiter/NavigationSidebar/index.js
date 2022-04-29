@@ -14,12 +14,12 @@ const NavigationSidebar = (
     return(
         <>
             <div className="list-group spacing-left">
-                <div className="d-block d-sm-none">XS</div>
+                {/* <div className="d-block d-sm-none">XS</div>
                 <div className="d-none d-sm-block d-md-none">SM</div>
                 <div className="d-none d-md-block d-lg-none">MD</div>
                 <div className="d-none d-lg-block d-xl-none">LG</div>
                 <div className="d-none d-xl-block d-xxl-none">XL</div>
-                <div className="d-none d-xxl-block">XXL</div>
+                <div className="d-none d-xxl-block">XXL</div> */}
                 <div className="list-group-item"><i className="fa-brands fa-twitter"/></div>
                 <Link to="/" className={`list-group-item list-group-item-action ${active === "/" ? "active" : ""}`}>
                     <i className="fa-solid fa-house-chimney wd-float-left pt-1 pe-1"/>
