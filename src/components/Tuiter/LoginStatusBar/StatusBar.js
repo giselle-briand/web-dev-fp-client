@@ -21,7 +21,7 @@ const StatusBar = () => {
     return(
         <div className="row wd-inline justify-content-end">
         {
-            isLoggedIn() && <div className="d-inline-flex w-50"><h6 className="fw-bold m-2">Hi, {profile.name}!</h6><img src={profile["avatar-image"]} className="wd-avatar-image-small" onClick={() => goToProfile()}/></div>
+            isLoggedIn() && <div className="d-inline-flex w-100 justify-content-end"><h6 className="fw-bold m-2">Hi, {profile.name}!</h6><img src={profile["avatar-image"]} className="wd-avatar-image-small" onClick={() => goToProfile()}/></div>
         }
         {
             !isLoggedIn() && <div className="d-inline-flex w-100 justify-content-end" ><button type="button" onClick={() => login()} className="btn btn-primary wd-signin-button mb-2 wd-rounded-button">Log in</button></div>

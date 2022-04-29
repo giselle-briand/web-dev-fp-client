@@ -30,11 +30,11 @@ const ProfileItem = ({
     }
 
     return (
-        <div className="row ps-3 pe-3">
-            <div className="col-1">
+        <div className="row ps-3 pe-3 m-0">
+            <div className="d-flex col-2 col-sm-1 p-0 justify-content-center">
                 <img src={user['avatar-image']} className="wd-avatar-image wd-cursor-pointer" onClick={() => goToProfile()}/>
             </div>
-            <div className="col-11 mb-2">
+            <div className="col-10 col-sm-11 ps-sm-4 pe-md-0 mb-2">
                 <div className="d-inline-flex justify-content-between w-100 wd-cursor-pointer" onClick={() => goToProfile()}>
                     <h6 className="fw-bold m-0 ps-2">{user.name}
                         <span><i className={`${user.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>

@@ -51,7 +51,7 @@ const Likes = ({
     return(
         <ul className="list-group">
             {
-                likes && likes.slice(0).reverse().map(like =>
+                likes && likes.map(like =>
                     <Tuit givenTuit={like}/>
                 )
             }
