@@ -4,8 +4,8 @@ import {useNavigate} from "react-router";
 
 const ProfileItem = ({
                                    user = {
-                                       name: "rosan wang",
-                                       username: "WangRosan",
+                                       name: "Name",
+                                       username: "username",
                                        password: "",
                                        avatar_image: "../../../media/profileimage.jpg",
                                        header: "../../../media/fall.png",
@@ -16,7 +16,7 @@ const ProfileItem = ({
                                        following: [],
                                        liked_tuits: [],
                                        verified: true,
-                                       email: "rosanwang@yahoo.com",
+                                       email: "user@yahoo.com",
                                        phoneNumber: "",
                                        admin: false
                                    }

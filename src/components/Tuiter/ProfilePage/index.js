@@ -19,8 +19,8 @@ import {findTuitById} from "../../services/tuits-service";
 const ProfilePage = (
     {
                          givenuser = {
-                             name: "rosan wang",
-                             username: "WangRosan",
+                             name: "Name",
+                             username: "username",
                              password: "",
                              avatar_image: "../../../media/profileimage.jpg",
                              header: "../../../media/fall.png",
@@ -31,7 +31,7 @@ const ProfilePage = (
                              following: [],
                              liked_tuits: [],
                              verified: true,
-                             email: "rosanwang@yahoo.com",
+                             email: "user@yahoo.com",
                              phoneNumber: "",
                              admin: false
                          }

@@ -131,7 +131,7 @@ const Search = () => {
                 </div>
             </div>
            <div id="landing-content" className="row">
-               <h4 className="fw-bold">Explore Popular Tuits!</h4>
+               <h4 className="fw-bold mb-4 ps-3">Explore Popular Tuits!</h4>
                <ul className="list-group wd-columns wd-float-done">
                    {
                        getPopularTuits() && popularTuits.map(tuit =>

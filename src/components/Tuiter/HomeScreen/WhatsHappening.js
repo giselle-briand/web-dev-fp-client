@@ -4,8 +4,8 @@ import {createTuit} from "../actions/tuits-actions";
 import {useProfile} from "../../../contexts/profile-context";
 
 const WhatsHappening = () => {
-    const {profileState} = useProfile()
-    const [profile, setProfile] = profileState
+    const {profileState} = useProfile();
+    const [profile, setProfile] = profileState;
     const dispatch = useDispatch();
     const [newTuit, setNewTuit] = useState({tuit: 'New tuit'});
 

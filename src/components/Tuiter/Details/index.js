@@ -171,8 +171,8 @@ const Details = ({
         if (profile === "init") {
             navigate('/login')
         } else {
-            const commentingBox = document.getElementById("comment");
-            if (commentingBox.style.display !== "block") {
+            const commentingBox = document.getElementById(tuit._id);
+            if (commentingBox.style.display === "none") {
                 commentingBox.style.display = "block";
             } else {
                 commentingBox.style.display = "none";
@@ -201,17 +201,19 @@ const Details = ({
         }
         await updateTuit(dispatch, updatedCurrentTuit);
         setTuit({...updatedCurrentTuit})
-        const textbox = document.getElementById("textarea")
-        textbox.value = "";
-        const commentingBox = document.getElementById("comment");
-        if (commentingBox.style.display !== "none") {
+        const textArea = getTextArea();
+        textArea.value = "";
+        const commentingBox = document.getElementById(tuit._id);
+        if (commentingBox.style.display === "block") {
             commentingBox.style.display = "none";
         }
     }
+    const getTextArea = () => document.getElementsByTagName('textarea')[0];   
+
     const getComments = async () => {
         const allTuits = await findAllTuits("init");
         const comments = allTuits.filter(aTuit => aTuit.parent_tuit === tuit._id);
-        setCommentsOnTuit(comments.reverse());
+        setCommentsOnTuit(comments);
     }
     return (
         <div >
@@ -296,21 +298,24 @@ const Details = ({
                             </h6>
                         </div>
                         <hr/>
-                        <div id="comment" className="w-100 display-none">
-                            <textarea id="textarea" className="bg-black w-100 ms-3 border-0 text-white"
-                              placeholder="Comment"
-                              onChange={(e) =>
-                                  setNewComment({
-                                      ...newComment,
-                                      tuit: e.target.value,
-                                      parent_tuit: tuit._id
-                                  })}/>
-                            <button type="button" className="btn btn-primary wd-tuit-override-button-home col-12 wd-rounded-button"
-                                    onClick={() => makeTuit()}>
-                                Comment
-                            </button>
+                        <div id={tuit._id} className="w-100" style={{display:"none"}}>
+                            <div className="d-flex flex-column align-items-center mb-3">
+                                <textarea className="bg-black w-100 ps-2 pt-1 text-white"
+                                    placeholder="Comment"
+                                    onChange={(e) =>
+                                        setNewComment({
+                                            ...newComment,
+                                            tuit: e.target.value,
+                                            parent_tuit: tuit._id
+                                        })}/>
+                                <button type="button" className="btn btn-primary mt-3 w-25 wd-rounded-button"
+                                        onClick={() => makeTuit()}>
+                                    Comment
+                                </button>
+                            </div>
+                            <hr/>
                         </div>
-                        <div className={`${tuit.comments > 0 ? "" : "wd-no-display"} `}>
+                        <div className={`${tuit.comments > 0 ? "d-flex flex-column-reverse" : "wd-no-display"} `}>
                             {
                                 getComments() && commentsOnTuit.map(comment =>
                                     <Tuit givenTuit={comment}/>

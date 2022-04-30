@@ -6,8 +6,8 @@ import {useLocation} from "react-router-dom";
 
 const Bookmarks = ({
                        user = {
-                           name: "rosan wang",
-                           username: "WangRosan",
+                           name: "Name",
+                           username: "username",
                            password: "",
                            avatar_image: "../../../media/profileimage.jpg",
                            header: "../../../media/fall.png",
@@ -18,7 +18,7 @@ const Bookmarks = ({
                            following: [],
                            liked_tuits: [],
                            verified: true,
-                           email: "rosanwang@yahoo.com",
+                           email: "user@yahoo.com",
                            phoneNumber: String
                        }
                    }) => {
