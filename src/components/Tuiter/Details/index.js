@@ -167,13 +167,15 @@ const Details = ({
         }
         return profile.bookmarks.includes(tuit._id) && tuit.bookmarked_users.includes(profile._id);
     }
-    const commentOnIt = async () => {
+    const commentOnIt = () => {
         if (profile === "init") {
             navigate('/login')
         } else {
             const commentingBox = document.getElementById("comment");
-            if (commentingBox.style.display === "none") {
+            if (commentingBox.style.display !== "block") {
                 commentingBox.style.display = "block";
+            } else {
+                commentingBox.style.display = "none";
             }
         }
     }
@@ -199,6 +201,8 @@ const Details = ({
         }
         await updateTuit(dispatch, updatedCurrentTuit);
         setTuit({...updatedCurrentTuit})
+        const textbox = document.getElementById("textarea")
+        textbox.value = "";
         const commentingBox = document.getElementById("comment");
         if (commentingBox.style.display !== "none") {
             commentingBox.style.display = "none";
@@ -207,8 +211,7 @@ const Details = ({
     const getComments = async () => {
         const allTuits = await findAllTuits("init");
         const comments = allTuits.filter(aTuit => aTuit.parent_tuit === tuit._id);
-        setCommentsOnTuit(comments);
-        console.log(comments)
+        setCommentsOnTuit(comments.reverse());
     }
     return (
         <div >
@@ -294,8 +297,7 @@ const Details = ({
                         </div>
                         <hr/>
                         <div id="comment" className="w-100 display-none">
-                            <textarea id="textarea"
-                              className="bg-black w-100 ms-3 border-0 text-white"
+                            <textarea id="textarea" className="bg-black w-100 ms-3 border-0 text-white"
                               placeholder="Comment"
                               onChange={(e) =>
                                   setNewComment({
