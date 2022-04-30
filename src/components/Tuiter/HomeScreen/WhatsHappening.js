@@ -47,7 +47,7 @@ const WhatsHappening = () => {
 
                         Tuit
                     </button>
-                </div>
+            </div>
         </div>
     );
 }

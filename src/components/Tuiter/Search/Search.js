@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import PostSummaryList from "../PostSummaryList";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import Tuit from "../Tuit";
 import {findUserByCredentials} from "../../services/users-service";
@@ -9,7 +8,7 @@ import {findPopularTuits} from "../../services/tuits-service";
 
 const Search = () => {
     const [posts, setPosts] = useState([])
-    const [tuits, setTuits] = useState([])
+    const [popularTuits, setPopularTuits] = useState([])
     const {searchString} = useParams()
     const tagRef = useRef()
     const navigate = useNavigate()
@@ -19,11 +18,10 @@ const Search = () => {
         withCredentials: true
     })
 
-    const popularTuits = async () => {
+    const getPopularTuits = async () => {
        const temp =  await findPopularTuits();
-       console.log(temp)
-        setTuits(temp);
-        return temp;
+       setPopularTuits(temp);
+       return temp;
     }
 
     const checkProfpic = (updatedPost) => {
@@ -100,7 +98,7 @@ const Search = () => {
                 navigate(`/search/${tagRef.current.value}`);
                 const landingContentDiv = document.getElementById("landing-content");
                 const searchContentDiv = document.getElementById("search-content");
-               if (landingContentDiv.style.display !== "none") {
+                if (landingContentDiv.style.display !== "none") {
                     landingContentDiv.style.display = "none";
                     searchContentDiv.style.display = "block";
                 }
@@ -136,7 +134,7 @@ const Search = () => {
                <h4 className="fw-bold">Explore Popular Tuits!</h4>
                <ul className="list-group wd-columns wd-float-done">
                    {
-                       popularTuits() && tuits.map(tuit =>
+                       getPopularTuits() && popularTuits.map(tuit =>
                            <Tuit givenTuit={tuit}/>
                        )
                    }

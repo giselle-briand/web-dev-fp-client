@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {deleteTuit, updateTuit} from "../actions/tuits-actions";
-import {createTuit} from "../../services/tuits-service";
+import {createTuit} from "../actions/tuits-actions";
 import {useDispatch} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
 import {findUser, findUserByCredentials} from "../../services/users-service";
 import {updateUser} from "../actions/users-actions";
+import '../../../css/profile.css'
 
 const Tuit = ({
     givenTuit = {
@@ -46,6 +47,7 @@ const Tuit = ({
     const {profileState} = useProfile();
     const [profile, setProfile] = profileState;
     const [tuit, setTuit] = useState(givenTuit);
+    const [newComment, setNewComment] = useState({tuit: 'New tuit', parent_tuit: "tuit id"});
 
     const goToProfile = async () => {
         const tuitUser = await findUser(tuit.creator);
@@ -182,7 +184,49 @@ const Tuit = ({
         }
         return profile.bookmarks.includes(tuit._id) && tuit.bookmarked_users.includes(profile._id);
     }
-
+    const deleteIt = async () => {
+        await deleteTuit(dispatch, tuit)
+    }
+    const commentOnIt = () => {
+        if (profile === "init") {
+            navigate('/login')
+        } else {
+            const commentingBox = document.getElementById("comment");
+            console.log(commentingBox.style.display)
+            if (commentingBox.style.display !== "block") {
+                commentingBox.style.display = "block";
+            } else {
+                commentingBox.style.display = "none";
+            }
+        }
+    }
+    const makeTuit = async () => {
+        let updatedCurrentTuit;
+        await createTuit(dispatch, profile._id, newComment)
+        if (tuit._id === undefined) {
+            const createdTuit = await createTuit(user._id, tuit)
+            const createdTuitId = createdTuit._id
+            setTuit({...createdTuit})
+            updatedCurrentTuit = {
+                ...tuit,
+                comments: tuit.comments + 1,
+                commented_users: [...tuit.commented_users, profile._id],
+                _id: createdTuitId
+            }
+        } else {
+            updatedCurrentTuit = {
+                ...tuit,
+                comments: tuit.comments + 1,
+                commented_users: [...tuit.commented_users, profile._id]
+            }
+        }
+        await updateTuit(dispatch, updatedCurrentTuit);
+        setTuit({...updatedCurrentTuit})
+        const commentingBox = document.getElementById("comment");
+        if (commentingBox.style.display !== "none") {
+            commentingBox.style.display = "none";
+        }
+    }
     return (
         <div className="row ps-3 pe-3 m-0">
             {/* <div className="col-1 p-0"> */}
@@ -196,7 +240,7 @@ const Tuit = ({
                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
                     <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "/" + tuit.date.day}</span></h6>
                     {
-                        profile.admin && <h6 className="text-secondary m-0"><i className="fas fa-remove float-end" onClick={() => deleteTuit(dispatch, tuit)}/></h6>
+                        profile.admin && <h6 className="text-secondary m-0"><i className="fas fa-remove float-end" onClick={() => deleteIt()}/></h6>
                     }
                 </div>
                 <div className="wd-cursor-pointer" onClick={() => goToDetails(tuit)}>
@@ -213,8 +257,8 @@ const Tuit = ({
                     </div>
                 </div>
                 <div className="d-inline-flex justify-content-between w-75 mt-3 pe-5">
-                    <h6 className="text-secondary m-0">
-                        <i className="fa-regular fa-comment"/>
+                    <h6 className="text-secondary m-0 wd-cursor-pointer">
+                        <i className="fa-regular fa-comment" onClick={() => commentOnIt()}/>
                         <span className="ps-3">{tuit.comments}</span>
                     </h6>
 
@@ -236,9 +280,22 @@ const Tuit = ({
                         }
                     </h6>
                 </div>
+                <div id="comment" className="w-100 display-none">
+                <textarea className="bg-black w-100 ms-3 border-0 text-white"
+                          placeholder="Comment"
+                          onChange={(e) =>
+                              setNewComment({
+                                  ...newComment,
+                                  tuit: e.target.value,
+                                  parent_tuit: tuit._id
+                              })}/>
+                    <button type="button" className="btn btn-primary wd-tuit-override-button-home col-12 wd-rounded-button"
+                            onClick={() => makeTuit()}>
+                        Comment
+                    </button>
+                </div>
             </div>
             <hr/>
-
         </div>
         
     )

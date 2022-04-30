@@ -49,6 +49,9 @@ const Following = () => {
             <hr/>
             <ul className="list-group">
                 {
+                    followings.length === 0 && <h6 className="fw-bold m-6">Not following anyone yet.</h6>
+                }
+                {
                     followings && followings.map(f =>
                         <ProfileItem user={f}/>
                     )

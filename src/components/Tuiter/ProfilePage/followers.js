@@ -48,6 +48,9 @@ const Followers = () => {
             <hr/>
             <ul className="list-group">
                 {
+                    followers.length === 0 && <h6 className="fw-bold m-6">No followers yet.</h6>
+                }
+                {
                     followers && followers.map(follower =>
                         <ProfileItem user={follower}/>
                     )

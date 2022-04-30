@@ -51,6 +51,9 @@ const Likes = ({
     return(
         <ul className="list-group">
             {
+                likes.length === 0 && <h6 className="fw-bold m-0">No likes yet.</h6>
+            }
+            {
                 likes && likes.map(like =>
                     <Tuit givenTuit={like}/>
                 )

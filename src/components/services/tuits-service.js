@@ -9,9 +9,13 @@ const api = axios.create({
     withCredentials: true
 });
 
+export const findTuitById = async (tuit) => {
+    const response = await api.get(`${TUITS_API}/${tuit._id}`)
+    return response.data;
+}
+
 export const findPopularTuits = async () => {
     const response = await api.get(`${TUITS_API}/popular`)
-    console.log(response.data)
     return response.data;
 }
 
