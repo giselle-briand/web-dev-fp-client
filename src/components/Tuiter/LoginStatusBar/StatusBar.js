@@ -19,12 +19,17 @@ const StatusBar = () => {
         navigate(`/login`)
     }
     return(
-        <div className="row wd-inline justify-content-end">
+        <div className="mt-1">
         {
-            isLoggedIn() && <div className="d-inline-flex w-100 justify-content-end"><h6 className="fw-bold m-2">Hi, {profile.name}!</h6><img src={profile["avatar-image"]} className="wd-avatar-image-small" onClick={() => goToProfile()}/></div>
+            isLoggedIn() && <div className="d-inline-flex w-100 justify-content-end align-items-center">
+                    <h6 className="fw-bold m-0 me-2">Hi, {profile.name}!</h6>
+                    <img src={profile["avatar-image"]} className="m-0 wd-avatar-image-small" onClick={() => goToProfile()}/>
+                </div>
         }
         {
-            !isLoggedIn() && <div className="d-inline-flex w-100 justify-content-end" ><button type="button" onClick={() => login()} className="btn btn-primary wd-signin-button mb-2 wd-rounded-button">Log in</button></div>
+            !isLoggedIn() && <div className="d-flex w-100 justify-content-end" >
+                <button type="button" onClick={() => login()} className="btn btn-primary wd-signin-button mb-2 wd-rounded-button">Log in</button>
+                </div>
         }
         </div>
     )

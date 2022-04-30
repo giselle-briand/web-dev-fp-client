@@ -191,9 +191,8 @@ const Tuit = ({
         if (profile === "init") {
             navigate('/login')
         } else {
-            const commentingBox = document.getElementById("comment");
-            console.log(commentingBox.style.display)
-            if (commentingBox.style.display !== "block") {
+            const commentingBox = document.getElementById(tuit._id);
+            if (commentingBox.style.display === "none") {
                 commentingBox.style.display = "block";
             } else {
                 commentingBox.style.display = "none";
@@ -222,18 +221,19 @@ const Tuit = ({
         }
         await updateTuit(dispatch, updatedCurrentTuit);
         setTuit({...updatedCurrentTuit})
-        const commentingBox = document.getElementById("comment");
-        if (commentingBox.style.display !== "none") {
+        const textArea = getTextArea();
+        textArea.value = "";
+        const commentingBox = document.getElementById(tuit._id);
+        if (commentingBox.style.display === "block") {
             commentingBox.style.display = "none";
         }
     }
+    const getTextArea = () => document.getElementsByTagName('textarea')[0]; 
     return (
         <div className="row ps-3 pe-3 m-0">
-            {/* <div className="col-1 p-0"> */}
             <div className="d-flex col-2 col-sm-1 p-0 justify-content-center">
                 <img src={tuit["avatar-image"]} className="wd-avatar-image wd-cursor-pointer" onClick={() => goToProfile()}/>
             </div>
-            {/* <div className="ps-sm-4 ps-md-2 ps-lg-3 ps-xl-4 ps-xxl-2 col-11 mb-2"> */}
             <div className="col-10 col-sm-11 ps-sm-4 pe-md-0 mb-2">
                 <div className="d-inline-flex justify-content-between w-100">
                     <h6 className="fw-bold m-0 wd-cursor-pointer" onClick={() => goToProfile()}>{tuit.name}
@@ -280,24 +280,26 @@ const Tuit = ({
                         }
                     </h6>
                 </div>
-                <div id="comment" className="w-100 display-none">
-                <textarea className="bg-black w-100 ms-3 border-0 text-white"
-                          placeholder="Comment"
-                          onChange={(e) =>
-                              setNewComment({
-                                  ...newComment,
-                                  tuit: e.target.value,
-                                  parent_tuit: tuit._id
-                              })}/>
-                    <button type="button" className="btn btn-primary wd-tuit-override-button-home col-12 wd-rounded-button"
+            </div>
+            <hr/>
+            <div id={tuit._id} className="p-0" style={{display:"none"}}>
+                <div className="d-flex flex-column align-items-center mb-3">
+                    <textarea className="bg-black w-100 ps-2 pt-1 text-white"
+                        placeholder="Comment"
+                        onChange={(e) =>
+                            setNewComment({
+                                ...newComment,
+                                tuit: e.target.value,
+                                parent_tuit: tuit._id
+                            })}/>
+                    <button type="button" className="btn btn-primary mt-3 w-25 wd-rounded-button"
                             onClick={() => makeTuit()}>
                         Comment
                     </button>
                 </div>
+                <hr/>
             </div>
-            <hr/>
-        </div>
-        
+        </div>  
     )
 }
 
