@@ -208,6 +208,7 @@ const Details = ({
         const allTuits = await findAllTuits("init");
         const comments = allTuits.filter(aTuit => aTuit.parent_tuit === tuit._id);
         setCommentsOnTuit(comments);
+        console.log(comments)
     }
     return (
         <div >
@@ -310,7 +311,7 @@ const Details = ({
                         <div className={`${tuit.comments > 0 ? "" : "wd-no-display"} `}>
                             {
                                 getComments() && commentsOnTuit.map(comment =>
-                                    <Tuit tuit={comment}/>
+                                    <Tuit givenTuit={comment}/>
                                 )
                             }
                         </div>

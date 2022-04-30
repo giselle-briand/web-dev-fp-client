@@ -187,13 +187,16 @@ const Tuit = ({
     const deleteIt = async () => {
         await deleteTuit(dispatch, tuit)
     }
-    const commentOnIt = async () => {
+    const commentOnIt = () => {
         if (profile === "init") {
             navigate('/login')
         } else {
             const commentingBox = document.getElementById("comment");
-            if (commentingBox.style.display === "none") {
+            console.log(commentingBox.style.display)
+            if (commentingBox.style.display !== "block") {
                 commentingBox.style.display = "block";
+            } else {
+                commentingBox.style.display = "none";
             }
         }
     }
@@ -277,11 +280,8 @@ const Tuit = ({
                         }
                     </h6>
                 </div>
-            </div>
-            <hr/>
-            <div id="comment" className="w-100 display-none">
-                <textarea id="textarea"
-                          className="bg-black w-100 ms-3 border-0 text-white"
+                <div id="comment" className="w-100 display-none">
+                <textarea className="bg-black w-100 ms-3 border-0 text-white"
                           placeholder="Comment"
                           onChange={(e) =>
                               setNewComment({
@@ -289,11 +289,13 @@ const Tuit = ({
                                   tuit: e.target.value,
                                   parent_tuit: tuit._id
                               })}/>
-                <button type="button" className="btn btn-primary wd-tuit-override-button-home col-12 wd-rounded-button"
-                        onClick={() => makeTuit()}>
-                    Comment
-                </button>
+                    <button type="button" className="btn btn-primary wd-tuit-override-button-home col-12 wd-rounded-button"
+                            onClick={() => makeTuit()}>
+                        Comment
+                    </button>
+                </div>
             </div>
+            <hr/>
         </div>
         
     )
