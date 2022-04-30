@@ -3,8 +3,8 @@ import Tuit from "../Tuit";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
 import {findUser} from "../../services/users-service";
-import {createTuit} from "../../services/tuits-service";
-//import {createTuit} from "../actions/tuits-actions";
+import {findAllTuits} from "../../services/tuits-service";
+import {createTuit} from "../actions/tuits-actions";
 import {updateTuit} from "../actions/tuits-actions";
 import {updateUser} from "../actions/users-actions";
 import {useDispatch} from "react-redux";
@@ -32,7 +32,9 @@ const Details = ({
     previous_path = s.previous_path
     user = s.aUser
 
+    const [commentsOnTuit, setCommentsOnTuit] = useState([])
     const [tuit, setTuit] = useState(givenTuit);
+    const [newComment, setNewComment] = useState({tuit: 'New tuit', parent_tuit: "tuit id"});
 
     const goBack = () => {
         navigate(previous_path, {state: {aUser: user, previous_path: previous_path, thePost: tuit}});
@@ -165,7 +167,48 @@ const Details = ({
         }
         return profile.bookmarks.includes(tuit._id) && tuit.bookmarked_users.includes(profile._id);
     }
-
+    const commentOnIt = async () => {
+        if (profile === "init") {
+            navigate('/login')
+        } else {
+            const commentingBox = document.getElementById("comment");
+            if (commentingBox.style.display === "none") {
+                commentingBox.style.display = "block";
+            }
+        }
+    }
+    const makeTuit = async () => {
+        let updatedCurrentTuit;
+        await createTuit(dispatch, profile._id, newComment)
+        if (tuit._id === undefined) {
+            const createdTuit = await createTuit(user._id, tuit)
+            const createdTuitId = createdTuit._id
+            setTuit({...createdTuit})
+            updatedCurrentTuit = {
+                ...tuit,
+                comments: tuit.comments + 1,
+                commented_users: [...tuit.commented_users, profile._id],
+                _id: createdTuitId
+            }
+        } else {
+            updatedCurrentTuit = {
+                ...tuit,
+                comments: tuit.comments + 1,
+                commented_users: [...tuit.commented_users, profile._id]
+            }
+        }
+        await updateTuit(dispatch, updatedCurrentTuit);
+        setTuit({...updatedCurrentTuit})
+        const commentingBox = document.getElementById("comment");
+        if (commentingBox.style.display !== "none") {
+            commentingBox.style.display = "none";
+        }
+    }
+    const getComments = async () => {
+        const allTuits = await findAllTuits("init");
+        const comments = allTuits.filter(aTuit => aTuit.parent_tuit === tuit._id);
+        setCommentsOnTuit(comments);
+    }
     return (
         <div >
             <div className="row">
@@ -230,7 +273,7 @@ const Details = ({
                         </div>
                         <hr/>
                         <div className="d-inline-flex justify-content-between w-100 ps-5 pe-5">
-                            <h6 className="text-secondary m-0"><i className="fa-regular fa-comment fa-lg"/></h6>
+                            <h6 className="text-secondary m-0"><i className="fa-regular fa-comment fa-lg wd-cursor-pointer" onClick={() => commentOnIt()}/></h6>
                             <h6 className="text-secondary m-0">
                                 {
                                     isLiked() && <i className="fa-solid fa-heart fa-lg wd-red wd-cursor-pointer" onClick={unlikeIt}/>
@@ -249,9 +292,24 @@ const Details = ({
                             </h6>
                         </div>
                         <hr/>
-                        <div className={`${tuit.comments.length > 0 ? "" : "wd-no-display"} `}>
+                        <div id="comment" className="w-100 display-none">
+                            <textarea id="textarea"
+                              className="bg-black w-100 ms-3 border-0 text-white"
+                              placeholder="Comment"
+                              onChange={(e) =>
+                                  setNewComment({
+                                      ...newComment,
+                                      tuit: e.target.value,
+                                      parent_tuit: tuit._id
+                                  })}/>
+                            <button type="button" className="btn btn-primary wd-tuit-override-button-home col-12 wd-rounded-button"
+                                    onClick={() => makeTuit()}>
+                                Comment
+                            </button>
+                        </div>
+                        <div className={`${tuit.comments > 0 ? "" : "wd-no-display"} `}>
                             {
-                                tuit.comments.map && tuit.comments.map(comment =>
+                                getComments() && commentsOnTuit.map(comment =>
                                     <Tuit tuit={comment}/>
                                 )
                             }

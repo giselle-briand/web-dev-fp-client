@@ -39,7 +39,7 @@ export const updateOtherUser = async (dispatch, user) => {
 }
 
 export const deleteUser = async (dispatch, user) => {
-    const response = await service.deleteUsers(user);
+    const response = await service.deleteUser(user);
     dispatch({
         type: DELETE_USER,
         user
