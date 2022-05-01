@@ -20,6 +20,7 @@ export const findPopularTuits = async () => {
 }
 
 export const createTuit = async (userId ,tuit) => {
+    console.log("service")
     const response = await api.post(`${TUITS_API}/users/${userId}`, tuit)
     return response.data;
 }

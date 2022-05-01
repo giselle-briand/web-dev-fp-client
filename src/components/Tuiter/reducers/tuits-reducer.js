@@ -8,7 +8,7 @@ const tuitsReducer = (state = [], action) => {
                 return state.filter(tuit => tuit._id !== action.tuit._id);
             case CREATE_TUIT:
                 return [
-                    action.newTuit,
+                     action.newTuit,
                     ...state
                 ];
             case UPDATE_TUIT:

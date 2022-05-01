@@ -41,6 +41,7 @@ const Tuit = ({
                       admin: false
                   }
 }) => {
+    console.log(givenTuit);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -245,7 +246,7 @@ const Tuit = ({
                 </div>
                 <div className="wd-cursor-pointer" onClick={() => goToDetails(tuit)}>
                     <p className="text-white">
-                        {tuit.tuit}
+                        {givenTuit.tuit}
                     </p>
                     <div>
                         <img src={`${tuit.hasOwnProperty("image") ? tuit.image : ""}`}
