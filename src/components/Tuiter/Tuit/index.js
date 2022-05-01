@@ -241,7 +241,7 @@ const Tuit = ({
                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
                     <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "/" + tuit.date.day}</span></h6>
                     {
-                        profile.admin && <h6 className="text-secondary m-0"><i className="fas fa-remove float-end" onClick={() => deleteIt()}/></h6>
+                        profile.admin && <h6 className="text-secondary m-0"><i className="fas fa-remove float-end wd-cursor-pointer" onClick={() => deleteIt()}/></h6>
                     }
                 </div>
                 <div className="wd-cursor-pointer" onClick={() => goToDetails(tuit)}>

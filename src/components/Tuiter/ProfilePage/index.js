@@ -130,60 +130,77 @@ const ProfilePage = (
         setUser({...otherUser})
     }
     const deletePostsByUser = async () => {
+        console.log(user._id)
         const posts = await findCommentsByUserId(user._id)
-        for (let i=0; i<posts.length; i++) {
-            if (posts[i].parent_path !== undefined) {
-                const parentTuit = await findTuitById(posts[i].parent_path)
-                const newParentTuit = {
-                    ...parentTuit,
-                    comments: parentTuit.comments - 1,
-                    commented_users: parentTuit.commented_users.filter(a_user => a_user._id !== user._id)
+        if (posts.length !== 0) {
+            for (let i=0; i<posts.length; i++) {
+                if (posts[i].parent_path !== undefined) {
+                    const parentTuit = await findTuitById(posts[i].parent_path)
+                    const newParentTuit = {
+                        ...parentTuit,
+                        comments: parentTuit.comments - 1,
+                        commented_users: parentTuit.commented_users.filter(a_user => a_user._id !== user._id)
+                    }
+                    await updateTuit(dispatch, newParentTuit);
                 }
-                await updateTuit(dispatch, newParentTuit);
+                await deleteTuit(dispatch, posts[i])
             }
-            await deleteTuit(dispatch, posts[i])
         }
+        console.log("just deleted all their tuits")
     }
     const deleteUserFromFollowersAndFollowingLists = async () => {
         const listOfFollowing = await findFollowingByUserId(user._id)
         const listOfFollowers = await findFollowersByUserId(user._id)
-        for (let i=0; i<listOfFollowing.length; i++) {
-            const userFollowing = await findUser(listOfFollowing[i]);
-            const newUserFollowing = {
-                ...userFollowing,
-                followers: userFollowing.followers.filter(a_user => a_user !== user._id),
-                followerCount: userFollowing.followerCount - 1
+        console.log("list of following:")
+        console.log(listOfFollowing)
+        console.log("list of followers:")
+        console.log(listOfFollowers)
+        if (listOfFollowing.length !== 0) {
+            for (let i = 0; i < listOfFollowing.length; i++) {
+                const userFollowing = await findUser(listOfFollowing[i]);
+                const newUserFollowing = {
+                    ...userFollowing,
+                    followers: userFollowing.followers.filter(a_user => a_user !== user._id),
+                    followerCount: userFollowing.followerCount - 1
+                }
+                await updateUser(dispatch, newUserFollowing);
             }
-            await updateUser(dispatch, newUserFollowing);
         }
-        for (let i=0; i<listOfFollowers.length; i++) {
-            const userFollower = await findUser(listOfFollowers[i]);
-            const newUserFollower = {
-                ...userFollower,
-                following: userFollower.following.filter(a_user => a_user !== user._id),
-                followingCount: userFollower.followingCount - 1
+        if (listOfFollowers.length !== 0) {
+            for (let i=0; i<listOfFollowers.length; i++) {
+                const userFollower = await findUser(listOfFollowers[i]);
+                const newUserFollower = {
+                    ...userFollower,
+                    following: userFollower.following.filter(a_user => a_user !== user._id),
+                    followingCount: userFollower.followingCount - 1
+                }
+                await updateUser(dispatch, newUserFollower);
             }
-            await updateUser(dispatch, newUserFollower);
         }
+        console.log("just finished going through followers/following")
     }
     const deleteFromBookmarksAndLikedTuits = async () => {
         const bookmarkedTuits = await findBookmarksByUserId(user._id);
         const likedTuits = await findLikedTuitsByUserId(user._id);
-        for (let i=0; i<bookmarkedTuits.length; i++) {
-            const bookmarkedTuit = await findTuitById(bookmarkedTuits[i])
-            const newBookmarkedTuit = {
-                ...bookmarkedTuit,
-                bookmarked_users: bookmarkedTuit.bookmarked_users.filter(a_user => a_user !== user._id)
+        if (bookmarkedTuits.length !== 0) {
+            for (let i=0; i<bookmarkedTuits.length; i++) {
+                const bookmarkedTuit = await findTuitById(bookmarkedTuits[i])
+                const newBookmarkedTuit = {
+                    ...bookmarkedTuit,
+                    bookmarked_users: bookmarkedTuit.bookmarked_users.filter(a_user => a_user !== user._id)
+                }
+                await updateTuit(dispatch, newBookmarkedTuit)
             }
-            await updateTuit(dispatch, newBookmarkedTuit)
         }
-        for (let i=0; i<likedTuits.length; i++) {
-            const likedTuit = await findTuitById(likedTuits[i])
-            const newLikedTuit = {
-                ...likedTuit,
-                liked_users: likedTuit.liked_users.filter(a_user => a_user !== user._id)
+        if (likedTuits.length !== 0) {
+            for (let i=0; i<likedTuits.length; i++) {
+                const likedTuit = await findTuitById(likedTuits[i])
+                const newLikedTuit = {
+                    ...likedTuit,
+                    liked_users: likedTuit.liked_users.filter(a_user => a_user !== user._id)
+                }
+                await updateTuit(dispatch, newLikedTuit)
             }
-            await updateTuit(dispatch, newLikedTuit)
         }
     }
     const deleteAccount = async () => {
@@ -236,7 +253,7 @@ const ProfilePage = (
                 (OTHER_USER_PROFILE_PATHS.includes(location.pathname) && checkIfFollowing()) && <SecureContent><button type="button" onClick={() => unfollowUser()} className="btn btn-primary wd-float-right space-button wd-rounded-button">Following</button></SecureContent>
             }
             {
-                profile.admin && <button type="button" onClick={() => deleteAccount()} className="btn btn-primary wd-float-right space-button">Delete Account</button>
+                (profile.admin && !LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname)) && <button type="button" onClick={() => deleteAccount()} className="btn btn-primary wd-float-right space-button wd-rounded-button">Delete Account</button>
             }
             <div className="username-text-align bold">{user.name}</div>
             <div className="username-text-align">@{user.username}</div>

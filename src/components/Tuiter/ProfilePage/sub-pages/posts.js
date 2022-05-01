@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {findCommentsByUserId} from "../../../services/users-service";
 import Tuit from "../../Tuit";
 import {Link, useLocation, useOutletContext} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {findAllTuits} from "../../actions/tuits-actions";
 
 const Posts = ({
                    user = {
@@ -30,9 +32,12 @@ const Posts = ({
     } else {
         user = s.aUser;
     }*/
+    // let posts = useSelector((state) => state.tuits);
+    // const dispatch = useDispatch();
+    // useEffect(() => findAllTuits(dispatch, profile), []);
 
     user = useOutletContext()
-
+    // const comments = useSelector((state) => state)
     const findMyComments = async () => {
         const comments = await findCommentsByUserId(user._id)
         comments.reverse()
@@ -40,6 +45,7 @@ const Posts = ({
     }
 
     useEffect(() => {
+        // findCommentsByUserId(user._id)
         findMyComments()
     }, [])
 
