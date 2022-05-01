@@ -157,24 +157,34 @@ const ProfilePage = (
         console.log(listOfFollowers)
         if (listOfFollowing.length !== 0) {
             for (let i = 0; i < listOfFollowing.length; i++) {
-                const userFollowing = await findUser(listOfFollowing[i]);
+                const userFollowing = await findUser(listOfFollowing[i]._id);
                 const newUserFollowing = {
                     ...userFollowing,
                     followers: userFollowing.followers.filter(a_user => a_user !== user._id),
                     followerCount: userFollowing.followerCount - 1
                 }
                 await updateUser(dispatch, newUserFollowing);
+                const userFollowingNew = {
+                    ...userFollowing,
+                    followerCount: userFollowing.followerCount - 1
+                }
+                await updateUser(dispatch, userFollowingNew);
             }
         }
         if (listOfFollowers.length !== 0) {
             for (let i=0; i<listOfFollowers.length; i++) {
-                const userFollower = await findUser(listOfFollowers[i]);
+                const userFollower = await findUser(listOfFollowers[i]._id);
                 const newUserFollower = {
                     ...userFollower,
                     following: userFollower.following.filter(a_user => a_user !== user._id),
                     followingCount: userFollower.followingCount - 1
                 }
                 await updateUser(dispatch, newUserFollower);
+                const userFollowerNew = {
+                    ...userFollower,
+                    followerCount: userFollower.followerCount - 1
+                }
+                await updateUser(dispatch, userFollowerNew);
             }
         }
         console.log("just finished going through followers/following")
@@ -182,9 +192,15 @@ const ProfilePage = (
     const deleteFromBookmarksAndLikedTuits = async () => {
         const bookmarkedTuits = await findBookmarksByUserId(user._id);
         const likedTuits = await findLikedTuitsByUserId(user._id);
+        console.log("bookmarkedTuits:")
+        console.log(bookmarkedTuits)
+        console.log(bookmarkedTuits.length)
+        console.log("likedTuits:")
+        console.log(likedTuits)
+        console.log(likedTuits.length)
         if (bookmarkedTuits.length !== 0) {
             for (let i=0; i<bookmarkedTuits.length; i++) {
-                const bookmarkedTuit = await findTuitById(bookmarkedTuits[i])
+                const bookmarkedTuit = await findTuitById(bookmarkedTuits[i]._id)
                 const newBookmarkedTuit = {
                     ...bookmarkedTuit,
                     bookmarked_users: bookmarkedTuit.bookmarked_users.filter(a_user => a_user !== user._id)
@@ -194,7 +210,7 @@ const ProfilePage = (
         }
         if (likedTuits.length !== 0) {
             for (let i=0; i<likedTuits.length; i++) {
-                const likedTuit = await findTuitById(likedTuits[i])
+                const likedTuit = await findTuitById(likedTuits[i]._id)
                 const newLikedTuit = {
                     ...likedTuit,
                     liked_users: likedTuit.liked_users.filter(a_user => a_user !== user._id)
@@ -233,7 +249,7 @@ const ProfilePage = (
                 <div className="inline col-11">
                     <div className="bold white-text">{user.name}</div>
                     {
-                        LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && <div className="white-text sizing">{user.email} {`${user.phoneNumber ? "·" + user.phoneNumber : ""}`}</div>
+                        (LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) || profile.admin) && <div className="white-text sizing">{user.email} {`${user.phoneNumber ? "·" + user.phoneNumber : ""}`}</div>
                     }
 
                 </div>
