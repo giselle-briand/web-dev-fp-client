@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Tuit from "../Tuit";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
@@ -6,8 +6,8 @@ import {findUser} from "../../services/users-service";
 import {findAllTuits} from "../../services/tuits-service";
 import {createTuit} from "../actions/tuits-actions";
 import {updateTuit} from "../actions/tuits-actions";
-import {updateUser} from "../actions/users-actions";
-import {useDispatch} from "react-redux";
+import { updateUser} from "../actions/users-actions";
+import {useDispatch, useSelector} from "react-redux";
 
 const Details = ({
     previous_path = "",
@@ -27,14 +27,43 @@ const Details = ({
     const [profile, setProfile] = profileState;
     const dispatch = useDispatch()
     const location = useLocation()
+
+    const [more, setMore] = useState([])
+    const reference = useRef()
+    reference.current = more;
+
     const s = location.state
     const givenTuit = s.thePost
     previous_path = s.previous_path
     user = s.aUser
 
+
+
     const [commentsOnTuit, setCommentsOnTuit] = useState([])
+
     const [tuit, setTuit] = useState(givenTuit);
     const [newComment, setNewComment] = useState({tuit: 'New tuit', parent_tuit: "tuit id"});
+
+    const getMoreTuits = async () => {
+        const allTuit = await findAllTuits("init")
+        let exploreTuits = []
+        for (let i=0; i<3; i++) {
+            const curTuit = allTuit[Math.floor(Math.random() * allTuit.length)]
+            exploreTuits.push(curTuit)
+        }
+        setMore(exploreTuits);
+        console.log("hi")
+       // return exploreTuits;
+    }
+    useEffect(() => {
+        getMoreTuits()
+        getComments()
+    }, [])
+
+    //let moreTuits;
+    //const moreTuits = async getMoreTuits();
+
+   // console.log(moreTuits)
 
     const goBack = () => {
         navigate(previous_path, {state: {aUser: user, previous_path: previous_path, thePost: tuit}});
@@ -208,13 +237,18 @@ const Details = ({
             commentingBox.style.display = "none";
         }
     }
-    const getTextArea = () => document.getElementsByTagName('textarea')[0];   
+    const getTextArea = () => document.getElementsByTagName('textarea')[0];
 
     const getComments = async () => {
         const allTuits = await findAllTuits("init");
         const comments = allTuits.filter(aTuit => aTuit.parent_tuit === tuit._id);
         setCommentsOnTuit(comments);
     }
+
+    //const temp = getMoreTuits();
+    //console.log(temp)
+
+
     return (
         <div >
             <div className="row">
@@ -223,7 +257,7 @@ const Details = ({
                 </div>
                 <div className="col-11 m-0 ps-4">
                     <h5 className="m-0 fw-bold">Tuit</h5>
-                </div> 
+                </div>
             </div>
             <div >
                 {/* Profile image and handle */}
@@ -246,7 +280,7 @@ const Details = ({
                                 <h6 className="text-secondary m-0"><i className="fa-solid fa-ellipsis"/></h6>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
                 {/* Tuit content */}
@@ -317,7 +351,7 @@ const Details = ({
                         </div>
                         <div className={`${tuit.comments > 0 ? "d-flex flex-column-reverse" : "wd-no-display"} `}>
                             {
-                                getComments() && commentsOnTuit.map(comment =>
+                                commentsOnTuit && commentsOnTuit.map(comment =>
                                     <Tuit givenTuit={comment}/>
                                 )
                             }
@@ -325,8 +359,14 @@ const Details = ({
                         <div>
                             <h5 className="ps-3 fw-bold mb-4">More Tuits</h5>
                         </div>
-                        <Tuit/>
-                        <Tuit/>
+
+                        <div>
+                            {
+                                more && more.map( function(t) {
+                                    return(<Tuit givenTuit={t}/>)
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
 
