@@ -52,8 +52,6 @@ const Details = ({
             exploreTuits.push(curTuit)
         }
         setMore(exploreTuits);
-        console.log("hi")
-       // return exploreTuits;
     }
     useEffect(() => {
         getMoreTuits()
