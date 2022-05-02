@@ -10,11 +10,13 @@ const Following = () => {
     const [profile, ] = profileState
     const navigate = useNavigate()
     const [followings, setFollowings] = useState([])
+    // const [isLoggedInUser, setIsLoggedInUser] = useState(false)
     const location = useLocation()
     const s = location.state
     let user
     if (location.pathname === "/profile/following") {
         user = profile;
+        // setIsLoggedInUser(true)
     } else {
         user = s.aUser;
     }
@@ -49,7 +51,10 @@ const Following = () => {
             <hr className="mt-3"/>
             <ul className="list-group">
                 {
-                    followings.length === 0 && <h6 className="fw-bold mt-2 text-center text-secondary">You are not following anyone.</h6>
+                    (LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && followings.length === 0) && <h6 className="fw-bold mt-2 text-center text-secondary">You are not following anyone.</h6>
+                }
+                {
+                    (!LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && followings.length === 0) && <h6 className="fw-bold mt-2 text-center text-secondary">{user.name} is not following anyone.</h6>
                 }
                 {
                     followings && followings.map(f =>

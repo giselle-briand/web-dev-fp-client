@@ -27,12 +27,10 @@ const ProfileNavigation = (
         parent_path= ""
     }
 ) => {
+    const {profileState} = useProfile()
+    const [profile, ] = profileState
     const location = useLocation()
     active = location.pathname;
-
-    // user = params.user
-    // previous_path = params.previous_path
-    // parent_path = params.parent_path
 
     let bookmarks_path;
     let tuits_path;
@@ -95,7 +93,7 @@ const ProfileNavigation = (
                           onClick={() => {highlight("likes")}}>Likes</Link>
                 </div>
                 {
-                    (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || user.admin) &&
+                    (PREVIOUS_PATHS_FOR_LOGGED_IN_USER.includes(previous_path) || profile.admin) &&
                         <div  className={`nav-item col-3`}>
                             <Link id="bookmarks"
                                   className="nav-link"

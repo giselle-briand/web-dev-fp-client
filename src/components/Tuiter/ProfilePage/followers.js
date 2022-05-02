@@ -47,7 +47,10 @@ const Followers = () => {
             <hr className="mt-3"/>
             <ul className="list-group">
                 {
-                    followers.length === 0 && <h6 className="fw-bold mt-2 text-center text-secondary">You don't have any followers.</h6>
+                    (LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && followers.length === 0) && <h6 className="fw-bold mt-2 text-center text-secondary">You don't have any followers.</h6>
+                }
+                {
+                    (!LOGGED_IN_USER_PROFILE_PATHS.includes(location.pathname) && followers.length === 0) && <h6 className="fw-bold mt-2 text-center text-secondary">{user.name} has no followers.</h6>
                 }
                 {
                     followers && followers.map(follower =>

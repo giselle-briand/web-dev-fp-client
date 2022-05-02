@@ -9,7 +9,7 @@ const Register = () => {
     //const dispatch = useDispatch();
     const navigate = useNavigate()
     const test = useProfile()
-
+    const [alertStatus, setAlertStatus] = useState(false)
     const [user, setUser] = useState({
             name: "",
             username: "",
@@ -25,7 +25,7 @@ const Register = () => {
             await test.signup(user)
             navigate('/profile')
         } catch (e) {
-            alert('oops')
+            setAlertStatus(true)
         }
     }
 
@@ -141,6 +141,9 @@ const Register = () => {
                     <input type="radio" className="space-radio" name="adminselection" id="no" value="no"/>
                 </div>
             </div>
+            {
+                alertStatus && <div className="color-red mt-2">Registering failed. The email provided is already associated with another account.</div>
+            }
 
             <button type="button" className="btn btn-primary wd-rounded-button" onClick={createUserClickHandler}>
                 Create User

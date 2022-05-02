@@ -50,6 +50,13 @@ const Tuit = ({
     const [tuit, setTuit] = useState(givenTuit);
     const [newComment, setNewComment] = useState({tuit: 'New tuit', parent_tuit: "tuit id"});
 
+    let commentId
+    if (tuit["api-post-id"] !== "") {
+        commentId = tuit["api-post-id"]
+    } else {
+        commentId = tuit._id
+    }
+
     const goToProfile = async () => {
         const tuitUser = await findUser(tuit.creator);
         if ((profile !== "init") && tuitUser.username === profile.username) {
@@ -192,7 +199,7 @@ const Tuit = ({
         if (profile === "init") {
             navigate('/login')
         } else {
-            const commentingBox = document.getElementById(tuit._id);
+            const commentingBox = document.getElementById(commentId);
             if (commentingBox.style.display === "none") {
                 commentingBox.style.display = "block";
             } else {
@@ -224,7 +231,7 @@ const Tuit = ({
         setTuit({...updatedCurrentTuit})
         const textArea = getTextArea();
         textArea.value = "";
-        const commentingBox = document.getElementById(tuit._id);
+        const commentingBox = document.getElementById(commentId);
         if (commentingBox.style.display === "block") {
             commentingBox.style.display = "none";
         }
@@ -241,7 +248,7 @@ const Tuit = ({
                     <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
                     <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "/" + tuit.date.day}</span></h6>
                     {
-                        profile.admin && <h6 className="text-secondary m-0"><i className="fas fa-remove float-end" onClick={() => deleteIt()}/></h6>
+                        profile.admin && <h6 className="text-secondary m-0"><i className="fas fa-remove float-end wd-cursor-pointer" onClick={() => deleteIt()}/></h6>
                     }
                 </div>
                 <div className="wd-cursor-pointer" onClick={() => goToDetails(tuit)}>
@@ -283,7 +290,7 @@ const Tuit = ({
                 </div>
             </div>
             <hr/>
-            <div id={tuit._id} className="p-0" style={{display:"none"}}>
+            <div id={commentId} className="p-0" style={{display:"none"}}>
                 <div className="d-flex flex-column align-items-center mb-3">
                     <textarea className="bg-black w-100 ps-2 pt-1 text-white"
                         placeholder="Comment"
