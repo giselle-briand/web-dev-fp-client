@@ -60,10 +60,13 @@ const Details = ({
         getComments()
     }, [])
 
-    //let moreTuits;
-    //const moreTuits = async getMoreTuits();
 
-   // console.log(moreTuits)
+    let commentId
+    if (tuit["api-post-id"] !== "") {
+        commentId = tuit["api-post-id"]
+    } else {
+        commentId = tuit._id
+    }
 
     const goBack = () => {
         navigate(previous_path, {state: {aUser: user, previous_path: previous_path, thePost: tuit}});
@@ -83,7 +86,6 @@ const Details = ({
             let newTuit
             let newUser
             if (tuit._id === undefined) {
-                //TODO possibly change to dispatch?
                 let createdTuit =  await createTuit(user._id, tuit)
                 const createdTuitId = createdTuit._id
                 setTuit({...createdTuit})
@@ -136,7 +138,7 @@ const Details = ({
             return false
         }
         return tuit.liked_users.includes(profile._id) &&
-            profile.liked_tuits.includes(tuit._id); //tuit.liked_users.includes(profile._id) &&
+            profile.liked_tuits.includes(tuit._id);
     }
     const bookmarkIt = async () => {
         if (profile === "init") {
@@ -200,7 +202,7 @@ const Details = ({
         if (profile === "init") {
             navigate('/login')
         } else {
-            const commentingBox = document.getElementById(tuit._id);
+            const commentingBox = document.getElementById(commentId);
             if (commentingBox.style.display === "none") {
                 commentingBox.style.display = "block";
             } else {
@@ -232,7 +234,7 @@ const Details = ({
         setTuit({...updatedCurrentTuit})
         const textArea = getTextArea();
         textArea.value = "";
-        const commentingBox = document.getElementById(tuit._id);
+        const commentingBox = document.getElementById(commentId);
         if (commentingBox.style.display === "block") {
             commentingBox.style.display = "none";
         }
@@ -332,7 +334,7 @@ const Details = ({
                             </h6>
                         </div>
                         <hr/>
-                        <div id={tuit._id} className="w-100" style={{display:"none"}}>
+                        <div id={commentId} className="w-100" style={{display:"none"}}>
                             <div className="d-flex flex-column align-items-center mb-3">
                                 <textarea className="bg-black w-100 ps-2 pt-1 text-white"
                                     placeholder="Comment"

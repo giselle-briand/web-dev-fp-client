@@ -157,16 +157,16 @@ const ProfilePage = (
         console.log(listOfFollowers)
         if (listOfFollowing.length !== 0) {
             for (let i = 0; i < listOfFollowing.length; i++) {
-                const userFollowing = await findUser(listOfFollowing[i]._id);
+                // const userFollowing = await findUser(listOfFollowing[i]._id);
                 const newUserFollowing = {
-                    ...userFollowing,
-                    followers: userFollowing.followers.filter(a_user => a_user !== user._id),
-                    followerCount: userFollowing.followerCount - 1
+                    ...listOfFollowing[i],
+                    followers: listOfFollowing[i].followers.filter(a_user => a_user !== user._id)
+                    // followerCount: listOfFollowing[i].followerCount - 1
                 }
                 await updateUser(dispatch, newUserFollowing);
                 const userFollowingNew = {
-                    ...userFollowing,
-                    followerCount: userFollowing.followerCount - 1
+                    ...listOfFollowing[i],
+                    followerCount: listOfFollowing[i].followerCount - 1
                 }
                 await updateUser(dispatch, userFollowingNew);
             }
@@ -200,22 +200,27 @@ const ProfilePage = (
         console.log(likedTuits.length)
         if (bookmarkedTuits.length !== 0) {
             for (let i=0; i<bookmarkedTuits.length; i++) {
-                const bookmarkedTuit = await findTuitById(bookmarkedTuits[i]._id)
+                // const bookmarkedTuit = await findTuitById(bookmarkedTuits[i])
                 const newBookmarkedTuit = {
-                    ...bookmarkedTuit,
-                    bookmarked_users: bookmarkedTuit.bookmarked_users.filter(a_user => a_user !== user._id)
+                    ...bookmarkedTuits[i],
+                    bookmarked_users: bookmarkedTuits[i].bookmarked_users.filter(a_user => a_user !== user._id)
                 }
                 await updateTuit(dispatch, newBookmarkedTuit)
             }
         }
         if (likedTuits.length !== 0) {
             for (let i=0; i<likedTuits.length; i++) {
-                const likedTuit = await findTuitById(likedTuits[i]._id)
+                // const likedTuit = await findTuitById(likedTuits[i]._id)
                 const newLikedTuit = {
-                    ...likedTuit,
-                    liked_users: likedTuit.liked_users.filter(a_user => a_user !== user._id)
+                    ...likedTuits[i],
+                    liked_users: likedTuits[i].liked_users.filter(a_user => a_user !== user._id)
                 }
                 await updateTuit(dispatch, newLikedTuit)
+                const newLikesCount = {
+                    ...likedTuits[i],
+                    likes: likedTuits[i].likes - 1
+                }
+                await updateTuit(dispatch, newLikesCount);
             }
         }
     }
