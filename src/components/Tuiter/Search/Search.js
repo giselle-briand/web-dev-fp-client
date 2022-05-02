@@ -18,6 +18,10 @@ const Search = () => {
         withCredentials: true
     })
 
+    useEffect(() => {
+        getPopularTuits()
+    }, [])
+
     const getPopularTuits = async () => {
        const temp =  await findPopularTuits();
        setPopularTuits(temp);
@@ -134,7 +138,7 @@ const Search = () => {
                <h4 className="fw-bold mb-4 ps-3">Explore Popular Tuits!</h4>
                <ul className="list-group wd-columns wd-float-done">
                    {
-                       getPopularTuits() && popularTuits.map(tuit =>
+                      popularTuits && popularTuits.map(tuit =>
                            <Tuit givenTuit={tuit}/>
                        )
                    }

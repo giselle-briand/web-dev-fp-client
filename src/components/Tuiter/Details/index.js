@@ -55,7 +55,6 @@ const Details = ({
     }
     useEffect(() => {
         getMoreTuits()
-        getComments()
     }, [])
 
 
@@ -351,7 +350,7 @@ const Details = ({
                         </div>
                         <div className={`${tuit.comments > 0 ? "d-flex flex-column-reverse" : "wd-no-display"} `}>
                             {
-                                commentsOnTuit && commentsOnTuit.map(comment =>
+                                getComments() && commentsOnTuit.map(comment =>
                                     <Tuit givenTuit={comment}/>
                                 )
                             }

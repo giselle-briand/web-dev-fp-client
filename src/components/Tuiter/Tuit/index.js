@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {deleteTuit, updateTuit} from "../actions/tuits-actions";
-import {createTuit} from "../actions/tuits-actions";
+import {createTuit} from "../../services/tuits-service";
 import {useDispatch} from "react-redux";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useProfile} from "../../../contexts/profile-context";
@@ -41,7 +41,7 @@ const Tuit = ({
                       admin: false
                   }
 }) => {
-    console.log(givenTuit);
+    //console.log(givenTuit);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -80,7 +80,11 @@ const Tuit = ({
             let newTuit
             let newUser
             if (tuit._id === undefined) {
+                console.log("inside the likng tuit")
+                console.log(user._id)
+                console.log(tuit)
                 const createdTuit = await createTuit(user._id, tuit)
+                console.log(createdTuit)
                 const createdTuitId = createdTuit._id
                 setTuit({...createdTuit})
                 newTuit = {
@@ -106,8 +110,10 @@ const Tuit = ({
                 }
             }
             await updateTuit(dispatch, newTuit);
+            console.log("updated tuit")
             setTuit({...newTuit})
             await updateUser(dispatch, newUser);
+            console.log("updated user")
             setProfile({...newUser})
         }
     }
@@ -240,13 +246,13 @@ const Tuit = ({
     return (
         <div className="row ps-3 pe-3 m-0">
             <div className="d-flex col-2 col-sm-1 p-0 justify-content-center">
-                <img src={tuit["avatar-image"]} className="wd-avatar-image wd-cursor-pointer" onClick={() => goToProfile()}/>
+                <img src={givenTuit["avatar-image"]} className="wd-avatar-image wd-cursor-pointer" onClick={() => goToProfile()}/>
             </div>
             <div className="col-10 col-sm-11 ps-sm-4 pe-md-0 mb-2">
                 <div className="d-inline-flex justify-content-between w-100">
-                    <h6 className="fw-bold m-0 wd-cursor-pointer" onClick={() => goToProfile()}>{tuit.name}
-                    <span><i className={`${tuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
-                    <span className="fw-light text-secondary ps-2">@{tuit.username} · {tuit.date.month + "/" + tuit.date.day}</span></h6>
+                    <h6 className="fw-bold m-0 wd-cursor-pointer" onClick={() => goToProfile()}>{givenTuit.name}
+                    <span><i className={`${givenTuit.verified ? "ms-1 fa-solid fa-circle-check" : ""}`}/></span>
+                    <span className="fw-light text-secondary ps-2">@{givenTuit.username} · {givenTuit.date.month + "/" + givenTuit.date.day}</span></h6>
                     {
                         profile.admin && <h6 className="text-secondary m-0"><i className="fas fa-remove float-end wd-cursor-pointer" onClick={() => deleteIt()}/></h6>
                     }
@@ -256,10 +262,10 @@ const Tuit = ({
                         {givenTuit.tuit}
                     </p>
                     <div>
-                        <img src={`${tuit.hasOwnProperty("image") ? tuit.image : ""}`}
-                            className={`${tuit.hasOwnProperty("image") ? "w-100 wd-tuit-image" : "wd-no-display"}`}/>
-                        <iframe width="500" height="300" src={`${tuit.hasOwnProperty("video") ? tuit.video : ""}`}
-                        className={`${tuit.hasOwnProperty("video") ? "w-100 wd-tuit-image" : "wd-no-display"}`}
+                        <img src={`${givenTuit.hasOwnProperty("image") ? tuit.image : ""}`}
+                            className={`${givenTuit.hasOwnProperty("image") ? "w-100 wd-tuit-image" : "wd-no-display"}`}/>
+                        <iframe width="500" height="300" src={`${givenTuit.hasOwnProperty("video") ? tuit.video : ""}`}
+                        className={`${givenTuit.hasOwnProperty("video") ? "w-100 wd-tuit-image" : "wd-no-display"}`}
                         title="Video" frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
                     </div>
