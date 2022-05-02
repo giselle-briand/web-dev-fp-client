@@ -130,7 +130,7 @@ const ProfilePage = (
         setUser({...otherUser})
     }
     const deletePostsByUser = async () => {
-        console.log(user._id)
+
         const posts = await findCommentsByUserId(user._id)
         if (posts.length !== 0) {
             for (let i=0; i<posts.length; i++) {
@@ -142,6 +142,29 @@ const ProfilePage = (
                         commented_users: parentTuit.commented_users.filter(a_user => a_user._id !== user._id)
                     }
                     await updateTuit(dispatch, newParentTuit);
+                }
+                if (posts[i].likes > 0) {
+                    posts[i].liked_users.map( async(id) => {
+                        const userLiked = await findUser(id);
+                        const newU = {
+                            ...userLiked,
+                            liked_tuits: userLiked.liked_tuits.filter(t => t !== posts[i]._id)
+                        }
+                        console.log(newU)
+                        await updateUser(dispatch, newU);
+
+                    })
+                }
+                if (posts[i].bookmarked_users.length > 0) {
+                    posts[i].bookmarked_users.map( async(id) => {
+                        const userBookmarked = await findUser(id);
+                        const newU = {
+                            ...userBookmarked ,
+                            bookmarks: userBookmarked.bookmarks.filter(t => t !== posts[i]._id)
+                        }
+                        await updateUser(dispatch, newU);
+
+                    })
                 }
                 await deleteTuit(dispatch, posts[i])
             }
